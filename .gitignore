@@ -11,9 +11,6 @@
 /.bundle
 /vendor/bundle
 
-# Ignore db creds / settings
-/config/database.yml
-
 # Ignore the default SQLite database.
 *.rbc
 capybara-*.html
@@ -52,3 +49,6 @@ pickle-email-*.html
 /yarn-error.log
 yarn-debug.log*
 .yarn-integrity
+
+
+.vscode
