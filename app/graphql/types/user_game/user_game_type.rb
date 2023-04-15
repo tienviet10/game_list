@@ -10,7 +10,7 @@ module Types
       field :start_date, GraphQL::Types::ISO8601DateTime, null: false
       field :completed_date, GraphQL::Types::ISO8601DateTime, null: false
       field :private, Boolean, null: false
-      field :rating, Integer, null: false
+      field :rating, Float, null: false
       field :review, String, null: false
       field :created_at, GraphQL::Types::ISO8601DateTime, null: false
       field :updated_at, GraphQL::Types::ISO8601DateTime, null: false
