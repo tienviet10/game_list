@@ -7,5 +7,6 @@ module Types
 
     # TODO: remove me
     field :register, mutation: Mutations::Users::RegisterUser
+    field :login, mutation: Mutations::Users::LoginUser
   end
 end
