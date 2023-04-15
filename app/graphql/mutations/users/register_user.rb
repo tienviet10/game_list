@@ -8,8 +8,8 @@ module Mutations
       field :user, Types::User::UserType, null: false
       field :errors, [String], null: false
 
-      def resolve(name:, email:, password:)
-        user = User.new(username: name, email: email, password: password)
+      def resolve(username:, email:, password:)
+        user = User.new(username: username, email: email, password: password, is_active: true)
         if user.save
           {
             user: user,
