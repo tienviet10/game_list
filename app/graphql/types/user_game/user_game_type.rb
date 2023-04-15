@@ -8,8 +8,8 @@ module Types
       field :game, Types::Game::GameType, null: false
       field :game_status, String, null: false
       field :game_note, String, null: false
-      field :start_date, Date, null: false
-      field :completed_date, Date, null: false
+      field :start_date, GraphQL::Types::ISO8601DateTime, null: false
+      field :completed_date, GraphQL::Types::ISO8601DateTime, null: false
       field :private, Boolean, null: false
       field :rating, Integer, null: false
       field :review, String, null: false
