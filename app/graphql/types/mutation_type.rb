@@ -6,11 +6,6 @@ module Types
     # field :register, mutation: Mutations::Users::Registration
 
     # TODO: remove me
-    field :test_field, String, null: false,
-                           description: "An example field added by the generator"
-
-    def test_field
-      "Hello World"
-    end
+    field :register, mutation: Mutations::Users::RegisterUser
   end
 end
