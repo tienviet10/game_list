@@ -5,11 +5,11 @@ default: &default
 
 development:
   <<: *default
-  database: grapghql_game_list
+  database: grapghql_game_list_test
 
 test:
   <<: *default
-  database: grapghql_game_list
+  database: grapghql_game_list_test
 
 production:
   <<: *default
