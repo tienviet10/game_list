@@ -5,11 +5,11 @@ module Mutations
       argument :email, String, required: true
       argument :password, String, required: true
 
-      field :user, Types::Users::UserType, null: false
+      field :user, Types::User::UserType, null: false
       field :errors, [String], null: false
 
       def resolve(name:, email:, password:)
-        user = User.new(name: name, email: email, password: password)
+        user = User.new(username: name, email: email, password: password)
         if user.save
           {
             user: user,
