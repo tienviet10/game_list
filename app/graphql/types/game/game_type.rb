@@ -10,9 +10,14 @@ module Types
       field :releaseDate, GraphQL::Types::ISO8601DateTime, null: false
       field :avg_score, Integer, null: false
       field :total_rating, Integer, null: false
-      field :genres, [Types::Genre::GenreType], null: false
-      field :tags, [Types::Tag::TagType], null: false
-      field :platforms, [Types::Platform::PlatformType], null: false
+
+      # field :genres, [Types::Genre::GenreType], null: false
+      field :genres, [String], null: false
+      field :tags, [String], null: false
+      field :platforms, [String], null: false
+
+      # field :tags, [Types::Tag::TagType], null: false
+      # field :platforms, [Types::Platform::PlatformType], null: false
     end
   end
 end
