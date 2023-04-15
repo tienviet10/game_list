@@ -6,6 +6,12 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
+15.times do
+  genre = Genre.create(name: Faker::Game.genre)
+  tag = Tag.create(name: Faker::Game.genre)
+  platform = Platform.create(name: Faker::Game.platform)
+end
+
 25.times do
   user = User.create(
     username: Faker::Name.name,
@@ -26,9 +32,9 @@
     total_rating: Faker::Number.between(from: 1, to: 100)
   )
   2.times do
-    game.genres.create(name: Faker::Game.genre)
-    game.platforms.create(name: Faker::Game.platform)
-    game.tags.create(name: Faker::Game.genre)
+    game.genres << Genre.all.sample
+    game.tags << Tag.all.sample
+    game.platforms << Platform.all.sample
   end
 
   user_game = UserGame.create(
