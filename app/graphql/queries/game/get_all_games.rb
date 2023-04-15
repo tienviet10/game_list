@@ -6,15 +6,15 @@ module Queries
       type [Types::Game::GameType], null: false
 
       def resolve
-        games = ::Game.all.map do |game|
+        res = ::Game.all.map do |game|
           {
             name: game.name,
-            tags: game.tags.pluck(:name)
-            # platforms: game.platforms.pluck(:name)
-            # genres: game.genres.pluck(:name)
+            tags: game.tags.pluck(:name),
+            genres: game.genres.pluck(:name),
+            platforms: game.platforms.pluck(:name)
           }
         end
-        games
+        res
       end
     end
 
