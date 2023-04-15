@@ -8,7 +8,7 @@ module Types
       field :description, String, null: false
       field :imageURL, String, null: false
       field :releaseDate, GraphQL::Types::ISO8601DateTime, null: false
-      field :avg_score, Integer, null: false
+      field :avg_score, Float, null: false
       field :total_rating, Integer, null: false
 
       # field :genres, [Types::Genre::GenreType], null: false
