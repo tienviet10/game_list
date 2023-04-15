@@ -13,10 +13,6 @@ module Types
       field :genres, [Types::Genre::GenreType], null: false
       field :tags, [Types::Tag::TagType], null: false
       field :platforms, [Types::Platform::PlatformType], null: false
-      field :users, [Types::User::UserType], null: false
-      field :user_games, [Types::UserGame::UserGameType], null: false
-      field :created_at, GraphQL::Types::ISO8601DateTime, null: false
-      field :updated_at, GraphQL::Types::ISO8601DateTime, null: false
     end
   end
 end

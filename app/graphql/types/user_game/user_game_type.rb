@@ -4,7 +4,6 @@ module Types
   module UserGame
     class UserGameType < Types::BaseObject
       field :id, ID, null: false
-      field :user, Types::User::UserType, null: false
       field :game, Types::Game::GameType, null: false
       field :game_status, String, null: false
       field :game_note, String, null: false
