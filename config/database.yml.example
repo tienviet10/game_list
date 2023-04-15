@@ -1,0 +1,16 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: 5
+
+development:
+  <<: *default
+  database: grapghql_game_list
+
+test:
+  <<: *default
+  database: grapghql_game_list
+
+production:
+  <<: *default
+  url: <%= ENV['DATABASE_URL'] %>
