@@ -7,5 +7,8 @@ module Types
 
     # TODO: remove me
     field :register, mutation: Mutations::Users::RegisterUser
+
+    field :add_user_games, mutation: Mutations::UserGames::AddUserGames
+    field :delete_user_games, mutation: Mutations::UserGames::DeleteUserGames
   end
 end
