@@ -18,6 +18,8 @@ module Types
     field :get_all_platforms, resolver: Queries::Game::GetAllPlatforms
     field :get_all_tags, resolver: Queries::Game::GetAllTags
 
+    field :get_all_games_by_platform, resolver: Queries::Game::GetAllGamesByPlatform
+
     field :get_all_users, resolver: Queries::User::GetAllUsers
   end
 end
