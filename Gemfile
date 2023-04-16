@@ -37,7 +37,6 @@ group :development, :test do
   gem 'rspec-rails'
   gem 'rspec-graphql_matchers'
   gem 'json_spec'
-
 end
 
 group :development do

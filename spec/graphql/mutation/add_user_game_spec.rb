@@ -12,6 +12,8 @@ RSpec.describe Mutations::UserGames::AddUserGames do
       it "adds the game to the user_games table" do
         result = subject.resolve(user_id: user.id, game_id: game.id)
         expect(result[:user_game]).to be_persisted
+        expect(result[:user_game].user_id).to eq(user.id)
+        expect(result[:user_game].game_id).to eq(game.id)
         expect(result[:errors]).to be_empty
       end
     end
