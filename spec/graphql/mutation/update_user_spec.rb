@@ -30,7 +30,7 @@
 require 'rails_helper'
 
 RSpec.describe Mutations::Users::UpdateUser, type: :request do
-  describe '.resolve' do
+  describe 'Update User Test' do
     let!(:user) { create(:user) }
 
     context 'when valid params are provided' do

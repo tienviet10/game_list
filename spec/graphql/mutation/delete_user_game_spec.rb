@@ -13,6 +13,7 @@ RSpec.describe Mutations::UserGames::DeleteUserGames do
         user_game = create(:user_game, user_id: user.id, game_id: game.id)
         result = subject.resolve(user_id: user.id, game_id: game.id)
         expect(result[:user_game]).to be_destroyed
+
         expect(result[:errors]).to be_empty
       end
     end

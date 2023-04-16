@@ -2,7 +2,7 @@ require "rails_helper"
 require "factory_bot_rails"
 
 RSpec.describe Queries::User::GetUserById do
-  describe "#resolve" do
+  describe "Get user by ID Test" do
     let(:user) { create(:user) }
 
     subject { described_class.new(object: nil, context: nil, field: nil) }
