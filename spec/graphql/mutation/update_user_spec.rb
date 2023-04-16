@@ -1,34 +1,29 @@
 require "rails_helper"
-require "rails_factory_bot"
+require "factory_bot_rails"
 
-describe Mutations::Users::UpdateUser do
-  def updateAUser(id:, payload:, action:)
-    described_class.new(object: nil, field: nil, context: {}).resolve(
-      id: id, payload: payload, action: action,
-    )
-  end
+RSpec.describe Mutations::Users::UpdateUser do
+  describe "#resolve" do
+    let(:user) { create(:user) }
 
-  it "updates a user" do
-    user = User.create(
-      username: "Test User",
-      email: "email@example.com",
-      password: "password",
-      is_active: true,
-    )
+    subject { described_class.new(object: nil, context: nil, field: nil) }
 
-    result = updateAUser(
-      id: user.id,
-      payload: "new password",
-      action: "password",
-    )
+    context "When the user is found" do
+      it "updates the user's password" do
+        result = subject.resolve(id: user.id, payload: "new_password", action: "password")
+        expect(result[:user]).to be_persisted
+        expect(result[:user].username).to eq("MyString")
+        expect(result[:user].email).to eq("MyString")
+        expect(result[:user].is_active).to eq(false)
+        expect(result[:user].password).to eq("new_password")
+        expect(result[:errors]).to be_empty
+      end
+    end
 
-    user = result[:user]
-
-    expect(user).to be_persisted
-    expect(user.password).to eq("new password")
-    expect(user.email).to eq("email@example.com")
-    expect(user.username).to eq("Test User")
-    expect(user.is_active).to eq(true)
+    context "When the user is not found" do
+      it "raises an ActiveRecord::RecordNotFound error" do
+        expect { subject.resolve(id: 0, payload: "new_password", action: "password") }.to raise_error(ActiveRecord::RecordNotFound)
+      end
+    end
   end
 end
 
