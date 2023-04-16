@@ -2,7 +2,7 @@ require "rails_helper"
 require "factory_bot_rails"
 
 RSpec.describe Mutations::UserGames::AddUserGames do
-  describe "#resolve" do
+  describe "Add a game to user's list" do
     let(:user) { create(:user) }
     let(:game) { create(:game) }
 
@@ -26,4 +26,3 @@ RSpec.describe Mutations::UserGames::AddUserGames do
     end
   end
 end
-

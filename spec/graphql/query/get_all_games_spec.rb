@@ -25,7 +25,7 @@ describe Queries::Game::GetAllGames, type: :request do
 
       post "/graphql", params: { query: query }
       json_response = JSON.parse(response.body)
-      games_response = json_response["data"]["getAllGames"]
+      games_response = json_response["data"]["allGames"]
 
       expect(games_response.count).to eq(3)
       games_response.each do |game_response|
@@ -45,7 +45,7 @@ describe Queries::Game::GetAllGames, type: :request do
     def query
       <<~GQL
         {
-          getAllGames {
+          allGames {
             name
             genres
             platforms
