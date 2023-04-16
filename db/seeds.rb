@@ -16,7 +16,7 @@ end
   user = User.create(
     username: Faker::Name.name,
     email: Faker::Internet.email,
-    password_digest: "password",
+    password: "password",
     banner_picture: Faker::LoremFlickr.image(size: "500x300", search_terms: ["game"]), user_picture: Faker::LoremFlickr.image(size: "300x300",
                                                                                                                               search_terms: ["game"]),
     bio: Faker::Lorem.paragraph(sentence_count: 2),
