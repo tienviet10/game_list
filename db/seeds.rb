@@ -6,10 +6,22 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-15.times do
-  genre = Genre.create(name: Faker::Game.genre)
-  tag = Tag.create(name: Faker::Game.genre)
-  platform = Platform.create(name: Faker::Game.platform)
+# 15.times do
+#   genre = Genre.create(name: Faker::Game.genre)
+#   tag = Tag.create(name: Faker::Game.genre)
+#   platform = Platform.create(name: Faker::Game.platform)
+# end
+
+Faker::Game.genre.split(" ").each do |genre|
+  Genre.create(name: genre)
+end
+
+["Indie", "Singleplayer", 'Adventure', 'Action', '2D', '3D', 'Puzzle', 'Fantasy'].each do |tag|
+  Tag.create(name: tag)
+end
+
+Faker::Game.platform.split(" ").each do |platform|
+  Platform.create(name: platform)
 end
 
 25.times do
