@@ -5,8 +5,8 @@ module Mutations
       argument :email, String, required: true
       argument :password, String, required: true
 
-      field :user, Types::User::UserType, null: false
-      field :errors, [String], null: false
+      field :user, Types::User::UserType, null: true
+      field :errors, [String], null: true
 
       def resolve(username:, email:, password:)
         user = User.new(username: username, email: email, password: password, is_active: true)
