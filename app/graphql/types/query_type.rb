@@ -20,6 +20,7 @@ module Types
 
     field :get_all_games_by_platform, resolver: Queries::Game::GetAllGamesByPlatform
     field :get_all_games_by_genre, resolver: Queries::Game::GetAllGamesByGenre
+    field :get_all_games_by_tag, resolver: Queries::Game::GetAllGamesByTag
 
     field :get_all_users, resolver: Queries::User::GetAllUsers
   end
