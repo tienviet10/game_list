@@ -1,21 +1,31 @@
- module Mutations
+module Mutations
   module Users
     class UpdateUser < Mutations::BaseMutation
       argument :id, ID, required: true
-      argument :username, String, required: false
-      argument :email, String, required: false
-      argument :password, String, required: false
+      argument :payload, GraphQL::Schema::Scalar, required: true
+      argument :action, String, required: true
 
       field :user, Types::User::UserType, null: true
       field :errors, [String], null: true
 
-      def resolve(id:, username:, email:, password:)
+      def resolve(id:, payload:, action:)
         user = User.find(id)
         if user
-          # Update user attributes only if they are provided
-          user.update(password: password) if password.present?
-          user.update(username: username) if username.present?
-          user.update(email: email) if email.present?
+          case action
+          when "password"
+            user.update(password: payload)
+          when "email"
+            user.update(email: payload)
+          when "username"
+            user.update(username: payload)
+          when "is_active"
+            user.update(is_active: payload)
+          else
+            return {
+              user: nil,
+              errors: ["Invalid action"],
+            }
+          end
 
           if user.save
             {

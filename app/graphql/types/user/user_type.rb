@@ -8,6 +8,7 @@ module Types
       field :email, String, null: false
       field :banner_picture, String, null: false
       field :user_picture, String, null: false
+      field :is_active, Boolean, null: false
       field :user_games, [Types::UserGame::UserGameType], null: false
       field :games, [Types::Game::GameType], null: false
       field :created_at, GraphQL::Types::ISO8601DateTime, null: false
