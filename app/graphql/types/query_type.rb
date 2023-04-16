@@ -4,7 +4,6 @@ module Types
     include GraphQL::Types::Relay::HasNodeField
     include GraphQL::Types::Relay::HasNodesField
 
-
     # Example:
     # field :users, resolver: Queries::Users::GetUsers
     # field :posts, resolver: Queries::Posts::Posts
@@ -12,7 +11,8 @@ module Types
 
     # Add root-level fields here.
     # They will be entry points for queries on your schema.
-    field :get_all_games, resolver: Queries::Game::GetAllGames
+    field :all_games, resolver: Queries::Game::GetAllGames
+    field :games_for_a_user, resolver: Queries::Game::GamesForAUser
 
     field :get_all_users, resolver: Queries::User::GetAllUsers
     field :get_user_by_id, resolver: Queries::User::GetUserById

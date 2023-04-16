@@ -1,4 +1,5 @@
 require "rails_helper"
+require "rails_factory_bot"
 
 describe Mutations::Users::UpdateUser do
   def updateAUser(id:, payload:, action:)
