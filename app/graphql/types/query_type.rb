@@ -14,6 +14,10 @@ module Types
     field :all_games, resolver: Queries::Game::GetAllGames
     field :games_for_a_user, resolver: Queries::Game::GamesForAUser
 
+    field :get_all_genres, resolver: Queries::Game::GetAllGenres
+    field :get_all_platforms, resolver: Queries::Game::GetAllPlatforms
+    field :get_all_tags, resolver: Queries::Game::GetAllTags
+
     field :get_all_users, resolver: Queries::User::GetAllUsers
   end
 end
