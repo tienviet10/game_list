@@ -3,8 +3,19 @@ class User < ApplicationRecord
 
   validates :email, presence: true, uniqueness: true
   validates :username, presence: true, uniqueness: true
-  validates :password, presence: true, length: { minimum: 6 }, on: :create
+  validate :password_presence_on_update, on: :update
+  validates :password, length: { minimum: 6 }, on: :create
 
   has_many :user_games
   has_many :games, through: :user_games
+
+  private
+
+  def password_presence_on_update
+    if password_digest_changed? && !password.present?
+      errors.add(:password, "can't be blank")
+    elsif password_digest_changed? && password.length < 6
+      errors.add(:password, "is too short (minimum is 6 characters)")
+    end
+  end
 end
