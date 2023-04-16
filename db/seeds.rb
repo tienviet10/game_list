@@ -12,7 +12,73 @@
 #   platform = Platform.create(name: Faker::Game.platform)
 # end
 
-Faker::Game.genre.split(" ").each do |genre|
+genres = [
+  'First-person shooter',
+  'Puzzle',
+  'Platformer',
+  'Action',
+  'Adventure',
+  'Real-time strategy',
+  'Action role-playing',
+  'Dungeon crawl',
+  'Roguelike',
+  'Tactical role-playing',
+  'Sports',
+  'Simulation',
+  'Fighting',
+  'Massively multiplayer online',
+  'Stealth',
+  'Survival',
+  'Rhythm',
+  'Survival horror',
+  'Text adventure',
+  'Visual novel',
+  'Real-time strategy',
+  'Multiplayer online battle arena',
+  'Tower defense',
+  'Trivia',
+  'Real-time tactics',
+  'Hack and slash',
+  'Battle royale',
+  'Third-person shooter',
+  'Music'
+]
+
+platforms = [
+  'Xbox',
+  'Xbox 360',
+  'Xbox One',
+  'PlayStation',
+  'PlayStation 2',
+  'PlayStation 3',
+  'PlayStation 4',
+  'PlayStation Portable',
+  'PlayStation Vita',
+  'Game Boy',
+  'Game Boy Color',
+  'Game Boy Advance',
+  'Nintendo DS',
+  'Nintendo DSi',
+  'Nintendo 3DS',
+  'Nintendo Entertainment System',
+  'Super Nintendo Entertainment System',
+  'Nintendo 64',
+  'GameCube',
+  'Wii',
+  'Wii U',
+  'Nintendo Switch',
+  'Windows',
+  'macOS',
+  'Linux',
+  'Sega Genesis',
+  'Sega Master System',
+  'Game Gear',
+  'Sega Saturn',
+  'Sega Dreamcast',
+  'Virtual Boy'
+]
+
+genres.each do |genre|
   Genre.create(name: genre)
 end
 
@@ -20,7 +86,7 @@ end
   Tag.create(name: tag)
 end
 
-Faker::Game.platform.split(" ").each do |platform|
+platforms.each do |platform|
   Platform.create(name: platform)
 end
 
