@@ -15,6 +15,6 @@ module Types
     field :get_all_games, resolver: Queries::Game::GetAllGames
 
     field :get_all_users, resolver: Queries::User::GetAllUsers
-    # field :get_user_by_id, resolver: Queries::User::GetUserById
+    field :get_user_by_id, resolver: Queries::User::GetUserById
   end
 end
