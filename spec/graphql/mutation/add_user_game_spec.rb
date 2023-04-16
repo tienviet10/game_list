@@ -20,7 +20,7 @@ RSpec.describe Mutations::UserGames::AddUserGames do
 
     context "When the game is already in the user_games table" do
       it "returns an error" do
-        user_game = create(:user_game, user_id: user.id, game_id: game.id)
+        create(:user_game, user_id: user.id, game_id: game.id)
         result = subject.resolve(user_id: user.id, game_id: game.id)
         expect(result[:user_game]).to be_nil
         expect(result[:errors]).to include("User Game already exists")
