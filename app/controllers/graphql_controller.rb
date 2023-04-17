@@ -55,14 +55,12 @@ class GraphqlController < ApplicationController
     end
     token = request.headers["Authorization"]&.split&.last
     decoded_token = JWT.decode(token, Rails.application.secrets.secret_key_base, true, { algorithm: "HS256" })
-    if decoded_token[0]["user_id"].present?
+    if decoded_token[0]["user_id"].present? && decoded_token[0]["exp"] > Time.now.to_i
       @current_user = decoded_token[0]["user_id"]
     else
       @current_user = nil
       raise GraphQL::ExecutionError, "Invalid token"
     end
-    # You can do additional verification of the decoded token here, such as checking the expiration time or verifying the signature.
-
   rescue JWT::DecodeError, GraphQL::ExecutionError => e
     render json: { error: "Unauthorized", message: "Please login again" }, status: :unauthorized
   end
