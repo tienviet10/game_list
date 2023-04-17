@@ -49,7 +49,8 @@ class GraphqlController < ApplicationController
   end
 
   def verify_jwt_token
-    if params[:query].include?("login") || params[:query].include?("register")
+    if params[:query].include?("login") || params[:query].include?("register") || params[:query].include?("IntrospectionQuery")
+      @current_user = nil
       return
     end
     token = request.headers["Authorization"]&.split&.last
@@ -57,6 +58,7 @@ class GraphqlController < ApplicationController
     if decoded_token[0]["user_id"].present?
       @current_user = decoded_token[0]["user_id"]
     else
+      @current_user = nil
       raise GraphQL::ExecutionError, "Invalid token"
     end
     # You can do additional verification of the decoded token here, such as checking the expiration time or verifying the signature.

@@ -1,7 +1,6 @@
 require "rails_helper"
-require "factory_bot_rails"
 
-RSpec.describe Mutations::UserGames::DeleteUserGames do
+describe Mutations::UserGames::DeleteUserGames do
   describe "delete a game in user's list" do
     let(:user) { create(:user) }
     let(:game) { create(:game) }

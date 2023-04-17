@@ -29,7 +29,7 @@
 
 require "rails_helper"
 
-RSpec.describe Mutations::Users::UpdateUser, type: :request do
+describe Mutations::Users::UpdateUser, type: :request do
   describe "Update User Test" do
     let!(:user) { create(:user) }
 
@@ -39,7 +39,7 @@ RSpec.describe Mutations::Users::UpdateUser, type: :request do
       let(:mutation) do
         <<~GQL
           mutation {
-            updateUser(input: {id: "#{user.id}", payload: "#{payload}", action: "#{action}"}) {
+            updateUser(input: {payload: "#{payload}", action: "#{action}"}) {
               user {
                 id
               }
@@ -49,16 +49,11 @@ RSpec.describe Mutations::Users::UpdateUser, type: :request do
         GQL
       end
 
-      before { post "/graphql", params: { query: mutation }, headers: { "Authorization" => "Bearer #{ENV["AUTHORIZATION_TOKEN"]}" } }
-
       it "returns the updated user" do
+        token = JWT.encode({ user_id: user.id, exp: 7.days.from_now.to_i }, Rails.application.secrets.secret_key_base)
+        post "/graphql", params: { query: mutation }, headers: { "Authorization" => "Bearer #{token}" }
         json_response = JSON.parse(response.body)
-        puts json_response
         expect(json_response["data"]["updateUser"]["user"]["id"]).to eq(user.id.to_s)
-      end
-
-      it "does not return any errors" do
-        json_response = JSON.parse(response.body)
         expect(json_response["data"]["updateUser"]["errors"]).to be_empty
       end
     end
@@ -69,7 +64,7 @@ RSpec.describe Mutations::Users::UpdateUser, type: :request do
       let(:mutation) do
         <<~GQL
           mutation {
-            updateUser( input: {id: "#{user.id}", payload: "#{payload}", action: "#{action}"}) {
+            updateUser( input: {payload: "#{payload}", action: "#{action}"}) {
               user {
                 id
               }
@@ -79,14 +74,11 @@ RSpec.describe Mutations::Users::UpdateUser, type: :request do
         GQL
       end
 
-      before { post "/graphql", params: { query: mutation }, headers: { "Authorization" => "Bearer #{ENV["AUTHORIZATION_TOKEN"]}" } }
-
       it "does not return the updated user" do
+        token = JWT.encode({ user_id: user.id, exp: 7.days.from_now.to_i }, Rails.application.secrets.secret_key_base)
+        post "/graphql", params: { query: mutation }, headers: { "Authorization" => "Bearer #{token}" }
         json_response = JSON.parse(response.body)
         expect(json_response["data"]["updateUser"]["user"]).to be_nil
-      end
-
-      it "returns an error" do
         expect(response.body).to include("Invalid action")
       end
     end
@@ -97,7 +89,7 @@ RSpec.describe Mutations::Users::UpdateUser, type: :request do
       let(:mutation) do
         <<~GQL
           mutation {
-            updateUser(input: {id: "invalid_id", payload: "#{payload}", action: "#{action}"}) {
+            updateUser(input: {payload: "#{payload}", action: "#{action}"}) {
               user {
                 id
               }
