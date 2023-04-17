@@ -23,7 +23,8 @@ describe Queries::Game::GetAllGames, type: :request do
       game3.tags << tag2
       game3.platforms << platform1
 
-      post "/graphql", params: { query: query }, headers: { "Authorization" => "Bearer #{ENV["AUTHORIZATION_TOKEN"]}" }
+      token = JWT.encode({ user_id: 0, exp: 7.days.from_now.to_i }, Rails.application.secrets.secret_key_base)
+      post "/graphql", params: { query: query }, headers: { "Authorization" => "Bearer #{token}" }
       json_response = JSON.parse(response.body)
       games_response = json_response["data"]["allGames"]
 
