@@ -6,12 +6,6 @@ module Queries
 
       def resolve
         UserGame.where(user_id: context[:current_user]).map(&:game)
-
-        # games = UserGame.where(user_id: 2)
-        # p games
-        # games.map do |game|
-        #   game.game
-        # end
       end
     end
   end

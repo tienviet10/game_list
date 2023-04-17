@@ -5,8 +5,6 @@ module Queries
       type Types::User::UserType, null: false
 
       def resolve()
-
-        # user = ::User.where(id: context[:current_user])
         user = ::User.find_by(id: context[:current_user])
 
         if user
