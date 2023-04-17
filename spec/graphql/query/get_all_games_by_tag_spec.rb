@@ -1,7 +1,7 @@
 require "rails_helper"
 
-describe Queries::Game::GetAllGamesByGenre, type: :request do
-  describe "verify get all games by genre query" do
+describe Queries::Game::GetAllGamesByTag, type: :request do
+  describe "verify get all games by tag query" do
     let!(:tag1) { create(:tag, name: "Multiplayer") }
     let!(:tag2) { create(:tag, name: "Singleplayer") }
     let!(:tag3) { create(:tag, name: "Adventure") }
