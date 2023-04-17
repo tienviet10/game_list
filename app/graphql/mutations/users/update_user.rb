@@ -1,15 +1,14 @@
 module Mutations
   module Users
     class UpdateUser < Mutations::BaseMutation
-      argument :id, ID, required: true
       argument :payload, GraphQL::Schema::Scalar, required: true
       argument :action, String, required: true
 
       field :user, Types::User::UserType, null: true
       field :errors, [String], null: true
 
-      def resolve(id:, payload:, action:)
-        user = User.find(id)
+      def resolve(payload:, action:)
+        user = User.find(context[:current_user])
         if user
           case action
           when "password"
@@ -22,9 +21,9 @@ module Mutations
             user.update(is_active: payload)
           else
             return {
-              user: nil,
-              errors: ["Invalid action"],
-            }
+                     user: nil,
+                     errors: ["Invalid action"],
+                   }
           end
 
           if user.save

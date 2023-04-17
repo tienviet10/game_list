@@ -27,91 +27,56 @@
 #   end
 # end
 
-require 'rails_helper'
+require "rails_helper"
 
-RSpec.describe Mutations::Users::UpdateUser, type: :request do
-  describe 'Update User Test' do
+describe Mutations::Users::UpdateUser, type: :request do
+  describe "Update User Test" do
     let!(:user) { create(:user) }
+    let(:token) { JWT.encode({ user_id: user.id, exp: 7.days.from_now.to_i }, Rails.application.secrets.secret_key_base) }
+    let(:payload) { "newpassword" }
 
-    context 'when valid params are provided' do
-      let(:payload) { 'newpassword' }
-      let(:action) { 'password' }
-      let(:mutation) do
-        <<~GQL
-          mutation {
-            updateUser(input: {id: "#{user.id}", payload: "#{payload}", action: "#{action}"}) {
-              user {
-                id
-              }
-              errors
-            }
-          }
-        GQL
-      end
+    context "when valid params are provided" do
+      let(:action) { "password" }
 
-      before { post '/graphql', params: { query: mutation } }
-
-      it 'returns the updated user' do
+      it "returns the updated user" do
+        post "/graphql", params: { query: mutation(payload, action) }, headers: { "Authorization" => "Bearer #{token}" }
         json_response = JSON.parse(response.body)
-        puts json_response
-        expect(json_response['data']['updateUser']['user']['id']).to eq(user.id.to_s)
-      end
-
-      it 'does not return any errors' do
-        json_response = JSON.parse(response.body)
-        expect(json_response['data']['updateUser']['errors']).to be_empty
+        expect(json_response["data"]["updateUser"]["user"]["id"]).to eq(user.id.to_s)
+        expect(json_response["data"]["updateUser"]["errors"]).to be_empty
       end
     end
 
-    context 'when an invalid action is provided' do
-      let(:payload) { 'newpassword' }
-      let(:action) { 'invalid_action' }
-      let(:mutation) do
-        <<~GQL
-          mutation {
-            updateUser( input: {id: "#{user.id}", payload: "#{payload}", action: "#{action}"}) {
-              user {
-                id
-              }
-              errors
-            }
-          }
-        GQL
-      end
+    context "when an invalid action is provided" do
+      let(:action) { "invalid_action" }
 
-      before { post '/graphql', params: { query: mutation } }
-
-      it 'does not return the updated user' do
-
+      it "does not return the updated user" do
+        post "/graphql", params: { query: mutation(payload, action) }, headers: { "Authorization" => "Bearer #{token}" }
         json_response = JSON.parse(response.body)
-        expect(json_response['data']['updateUser']['user']).to be_nil
-      end
-
-      it 'returns an error' do
-        expect(response.body).to include('Invalid action')
+        expect(json_response["data"]["updateUser"]["user"]).to be_nil
+        expect(response.body).to include("Invalid action")
       end
     end
 
-    context 'when the user cannot be found' do
-      let(:payload) { 'newpassword' }
-      let(:action) { 'password' }
-      let(:mutation) do
-        <<~GQL
-          mutation {
-            updateUser(input: {id: "invalid_id", payload: "#{payload}", action: "#{action}"}) {
-              user {
-                id
-              }
-              errors
+    context "when the user cannot be found" do
+      let(:action) { "password" }
+
+      it "does not return the updated user but raise error" do
+        token = JWT.encode({ user_id: 0, exp: 7.days.from_now.to_i }, Rails.application.secrets.secret_key_base)
+        expect { post "/graphql", params: { query: mutation(payload, action) }, headers: { "Authorization" => "Bearer #{token}" } }.to raise_error(ActiveRecord::RecordNotFound)
+      end
+    end
+
+    def mutation(payload, action)
+      <<~GQL
+        mutation {
+          updateUser(input: {payload: "#{payload}", action: "#{action}"}) {
+            user {
+              id
             }
+            errors
           }
-        GQL
-      end
-
-      it 'does not return the updated user but raise error' do
-        expect {post '/graphql', params: { query: mutation }}.to raise_error(ActiveRecord::RecordNotFound)
-      end
-
+        }
+      GQL
     end
   end
 end

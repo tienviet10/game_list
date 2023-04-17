@@ -5,13 +5,7 @@ module Queries
       type [Types::Game::GameType], null: false
 
       def resolve
-        UserGame.where(user_id: 1).map(&:game)
-
-        # games = UserGame.where(user_id: 2)
-        # p games
-        # games.map do |game|
-        #   game.game
-        # end
+        UserGame.where(user_id: context[:current_user]).map(&:game)
       end
     end
   end
