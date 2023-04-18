@@ -1,5 +1,5 @@
 module Queries
-  module Game
+  module UserGames
     class GamesForAUser < Queries::BaseQuery
       description "Get a list of games for a user"
       type [Types::Game::GameType], null: false

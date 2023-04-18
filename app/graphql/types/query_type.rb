@@ -12,7 +12,7 @@ module Types
     # Add root-level fields here.
     # They will be entry points for queries on your schema.
     field :all_games, resolver: Queries::Game::GetAllGames
-    field :games_for_a_user, resolver: Queries::Game::GamesForAUser
+    field :games_for_a_user, resolver: Queries::UserGames::GamesForAUser
 
     field :get_all_genres, resolver: Queries::Game::GetAllGenres
     field :get_all_platforms, resolver: Queries::Game::GetAllPlatforms
