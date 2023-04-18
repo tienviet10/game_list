@@ -40,7 +40,8 @@ describe Queries::Game::GetAllGamesByGenre, type: :request do
     }
 
     it "returns all games assosicated with correct genre (by ID)" do
-      post "/graphql", params: { query: queryById(genre3.id) }
+      token = JWT.encode({ user_id: 0, exp: 7.days.from_now.to_i }, Rails.application.secrets.secret_key_base)
+      post "/graphql", params: { query: queryById(genre3.id) }, headers: { "Authorization" => "Bearer #{token}" }
 
       json_response = JSON.parse(response.body)
       games_response = json_response["data"]["getAllGamesByGenre"]
@@ -55,7 +56,8 @@ describe Queries::Game::GetAllGamesByGenre, type: :request do
     end
 
     it "returns all games assosicated with correct genre (by Name)" do
-      post "/graphql", params: { query: queryByName(genre1.name) }
+      token = JWT.encode({ user_id: 0, exp: 7.days.from_now.to_i }, Rails.application.secrets.secret_key_base)
+      post "/graphql", params: { query: queryByName(genre1.name) }, headers: { "Authorization" => "Bearer #{token}" }
 
       json_response = JSON.parse(response.body)
       games_response = json_response["data"]["getAllGamesByGenre"]
@@ -71,13 +73,14 @@ describe Queries::Game::GetAllGamesByGenre, type: :request do
 
     it "expects the response to be the same if you query by ID or name" do
       # Query by ID
-      post "/graphql", params: { query: queryById(genre3.id) }
+      token = JWT.encode({ user_id: 0, exp: 7.days.from_now.to_i }, Rails.application.secrets.secret_key_base)
+      post "/graphql", params: { query: queryById(genre3.id) }, headers: { "Authorization" => "Bearer #{token}" }
 
       json_responseID = JSON.parse(response.body)
       games_responseID = json_responseID["data"]["getAllGamesByGenre"]
 
       # Query by Name
-      post "/graphql", params: { query: queryByName(genre3.name) }
+      post "/graphql", params: { query: queryByName(genre3.name) }, headers: { "Authorization" => "Bearer #{token}" }
 
       json_responseName = JSON.parse(response.body)
       games_responseName = json_responseName["data"]["getAllGamesByGenre"]

@@ -40,7 +40,8 @@ describe Queries::Game::GetAllGamesByTag, type: :request do
     }
 
     it "returns all games assosicated with correct tag (by ID)" do
-      post "/graphql", params: { query: queryById(tag1.id) }
+      token = JWT.encode({ user_id: 0, exp: 7.days.from_now.to_i }, Rails.application.secrets.secret_key_base)
+      post "/graphql", params: { query: queryById(tag1.id) }, headers: { "Authorization" => "Bearer #{token}" }
 
       json_response = JSON.parse(response.body)
       games_response = json_response["data"]["getAllGamesByTag"]
@@ -55,7 +56,8 @@ describe Queries::Game::GetAllGamesByTag, type: :request do
     end
 
     it "returns all games assosicated with correct tag (by Name)" do
-      post "/graphql", params: { query: queryByName(tag3.name) }
+      token = JWT.encode({ user_id: 0, exp: 7.days.from_now.to_i }, Rails.application.secrets.secret_key_base)
+      post "/graphql", params: { query: queryByName(tag3.name) }, headers: { "Authorization" => "Bearer #{token}" }
 
       json_response = JSON.parse(response.body)
       games_response = json_response["data"]["getAllGamesByTag"]
@@ -71,13 +73,15 @@ describe Queries::Game::GetAllGamesByTag, type: :request do
 
     it "expects the response to be the same if you query by ID or name" do
       # Query by ID
-      post "/graphql", params: { query: queryById(tag1.id) }
+      token = JWT.encode({ user_id: 0, exp: 7.days.from_now.to_i }, Rails.application.secrets.secret_key_base)
+      post "/graphql", params: { query: queryById(tag1.id) }, headers: { "Authorization" => "Bearer #{token}" }
 
       json_responseID = JSON.parse(response.body)
       games_responseID = json_responseID["data"]["getAllGamesByTag"]
 
       # Query by Name
-      post "/graphql", params: { query: queryByName(tag1.name) }
+      token = JWT.encode({ user_id: 0, exp: 7.days.from_now.to_i }, Rails.application.secrets.secret_key_base)
+      post "/graphql", params: { query: queryByName(tag1.name) }, headers: { "Authorization" => "Bearer #{token}" }
 
       json_responseName = JSON.parse(response.body)
       games_responseName = json_responseName["data"]["getAllGamesByTag"]

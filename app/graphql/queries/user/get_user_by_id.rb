@@ -10,7 +10,6 @@ module Queries
         if user
           user
         else
-          p "User not found HERE"
           raise GraphQL::ExecutionError, "User not found"
         end
       end
