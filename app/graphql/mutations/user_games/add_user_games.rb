@@ -1,6 +1,7 @@
 module Mutations
   module UserGames
     class AddUserGames < Mutations::BaseMutation
+      description "Add a game to user's list according to user_id and game_id"
       argument :game_id, ID, required: true
 
       field :user_game, Types::UserGame::UserGameType, null: true
