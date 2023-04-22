@@ -6,8 +6,8 @@ module Mutations
       argument :password, String, required: true
 
       field :user, Types::User::UserType, null: true
-      field :token, String, null: false
-      field :errors, [String], null: true
+      field :token, String, null: true
+      field :errors, [String], null: false
 
       def resolve(username:, email:, password:)
         user = User.new(username: username, email: email, password: password, is_active: true)
@@ -25,7 +25,8 @@ module Mutations
               email: nil,
             },
             token: nil,
-            errors: user.errors.full_messages,
+            # errors: user.errors.full_messages,
+            errors: GraphQL::ExecutionError.new("Email is already taken"),
           }
         end
       end
