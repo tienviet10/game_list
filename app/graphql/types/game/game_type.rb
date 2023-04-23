@@ -11,13 +11,21 @@ module Types
       field :avg_score, Float, null: false
       field :total_rating, Integer, null: false
 
-      # field :genres, [Types::Genre::GenreType], null: false
       field :genres, [String], null: false
       field :tags, [String], null: false
       field :platforms, [String], null: false
 
-      # field :tags, [Types::Tag::TagType], null: false
-      # field :platforms, [Types::Platform::PlatformType], null: false
+      def genres
+        object.genres.map(&:name)
+      end
+
+      def platforms
+        object.platforms.map(&:name)
+      end
+
+      def tags
+        object.tags.map(&:name)
+      end
     end
   end
 end
