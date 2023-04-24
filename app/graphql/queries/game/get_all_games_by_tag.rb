@@ -4,8 +4,8 @@ module Queries
       description "Get all games by tag"
       type [Types::Game::GameType], null: false
 
-      argument :tag, Types::Input::TagAttributes, required: false
-      argument :limit, Integer, required: false, default_value: 10, prepare: ->(limit, ctx) {[limit, 30].min}
+      argument :tag, Types::Input::EntityIdNameAttributes, required: false
+      argument :limit, Integer, required: false, default_value: 10, prepare: ->(limit, ctx) { [limit, 30].min }
 
       def resolve(tag:, limit:)
         start = ::Game.joins(:tags)
