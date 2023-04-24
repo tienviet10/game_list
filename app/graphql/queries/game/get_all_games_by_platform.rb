@@ -4,8 +4,8 @@ module Queries
       description "Get all games by platform"
       type [Types::Game::GameType], null: false
 
-      argument :platform, Types::Input::PlatformAttributes, required: false
-      argument :limit, Integer, required: false, default_value: 10, prepare: ->(limit, ctx) {[limit, 30].min}
+      argument :platform, Types::Input::EntityIdNameAttributes, required: false
+      argument :limit, Integer, required: false, default_value: 10, prepare: ->(limit, ctx) { [limit, 30].min }
 
       def resolve(platform:, limit:)
         start = ::Game.joins(:platforms)
