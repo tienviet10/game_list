@@ -160,3 +160,29 @@ UserGame.create(
   rating: Faker::Number.between(from: 1, to: 5),
   review: Faker::Lorem.paragraph(sentence_count: 2),
 )
+
+game2 = Game.create(
+  name: "Halo 2",
+  description: Faker::Lorem.paragraph(sentence_count: 2),
+  imageURL: Faker::LoremFlickr.image(size: "300x300", search_terms: ["game"]),
+  releaseDate: Faker::Date.between(from: "2014-09-23", to: "2021-09-25"),
+  avg_score: Faker::Number.decimal(l_digits: 1, r_digits: 1),
+  total_rating: Faker::Number.between(from: 1, to: 100),
+)
+2.times do
+  game2.genres << Genre.all.sample
+  game2.tags << Tag.all.sample
+  game2.platforms << Platform.all.sample
+end
+
+UserGame.create(
+  user_id: user1.id,
+  game_id: game2.id,
+  game_status: "Planning",
+  game_note: Faker::Lorem.paragraph(sentence_count: 2),
+  start_date: Faker::Date.between(from: "2014-09-23", to: "2021-09-25"),
+  completed_date: Faker::Date.between(from: "2014-09-23", to: "2021-09-25"),
+  private: Faker::Boolean.boolean(true_ratio: 0.5),
+  rating: Faker::Number.between(from: 1, to: 5),
+  review: Faker::Lorem.paragraph(sentence_count: 2),
+)
