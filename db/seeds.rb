@@ -18,7 +18,6 @@ genres = [
   "Platformer",
   "Action",
   "Adventure",
-  "Real-time strategy",
   "Action role-playing",
   "Dungeon crawl",
   "Roguelike",
