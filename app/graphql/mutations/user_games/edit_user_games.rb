@@ -14,29 +14,31 @@ module Mutations
       field :errors, [String], null: true
 
       def resolve(game_id:, game_status: nil, rating: nil, game_note: nil, review: nil, private: nil, start_date: nil, completed_date: nil)
-        if context[:current_user].nil?
-          { user_game: nil, errors: ["Authentication required"] }
+        begin
+          current_user = context[:current_user] unless context[:current_user].nil?
+        rescue => e
+          return { user_game: nil, errors: [e.message] }
+        end
+
+        userGame = UserGame.find_by(user_id: context[:current_user], game_id: game_id)
+        if userGame.nil?
+          { user_game: nil, errors: ["User Game not found"] }
         else
-          userGame = UserGame.find_by(user_id: context[:current_user], game_id: game_id)
-          if userGame.nil?
-            { user_game: nil, errors: ["User Game not found"] }
+          begin
+            userGame.game_status = game_status unless game_status.nil?
+          rescue ArgumentError => e
+            return { user_game: nil, errors: [e.message] }
+          end
+          userGame.rating = rating unless rating.nil?
+          userGame.game_note = game_note unless game_note.nil?
+          userGame.review = review unless review.nil?
+          userGame.private = private unless private.nil?
+          userGame.start_date = start_date unless start_date.nil?
+          userGame.completed_date = completed_date unless completed_date.nil?
+          if userGame.save
+            { user_game: userGame, errors: [] }
           else
-            begin
-              userGame.game_status = game_status unless game_status.nil?
-            rescue ArgumentError => e
-              return { user_game: nil, errors: [e.message] }
-            end
-            userGame.rating = rating unless rating.nil?
-            userGame.game_note = game_note unless game_note.nil?
-            userGame.review = review unless review.nil?
-            userGame.private = private unless private.nil?
-            userGame.start_date = start_date unless start_date.nil?
-            userGame.completed_date = completed_date unless completed_date.nil?
-            if userGame.save
-              { user_game: userGame, errors: [] }
-            else
-              { user_game: nil, errors: userGame.errors.full_messages }
-            end
+            { user_game: nil, errors: userGame.errors.full_messages }
           end
         end
       end
