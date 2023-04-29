@@ -37,6 +37,8 @@ group :development, :test do
   gem "dotenv-rails"
   gem "factory_bot_rails"
   gem "rspec-rails"
+  # Use Enum types in ActiveRecord
+  gem "activerecord-pg_enum"
 end
 
 group :development do
