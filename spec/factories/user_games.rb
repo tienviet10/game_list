@@ -3,7 +3,7 @@ FactoryBot.define do
     association :user, factory: :user
     association :game, factory: :game
 
-    game_status { "MyString" }
+    game_status { "Playing" }
     game_note { "MyText" }
     start_date { "2023-04-14 15:54:11" }
     completed_date { "2023-04-14 15:54:11" }
