@@ -47,6 +47,10 @@ GEM
     activerecord (6.1.7.3)
       activemodel (= 6.1.7.3)
       activesupport (= 6.1.7.3)
+    activerecord-pg_enum (2.0.0)
+      activerecord (>= 4.1.0)
+      activesupport
+      pg
     activestorage (6.1.7.3)
       actionpack (= 6.1.7.3)
       activejob (= 6.1.7.3)
@@ -201,6 +205,7 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
+  activerecord-pg_enum
   bcrypt (~> 3.1.7)
   bootsnap (>= 1.4.4)
   byebug

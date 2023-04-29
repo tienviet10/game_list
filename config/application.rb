@@ -36,5 +36,8 @@ module GameListBe
     # Middleware like session, flash, cookies can be added back manually.
     # Skip views, helpers and assets when generating a new resource.
     config.api_only = true
+
+    # This is to make sure that the schema.rb file is generated in SQL format and not Ruby format (which is the default NOT HAVING ENUMS TYPES).
+    config.active_record.schema_format = :sql
   end
 end

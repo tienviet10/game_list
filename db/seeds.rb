@@ -152,7 +152,7 @@ end
 UserGame.create(
   user_id: user1.id,
   game_id: game1.id,
-  game_status: "Planning",
+  game_status: :Playing,
   game_note: Faker::Lorem.paragraph(sentence_count: 2),
   start_date: Faker::Date.between(from: "2014-09-23", to: "2021-09-25"),
   completed_date: Faker::Date.between(from: "2014-09-23", to: "2021-09-25"),
@@ -178,7 +178,7 @@ end
 UserGame.create(
   user_id: user1.id,
   game_id: game2.id,
-  game_status: "Planning",
+  game_status: :Planning,
   game_note: Faker::Lorem.paragraph(sentence_count: 2),
   start_date: Faker::Date.between(from: "2014-09-23", to: "2021-09-25"),
   completed_date: Faker::Date.between(from: "2014-09-23", to: "2021-09-25"),

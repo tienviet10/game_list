@@ -13,9 +13,7 @@ describe Mutations::UserGames::DeleteUserGames, type: :request do
       it "deletes the game from the user_games table" do
         post "/graphql", params: { query: mutation(game.id) }, headers: { "Authorization" => "Bearer #{token}" }
 
-        p JSON.parse(response.body)
         result = JSON.parse(response.body).deep_symbolize_keys[:data][:deleteUserGames]
-        p result
 
         expect(result[:userGame][:id]).to eq(user_game.id.to_s)
         expect(result[:userGame][:game][:id]).to eq(game.id.to_s)
