@@ -17,7 +17,7 @@ module Mutations
           if user_game.save
             { user_game: user_game, errors: [] }
           else
-            { user_game: nil, errors: user_game.errors.full_messages }
+            { user_game: nil, errors: ["Cannot add the new game!"] }
           end
         end
       end
