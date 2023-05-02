@@ -19,6 +19,7 @@ ActiveRecord::Schema.define(version: 2023_04_14_205207) do
     t.string "name"
     t.text "description"
     t.string "imageURL"
+    t.string "bannerURL"
     t.datetime "releaseDate"
     t.decimal "avg_score", precision: 3, scale: 1
     t.integer "total_rating"
