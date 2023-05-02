@@ -4,7 +4,7 @@ require "factory_bot_rails"
 describe Mutations::UserGames::AddUserGames, type: :request do
   describe "Add a game to user's list" do
     let!(:user) { create(:user, username: "user0", email: "user0@gmail.com", password: "password") }
-    let!(:game) { create(:game, name: "Persona 5", description: "Inside a casino, during one of their heists, the group known as Phantom Thieves of Hearts is cornered by the police. Unable to escape, the leader of the group (the game's protagonist) is put under arrest, and goes into interrogation.", imageURL: "https://www.mobygames.com/game/86408/persona-5/", releaseDate: "2014-09-23", avg_score: 4.5, total_rating: 1000) }
+    let!(:game) { create(:game, name: "Persona 5", description: "Inside a casino, during one of their heists, the group known as Phantom Thieves of Hearts is cornered by the police. Unable to escape, the leader of the group (the game's protagonist) is put under arrest, and goes into interrogation.", imageURL: "https://www.mobygames.com/game/86408/persona-5/", bannerURL: "https://images.igdb.com/igdb/image/upload/t_screenshot_big/gin55k9eyfq8udk0taym.jpg", releaseDate: "2014-09-23", avg_score: 4.5, total_rating: 1000) }
     let!(:token) { JWT.encode({ user_id: user.id, exp: 7.days.from_now.to_i }, Rails.application.secrets.secret_key_base) }
 
     context "when the user is authenticated" do

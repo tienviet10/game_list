@@ -6,10 +6,11 @@ module Types
       field :id, ID, null: false
       field :name, String, null: false
       field :description, String, null: false
-      field :imageURL, String, null: false
+      field :imageURL, String, null: true
+      field :bannerURL, String, null: true
       field :releaseDate, GraphQL::Types::ISO8601DateTime, null: false
-      field :avg_score, Float, null: false
-      field :total_rating, Integer, null: false
+      field :avg_score, Float, null: true
+      field :total_rating, Integer, null: true
 
       field :genres, [String], null: false
       field :tags, [String], null: false
