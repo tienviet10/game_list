@@ -75,6 +75,31 @@ RSpec.describe Mutations::UserGames::EditUserGames, type: :request do
         expect(result[:userGame][:private]).to eq(false)
         expect(result[:errors]).to be_empty
       end
+
+      it "not update user game if game status is not valid enum type" do
+        mutation = <<~GQL
+          mutation {
+            editUserGames(input: {
+              gameId: "#{game.id}"
+              gameStatus: "Invalid"
+            }) {
+              userGame {
+                id
+                gameStatus
+              }
+              errors
+            }
+          }
+        GQL
+
+        post "/graphql", params: { query: mutation }, headers: { "Authorization" => "Bearer #{token}" }
+
+        result = JSON.parse(response.body).deep_symbolize_keys[:data][:editUserGames]
+
+        expect(result[:userGame]).to be_nil
+
+        expect(result[:errors]).to include("'Invalid' is not a valid game_status")
+      end
     end
   end
 end
