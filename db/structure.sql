@@ -51,7 +51,8 @@ CREATE TABLE public.games (
     avg_score numeric(3,1),
     total_rating integer,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    "bannerURL" character varying
 );
 
 
@@ -436,6 +437,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20230414205207'),
 ('20230429011040'),
 ('20230429013042'),
-('20230429054255');
+('20230429054255'),
+('20230502192510');
 
 

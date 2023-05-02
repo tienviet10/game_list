@@ -89,6 +89,19 @@ platforms.each do |platform|
   Platform.create(name: platform)
 end
 
+Game.create(
+  name: "Dead Space",
+  description: "The sci-fi survival horror classic Dead Space returns, completely rebuilt from the ground up by Motive Studios to offer a deeper and more immersive experience. Harnessing the power of the Frostbite game engine and next generation consoles, this remake brings jaw-dropping visual fidelity and improvements to gameplay while staying true to the original.",
+  imageURL: "https://images.igdb.com/igdb/image/upload/t_cover_big/co5esn.png",
+  bannerURL: "https://images.igdb.com/igdb/image/upload/t_screenshot_big/sckeer.jpg",
+  releaseDate: "2023-01-27",
+  avg_score: 8.3,
+  total_rating: 100,
+  genres: [Genre.find_by(name: "Action"), Genre.find_by(name: "Adventure"), Genre.find_by(name: "Survival horror")],
+  tags: [Tag.find_by(name: "Singleplayer"), Tag.find_by(name: "Adventure"), Tag.find_by(name: "Action"), Tag.find_by(name: "3D"), Tag.find_by(name: "Fantasy")],
+  platforms: [Platform.find_by(name: "Xbox One"), Platform.find_by(name: "PlayStation 4"), Platform.find_by(name: "Windows")],
+)
+
 25.times do
   user = User.create(
     username: Faker::Name.name,
