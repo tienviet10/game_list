@@ -49,10 +49,12 @@ platforms = [
   "Xbox",
   "Xbox 360",
   "Xbox One",
+  "Xbox Series X",
   "PlayStation",
   "PlayStation 2",
   "PlayStation 3",
   "PlayStation 4",
+  "PlayStation 5",
   "PlayStation Portable",
   "PlayStation Vita",
   "Game Boy",
@@ -77,13 +79,14 @@ platforms = [
   "Sega Saturn",
   "Sega Dreamcast",
   "Virtual Boy",
+
 ]
 
 genres.each do |genre|
   Genre.create(name: genre)
 end
 
-["Indie", "Singleplayer", "Adventure", "Action", "2D", "3D", "Puzzle", "Fantasy", "Soullike", "Zombies", "Dungeons & Dragons", "Multiplayer"].each do |tag|
+["Indie", "Singleplayer", "Adventure", "Action", "2D", "3D", "Puzzle", "Fantasy", "Soullike", "Zombies", "Dungeons & Dragons", "Multiplayer", "Indie", "Simulator"].each do |tag|
   Tag.create(name: tag)
 end
 
@@ -216,6 +219,45 @@ Game.create(
   genres: [Genre.find_by(name: "Role-playing"), Genre.find_by(name: "Turn-based strategy")],
   tags: [Tag.find_by(name: "Singleplayer"), Tag.find_by(name: "Adventure"), Tag.find_by(name: "Dungeons & Dragons")],
   platforms: [Platform.find_by(name: "Windows")],
+)
+
+Game.create(
+  name: "Dead Island 2",
+  description: "Several months after the events on Banoi, California is put under full quarantine, becoming a bloody paradise and an action-packed playground for renegades who seek adventure and glory.",
+  imageURL: "https://images.igdb.com/igdb/image/upload/t_cover_big/co5469.png",
+  bannerURL: "https://images.igdb.com/igdb/image/upload/t_screenshot_big/scii5w.jpg",
+  releaseDate: "2023-04-21",
+  avg_score: 7.0,
+  total_rating: 1000,
+  genres: [Genre.find_by(name: "Role-playing"), Genre.find_by(name: "Turn-based strategy")],
+  tags: [Tag.find_by(name: "Singleplayer"), Tag.find_by(name: "Multiplayer"), Tag.find_by(name: "Zombies"), Tag.find_by(name: "Fantasy")],
+  platforms: [Platform.find_by(name: "PlayStation 5"), Platform.find_by(name: "Xbox Series X")],
+)
+
+Game.create(
+  name: "Terra Nil",
+  description: "A reverse city builder where you use resources to restore the planet's barren wasteland into a lush green world filled with thriving flora and fauna. Recover precious natural resources and rebuild the planet bit by bit.",
+  imageURL: "https://images.igdb.com/igdb/image/upload/t_cover_big/co66nn.png",
+  bannerURL: "https://images.igdb.com/igdb/image/upload/t_screenshot_big/sclu8u.jpg",
+  releaseDate: "2023-03-28",
+  avg_score: 8.0,
+  total_rating: 1000,
+  genres: [Genre.find_by(name: "Role-playing"), Genre.find_by(name: "Turn-based strategy")],
+  tags: [Tag.find_by(name: "Singleplayer"), Tag.find_by(name: "Simulator"), Tag.find_by(name: "Fantasy")],
+  platforms: [Platform.find_by(name: "Windows")],
+)
+
+Game.create(
+  name: "Planescape: Torment",
+  description: "Planescape: Torment is a role-playing video game developed by Black Isle Studios and published by Interplay Entertainment. Released for Microsoft Windows on December 12, 1999, the game takes place in locations from the multiverse of Planescape, a Dungeons & Dragons (D&D) fantasy campaign setting.",
+  imageURL: "https://images.igdb.com/igdb/image/upload/t_cover_big/co3ggb.png",
+  bannerURL: "https://images.igdb.com/igdb/image/upload/t_screenshot_big/kb4xmak8dnz1ar5wetb9.jpg",
+  releaseDate: "1999-12-12",
+  avg_score: 9.0,
+  total_rating: 1000,
+  genres: [Genre.find_by(name: "Role-playing"), Genre.find_by(name: "Turn-based strategy")],
+  tags: [Tag.find_by(name: "Singleplayer"), Tag.find_by(name: "Adventure"), Tag.find_by(name: "Dungeons & Dragons")],
+  platforms: [Platform.find_by(name: "Windows"), Platform.find_by(name: "macOS")],
 )
 
 25.times do
