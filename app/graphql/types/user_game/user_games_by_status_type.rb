@@ -8,6 +8,7 @@ module Types
       field :completed, [Types::Game::GameType], null: true
       field :paused, [Types::Game::GameType], null: true
       field :dropped, [Types::Game::GameType], null: true
+      field :erros, [String], null: true
     end
   end
 end

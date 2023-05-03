@@ -13,6 +13,7 @@ module Queries
             "completed" => fetch_games_by_status(:Completed),
             "paused" => fetch_games_by_status(:Paused),
             "dropped" => fetch_games_by_status(:Dropped),
+            "errors": [],
           }
         rescue => e
           Rails.logger.error("Error retrieving games by status: #{e.message}")
@@ -22,7 +23,7 @@ module Queries
             "completed" => [],
             "paused" => [],
             "dropped" => [],
-            "errors": e.message,
+            "errors": [e.message],
           }
         end
       end
