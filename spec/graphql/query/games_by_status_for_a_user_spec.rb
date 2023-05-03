@@ -58,7 +58,7 @@ describe Queries::UserGames::GamesByStatusForAUser, type: :request do
       token = JWT.encode({ user_id: user.id, exp: 7.days.from_now.to_i }, Rails.application.secrets.secret_key_base)
       post "/graphql", params: { query: queryByStatus }, headers: { "Authorization" => "Bearer #{token}" }
 
-      p json_response["data"]["gamesByStatusForAUser"]
+      json_response = JSON.parse(response.body)
       expect(json_response["data"]["gamesByStatusForAUser"]).to eq({ "playing" => [{ "id" => game3.id.to_s, "name" => "Assassin's Creed", "imageURL" => "https://www.igdb.com/games/assassin-s-creed/", "avgScore" => 4.4, "platforms" => ["Xbox"] }], "planning" => [{ "id" => game1.id.to_s, "name" => "Persona 5", "imageURL" => "https://www.mobygames.com/game/86408/persona-5/", "avgScore" => 4.5, "platforms" => ["PS5", "Xbox"] }, { "id" => game2.id.to_s, "name" => "FIFA 11", "imageURL" => "https://www.mobygames.com/game/51960/fifa-soccer-11/", "avgScore" => 4.7, "platforms" => ["Switch"] }], "completed" => [], "paused" => [], "dropped" => [] })
     end
 
