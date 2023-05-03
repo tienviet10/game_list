@@ -265,8 +265,10 @@ Game.create(
     username: Faker::Name.name,
     email: Faker::Internet.email,
     password: "password",
-    banner_picture: Faker::LoremFlickr.image(size: "500x300", search_terms: ["game"]), user_picture: Faker::LoremFlickr.image(size: "300x300",
-                                                                                                                              search_terms: ["game"]),
+    banner_picture: Faker::LoremFlickr.image(size: "500x300",
+                                             search_terms: ["game"]),
+    user_picture: Faker::LoremFlickr.image(size: "300x300",
+                                           search_terms: ["game"]),
     bio: Faker::Lorem.paragraph(sentence_count: 2),
     is_active: true,
   )
@@ -288,7 +290,8 @@ Game.create(
   user_game = UserGame.create(
     user_id: user.id,
     game_id: game.id,
-    game_status: "Planning", game_note: Faker::Lorem.paragraph(sentence_count: 2),
+    game_status: :Planning,
+    game_note: Faker::Lorem.paragraph(sentence_count: 2),
     start_date: Faker::Date.between(from: "2014-09-23", to: "2021-09-25"),
     completed_date: Faker::Date.between(from: "2014-09-23", to: "2021-09-25"),
     private: Faker::Boolean.boolean(true_ratio: 0.5),
@@ -309,7 +312,8 @@ user1 = User.create(
 game1 = Game.create(
   name: Faker::Game.title,
   description: Faker::Lorem.paragraph(sentence_count: 2),
-  imageURL: Faker::LoremFlickr.image(size: "300x300", search_terms: ["game"]),
+  imageURL: "https://images.igdb.com/igdb/image/upload/t_cover_big/co5esn.png",
+  bannerURL: "https://images.igdb.com/igdb/image/upload/t_screenshot_big/sckeer.jpg",
   releaseDate: Faker::Date.between(from: "2014-09-23", to: "2021-09-25"),
   avg_score: Faker::Number.decimal(l_digits: 1, r_digits: 1),
   total_rating: Faker::Number.between(from: 1, to: 100),
@@ -323,7 +327,7 @@ end
 UserGame.create(
   user_id: user1.id,
   game_id: game1.id,
-  game_status: :Playing,
+  game_status: :Planning,
   game_note: Faker::Lorem.paragraph(sentence_count: 2),
   start_date: Faker::Date.between(from: "2014-09-23", to: "2021-09-25"),
   completed_date: Faker::Date.between(from: "2014-09-23", to: "2021-09-25"),
@@ -335,7 +339,8 @@ UserGame.create(
 game2 = Game.create(
   name: "Halo 2",
   description: Faker::Lorem.paragraph(sentence_count: 2),
-  imageURL: Faker::LoremFlickr.image(size: "300x300", search_terms: ["game"]),
+  imageURL: "https://images.igdb.com/igdb/image/upload/t_cover_big/co1r76.png",
+  bannerURL: "https://images.igdb.com/igdb/image/upload/t_screenshot_big/gin55k9eyfq8udk0taym.jpg",
   releaseDate: Faker::Date.between(from: "2014-09-23", to: "2021-09-25"),
   avg_score: Faker::Number.decimal(l_digits: 1, r_digits: 1),
   total_rating: Faker::Number.between(from: 1, to: 100),
@@ -349,7 +354,34 @@ end
 UserGame.create(
   user_id: user1.id,
   game_id: game2.id,
-  game_status: :Planning,
+  game_status: :Playing,
+  game_note: Faker::Lorem.paragraph(sentence_count: 2),
+  start_date: Faker::Date.between(from: "2014-09-23", to: "2021-09-25"),
+  completed_date: Faker::Date.between(from: "2014-09-23", to: "2021-09-25"),
+  private: Faker::Boolean.boolean(true_ratio: 0.5),
+  rating: Faker::Number.between(from: 1, to: 5),
+  review: Faker::Lorem.paragraph(sentence_count: 2),
+)
+
+game3 = Game.create(
+  name: "Halo 3",
+  description: Faker::Lorem.paragraph(sentence_count: 2),
+  imageURL: "https://images.igdb.com/igdb/image/upload/t_cover_big/co3p2d.png",
+  bannerURL: "https://images.igdb.com/igdb/image/upload/t_screenshot_big/sckj6g.jpg",
+  releaseDate: Faker::Date.between(from: "2014-09-23", to: "2021-09-25"),
+  avg_score: Faker::Number.decimal(l_digits: 1, r_digits: 1),
+  total_rating: Faker::Number.between(from: 1, to: 100),
+)
+2.times do
+  game3.genres << Genre.all.sample
+  game3.tags << Tag.all.sample
+  game3.platforms << Platform.all.sample
+end
+
+UserGame.create(
+  user_id: user1.id,
+  game_id: game3.id,
+  game_status: :Playing,
   game_note: Faker::Lorem.paragraph(sentence_count: 2),
   start_date: Faker::Date.between(from: "2014-09-23", to: "2021-09-25"),
   completed_date: Faker::Date.between(from: "2014-09-23", to: "2021-09-25"),
