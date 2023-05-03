@@ -5,13 +5,32 @@ module Queries
       type Types::UserGame::UserGamesByStatusType, null: false
 
       def resolve()
-        {
-          "playing" => ::UserGame.where(user_id: context[:current_user], game_status: :Playing).map(&:game),
-          "planning" => ::UserGame.where(user_id: context[:current_user], game_status: :Planning).map(&:game),
-          "completed" => ::UserGame.where(user_id: context[:current_user], game_status: :Completed).map(&:game),
-          "paused" => ::UserGame.where(user_id: context[:current_user], game_status: :Paused).map(&:game),
-          "dropped" => ::UserGame.where(user_id: context[:current_user], game_status: :Dropped).map(&:game),
-        }
+        raise GraphQL::ExecutionError, "User not authenticated" unless context[:current_user]
+        begin
+          {
+            "playing" => fetch_games_by_status(:Playing),
+            "planning" => fetch_games_by_status(:Planning),
+            "completed" => fetch_games_by_status(:Completed),
+            "paused" => fetch_games_by_status(:Paused),
+            "dropped" => fetch_games_by_status(:Dropped),
+          }
+        rescue => e
+          Rails.logger.error("Error retrieving games by status: #{e.message}")
+          {
+            "playing" => [],
+            "planning" => [],
+            "completed" => [],
+            "paused" => [],
+            "dropped" => [],
+            "errors": e.message,
+          }
+        end
+      end
+
+      private
+
+      def fetch_games_by_status(status)
+        ::UserGame.where(user_id: context[:current_user], game_status: status).map(&:game)
       end
     end
   end
