@@ -1,17 +1,12 @@
 module Queries
-  module Game
-    class GetAllGamesByTag < Queries::BaseQuery
+  module UserGames
+    class GamesByStatusForAUser < Queries::BaseQuery
       description "Get games by status for a user"
+      argument :status, String, required: false
       type [Types::Game::GameType], null: false
 
-      argument :tag, Types::Input::EntityIdNameAttributes, required: false
-      argument :limit, Integer, required: false, default_value: 10, prepare: ->(limit, ctx) { [limit, 30].min }
-
-      def resolve(tag:, limit:)
-        start = ::Game.joins(:tags)
-        start = start.where(tags: { name: tag.name }) if tag.name.present?
-        start = start.where(tags: { id: tag.ID }) if tag.ID.present?
-        start.limit(limit)
+      def resolve(status:)
+        ::UserGame.where(game_status: status, user_id: context[:current_user]).map(&:game)
       end
     end
   end
