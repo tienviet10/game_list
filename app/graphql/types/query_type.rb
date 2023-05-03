@@ -13,6 +13,7 @@ module Types
     # They will be entry points for queries on your schema.
     field :all_games, resolver: Queries::Game::GetAllGames
     field :games_for_a_user, resolver: Queries::UserGames::GamesForAUser
+    field :games_by_status_for_a_user, resolver: Queries::UserGames::GamesByStatusForAUser
 
     field :get_all_genres, resolver: Queries::Game::GetAllGenres
     field :get_all_platforms, resolver: Queries::Game::GetAllPlatforms
