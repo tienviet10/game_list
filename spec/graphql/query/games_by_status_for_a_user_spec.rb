@@ -1,7 +1,7 @@
 require "rails_helper"
 
 describe Queries::UserGames::GamesByStatusForAUser, type: :request do
-  describe "verify get games by status query for a user" do
+  describe "games by status query for a user" do
     let!(:user) { create(:user, username: "v", email: "v@gmail.com", password: "password") }
 
     let!(:platform1) { create(:platform, name: "PS5") }
@@ -54,21 +54,13 @@ describe Queries::UserGames::GamesByStatusForAUser, type: :request do
       create(:user_game, user: user, game: game3, game_status: "Playing")
     }
 
-    it "returns all games assosicated with correct genre (by ID)" do
+    it "returns all games according to status for a user" do
       token = JWT.encode({ user_id: user.id, exp: 7.days.from_now.to_i }, Rails.application.secrets.secret_key_base)
       post "/graphql", params: { query: queryByStatus }, headers: { "Authorization" => "Bearer #{token}" }
 
       json_response = JSON.parse(response.body)
       p json_response["data"]["gamesByStatusForAUser"]
-      # games_response = json_response["data"]["getAllGamesByGenre"]
-
-      # # Expect game_response to contain the games "Persona 5" and "Assassin's Creed"
-      # expect(games_response.count).to eq(2)
-      # expect(games_response.find { |item| item["name"] == game1.name }).to_not be_nil # Persona 5
-      # expect(games_response.find { |item| item["name"] == game3.name }).to_not be_nil # Assassin's Creed
-
-      # # Expect game_response to not contain the game "FIFA 11"
-      # expect(games_response.find { |item| item["name"] == game2.name }).to be_nil # "FIFA 11"
+      expect(json_response["data"]["gamesByStatusForAUser"]).to eq({ "playing" => [{ "id" => game3.id.to_s, "name" => "Assassin's Creed", "imageURL" => "https://www.igdb.com/games/assassin-s-creed/", "avgScore" => 4.4, "platforms" => ["Xbox"] }], "planning" => [{ "id" => game1.id.to_s, "name" => "Persona 5", "imageURL" => "https://www.mobygames.com/game/86408/persona-5/", "avgScore" => 4.5, "platforms" => ["PS5", "Xbox"] }, { "id" => game2.id.to_s, "name" => "FIFA 11", "imageURL" => "https://www.mobygames.com/game/51960/fifa-soccer-11/", "avgScore" => 4.7, "platforms" => ["Switch"] }], "completed" => [], "paused" => [], "dropped" => [] })
     end
 
     # it "returns all games assosicated with correct genre (by Name)" do
