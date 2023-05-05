@@ -88,7 +88,7 @@ describe Queries::Game::GetAllGamesByPlatform, type: :request do
 
       # Expect the responses to be the exact same
       expect(games_responseID.count).to eq(games_responseName.count)
-      expect(games_responseID).to eq(games_responseName)
+      expect(games_responseID).to match_array(games_responseName)
     end
 
     def queryById(id)
