@@ -13,20 +13,24 @@ module Queries
 
         # Return games by platform if platform argument is provided
         if (platform.present?)
-          allGames = allGames.joins(:platforms).where(platforms: { name: platform })
+          allGames = add_filter(allGames, :platforms, :name, platform)
         end
 
         # Return games by genre if genre argument is provided
         if (genre.present?)
-          allGames = allGames.joins(:genres).where(genres: { name: genre })
+          allGames = add_filter(allGames, :genres, :name, genre)
         end
 
         # Return games by tag if tag argument is provided
         if (tag.present?)
-          allGames = allGames.joins(:tags).where(tags: { name: tag })
+          allGames = add_filter(allGames, :tags, :name, tag)
         end
 
-        return allGames.uniq
+        return allGames.distinct.group("games.id")
+      end
+
+      def add_filter(games_table, table_type, column_name, value)
+        games_table.joins(table_type).where(table_type => { column_name => value }).having("COUNT(DISTINCT #{table_type}.#{column_name}) = ?", value.length)
       end
     end
   end
