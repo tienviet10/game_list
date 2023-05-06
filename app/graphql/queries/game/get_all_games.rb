@@ -30,6 +30,7 @@ module Queries
       end
 
       def add_filter(games_table, table_type, column_name, value)
+        value = value.uniq
         games_table.joins(table_type).where(table_type => { column_name => value }).having("COUNT(DISTINCT #{table_type}.#{column_name}) = ?", value.length)
       end
     end
