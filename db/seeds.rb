@@ -86,7 +86,7 @@ genres.each do |genre|
   Genre.create(name: genre)
 end
 
-["Indie", "Singleplayer", "Adventure", "Action", "2D", "3D", "Puzzle", "Fantasy", "Soullike", "Zombies", "Dungeons & Dragons", "Multiplayer", "Indie", "Simulator"].each do |tag|
+["Indie", "Singleplayer", "Adventure", "Action", "2D", "3D", "Puzzle", "Fantasy", "Soullike", "Zombies", "Dungeons & Dragons", "Multiplayer", "Simulator"].each do |tag|
   Tag.create(name: tag)
 end
 
