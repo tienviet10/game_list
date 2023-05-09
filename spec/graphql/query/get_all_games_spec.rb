@@ -186,6 +186,22 @@ describe Queries::Game::GetAllGames, type: :request do
       expect(games_response.count).to eq(0)
     end
 
+    ############
+
+    it "skips invalid entries (empty strings) from the search" do
+      variables = {
+        "tag": [""],
+      }
+
+      token = JWT.encode({ user_id: 0, exp: 7.days.from_now.to_i }, Rails.application.secrets.secret_key_base)
+      post "/graphql", params: { query: query, variables: variables }, headers: { "Authorization" => "Bearer #{token}" }
+      json_response = JSON.parse(response.body)
+      games_response = json_response["data"]["allGames"]
+
+      expect(games_response.count).to eq(5)
+    end
+
+    ############
     it "returns 0 games with many filters" do
       variables = {
         "platform": [platform4.name],
