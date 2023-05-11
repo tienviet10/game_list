@@ -6,11 +6,13 @@ module Queries
 
       def resolve()
         raise GraphQL::ExecutionError, "User not authenticated" unless context[:current_user]
+
         playing = fetch_games_by_status(:Playing)
         planning = fetch_games_by_status(:Planning)
         completed = fetch_games_by_status(:Completed)
         paused = fetch_games_by_status(:Paused)
         dropped = fetch_games_by_status(:Dropped)
+
         begin
           {
             "playing" => playing,
