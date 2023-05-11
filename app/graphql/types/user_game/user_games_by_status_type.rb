@@ -13,6 +13,7 @@ module Types
       field :completedCount, Integer, null: true
       field :pausedCount, Integer, null: true
       field :droppedCount, Integer, null: true
+      field :totalCount, Integer, null: true
       field :errors, [String], null: true
     end
   end

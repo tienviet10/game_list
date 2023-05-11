@@ -13,6 +13,12 @@ module Queries
         paused = fetch_games_by_status(:Paused)
         dropped = fetch_games_by_status(:Dropped)
 
+        playingCount = playing.count
+        planningCount = planning.count
+        completedCount = completed.count
+        pausedCount = paused.count
+        droppedCount = dropped.count
+
         begin
           {
             "playing" => playing,
@@ -20,11 +26,12 @@ module Queries
             "completed" => completed,
             "paused" => paused,
             "dropped" => dropped,
-            "playingCount" => playing.count,
-            "planningCount" => planning.count,
-            "completedCount" => completed.count,
-            "pausedCount" => paused.count,
-            "droppedCount" => dropped.count,
+            "playingCount" => playingCount,
+            "planningCount" => planningCount,
+            "completedCount" => completedCount,
+            "pausedCount" => pausedCount,
+            "droppedCount" => droppedCount,
+            "totalCount" => playingCount + planningCount + completedCount + pausedCount + droppedCount,
             "errors": [],
           }
         rescue => e
@@ -40,6 +47,7 @@ module Queries
             "completedCount" => 0,
             "pausedCount" => 0,
             "droppedCount" => 0,
+            "totalCount" => 0,
             "errors": [e.message],
           }
         end
