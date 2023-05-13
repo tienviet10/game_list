@@ -271,6 +271,7 @@ Game.create(
                                            search_terms: ["game"]),
     bio: Faker::Lorem.paragraph(sentence_count: 2),
     is_active: true,
+    listsOrder: "planning,playing,completed,paused,dropped",
   )
 
   game = Game.create(
@@ -303,10 +304,11 @@ user1 = User.create(
   username: "Vv",
   email: "v@gmail.com",
   password: "password",
-  banner_picture: Faker::LoremFlickr.image(size: "500x300", search_terms: ["game"]), user_picture: Faker::LoremFlickr.image(size: "300x300",
-                                                                                                                            search_terms: ["game"]),
+  banner_picture: Faker::LoremFlickr.image(size: "500x300", search_terms: ["game"]),
+  user_picture: Faker::LoremFlickr.image(size: "300x300", search_terms: ["game"]),
   bio: Faker::Lorem.paragraph(sentence_count: 2),
   is_active: true,
+  listsOrder: "planning,playing,completed,paused,dropped",
 )
 
 game1 = Game.create(

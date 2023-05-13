@@ -14,6 +14,7 @@ module Types
       field :pausedCount, Integer, null: true
       field :droppedCount, Integer, null: true
       field :totalCount, Integer, null: true
+      field :listsOrder, String, null: true
       field :errors, [String], null: true
     end
   end

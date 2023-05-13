@@ -32,6 +32,7 @@ module Queries
             "pausedCount" => pausedCount,
             "droppedCount" => droppedCount,
             "totalCount" => playingCount + planningCount + completedCount + pausedCount + droppedCount,
+            "listsOrder" => ::User.find_by(id: context[:current_user]).listsOrder,
             "errors": [],
           }
         rescue => e
@@ -48,6 +49,7 @@ module Queries
             "pausedCount" => 0,
             "droppedCount" => 0,
             "totalCount" => 0,
+            "listsOrder" => "",
             "errors": [e.message],
           }
         end
