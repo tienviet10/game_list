@@ -9,6 +9,7 @@ module Mutations
 
       def resolve(payload:, action:)
         user = User.find(context[:current_user])
+        p user
         if user
           case action
           when "password"
@@ -19,6 +20,8 @@ module Mutations
             user.update(username: payload)
           when "is_active"
             user.update(is_active: payload)
+          when "lists_order"
+            user.update(listsOrder: payload)
           else
             return {
                      user: nil,
