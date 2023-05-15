@@ -9,7 +9,7 @@ module Mutations
 
       def resolve(payload:, action:)
         user = User.find(context[:current_user])
-        p user
+
         if user
           case action
           when "password"
