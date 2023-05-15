@@ -260,7 +260,8 @@ CREATE TABLE public.users (
     bio character varying,
     is_active boolean,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    "listsOrder" character varying
 );
 
 
@@ -438,6 +439,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20230429011040'),
 ('20230429013042'),
 ('20230429054255'),
-('20230502192510');
+('20230502192510'),
+('20230513052953');
 
 
