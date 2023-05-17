@@ -5,7 +5,7 @@ module Queries
 
       argument :game_id, ID, required: true
 
-      type Types::UserGame::UserGameType, null: false
+      type Types::UserGame::UserGameType, null: true
 
       def resolve(game_id:)
         UserGame.where(user_id: context[:current_user], game_id: game_id).first
