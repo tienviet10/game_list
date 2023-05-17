@@ -7,7 +7,7 @@ class UserGame < ApplicationRecord
     self.game_status ||= :Playing
     self.game_note ||= ""
     self.start_date ||= Time.now
-    self.completed_date ||= Time.now + 1.day
+    self.completed_date ||= nil
     self.private ||= false
     self.rating ||= 0
     self.review ||= ""

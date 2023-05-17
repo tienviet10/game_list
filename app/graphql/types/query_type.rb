@@ -6,6 +6,7 @@ module Types
     field :all_games, resolver: Queries::Game::GetAllGames
     field :games_for_a_user, resolver: Queries::UserGames::GamesForAUser
     field :games_by_status_for_a_user, resolver: Queries::UserGames::GamesByStatusForAUser
+    field :get_user_game_by_game_id, resolver: Queries::UserGames::GetUserGameByGameId
 
     field :get_genres_platforms_tags, resolver: Queries::Game::GenresPlatformsTags
 
