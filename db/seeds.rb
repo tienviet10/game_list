@@ -1,17 +1,3 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
-#
-# Examples:
-#
-#   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
-#   Character.create(name: 'Luke', movie: movies.first)
-
-# 15.times do
-#   genre = Genre.create(name: Faker::Game.genre)
-#   tag = Tag.create(name: Faker::Game.genre)
-#   platform = Platform.create(name: Faker::Game.platform)
-# end
-
 genres = [
   "First-person shooter",
   "Puzzle",
@@ -94,7 +80,7 @@ platforms.each do |platform|
   Platform.create(name: platform)
 end
 
-Game.create(
+game1 = Game.create(
   name: "Dead Space",
   description: "The sci-fi survival horror classic Dead Space returns, completely rebuilt from the ground up by Motive Studios to offer a deeper and more immersive experience. Harnessing the power of the Frostbite game engine and next generation consoles, this remake brings jaw-dropping visual fidelity and improvements to gameplay while staying true to the original.",
   imageURL: "https://images.igdb.com/igdb/image/upload/t_cover_big/co5esn.png",
@@ -130,7 +116,7 @@ Game.create(
   platforms: [Platform.find_by(name: "Xbox One"), Platform.find_by(name: "PlayStation 4"), Platform.find_by(name: "Windows")],
 )
 
-Game.create(
+game2 = Game.create(
   name: "The Legend of Zelda: Breath of the Wild",
   description: "Forget everything you know about The Legend of Zelda games. Step into a world of discovery, exploration and adventure in The Legend of Zelda: Breath of the Wild, a boundary-breaking new game in the acclaimed series.",
   imageURL: "https://images.igdb.com/igdb/image/upload/t_cover_big/co3p2d.png",
@@ -143,7 +129,7 @@ Game.create(
   platforms: [Platform.find_by(name: "Nintendo Switch"), Platform.find_by(name: "Wii U")],
 )
 
-Game.create(
+game3 = Game.create(
   name: "The Last of Us Part II",
   description: "Five years after their dangerous journey across the post-pandemic United States, Ellie and Joel have settled down in Jackson, Wyoming. Living amongst a thriving community of survivors has allowed them peace and stability, despite the constant threat of the infected and other, more desperate survivors.",
   imageURL: "https://images.igdb.com/igdb/image/upload/t_cover_big/co5ziw.png",
@@ -260,45 +246,254 @@ Game.create(
   platforms: [Platform.find_by(name: "Windows"), Platform.find_by(name: "macOS")],
 )
 
-25.times do
-  user = User.create(
-    username: Faker::Name.name,
-    email: Faker::Internet.email,
-    password: "password",
-    banner_picture: Faker::LoremFlickr.image(size: "500x300",
-                                             search_terms: ["game"]),
-    user_picture: Faker::LoremFlickr.image(size: "300x300",
-                                           search_terms: ["game"]),
-    bio: Faker::Lorem.paragraph(sentence_count: 2),
-    is_active: true,
-    listsOrder: "planning,playing,completed,paused,dropped",
-  )
+Game.create(
+  name: "Resident Evil 4",
+  description: "Resident Evil 4 is a remake of the 2005 original Resident Evil 4 reimagined for 2023 to bring state-of-the-art survival horror. Resident Evil 4 preserves the essence of the original game, while introducing modernized gameplay, a reimagined storyline,
+  and vividly detailed graphics to make this the latest survival horror game where life and death, terror and catharsis intersect.",
+  imageURL: "https://images.igdb.com/igdb/image/upload/t_cover_big/co6bo0.png",
+  bannerURL: "https://images.igdb.com/igdb/image/upload/t_screenshot_big/scixzc.jpg",
+  releaseDate: "2020-01-27",
+  avg_score: 8.8,
+  total_rating: 200,
+  genres: [Genre.find_by(name: "Action"), Genre.find_by(name: "Adventure"), Genre.find_by(name: "Survival horror")],
+  tags: [Tag.find_by(name: "Singleplayer"), Tag.find_by(name: "Adventure"), Tag.find_by(name: "Action"), Tag.find_by(name: "3D"), Tag.find_by(name: "Fantasy")],
+  platforms: [Platform.find_by(name: "Xbox One"), Platform.find_by(name: "PlayStation 4"), Platform.find_by(name: "Windows")],
+)
 
-  game = Game.create(
-    name: Faker::Game.title,
-    description: Faker::Lorem.paragraph(sentence_count: 2),
-    imageURL: Faker::LoremFlickr.image(size: "300x300", search_terms: ["game"]),
-    releaseDate: Faker::Date.between(from: "2014-09-23", to: "2021-09-25"),
-    avg_score: Faker::Number.decimal(l_digits: 1, r_digits: 1),
-    total_rating: Faker::Number.between(from: 1, to: 100),
-  )
-  2.times do
-    game.genres << Genre.all.sample
-    game.tags << Tag.all.sample
-    game.platforms << Platform.all.sample
-  end
+Game.create(
+  name: "Rusted Moss",
+  description: "Traverse the perilous lands of a dying world in this bullet-hell inspired metroidvania! Strong enemies emerge from distant lands as the iron inventions of men succumb to the decay of rust and time. Use a trusty grappling hook and uncover new powers to battle monstrous machines, powerful witches, and explore a new emerging world.",
+  imageURL: "https://images.igdb.com/igdb/image/upload/t_cover_big/co6bv5.png",
+  bannerURL: "https://images.igdb.com/igdb/image/upload/t_screenshot_big/scery3.jpg",
+  releaseDate: "2013-09-23",
+  avg_score: 5.5,
+  total_rating: 1300,
+  genres: [Genre.find_by(name: "Action"), Genre.find_by(name: "Adventure"), Genre.find_by(name: "Music")],
+  tags: [Tag.find_by(name: "Singleplayer"), Tag.find_by(name: "Adventure"), Tag.find_by(name: "Action"), Tag.find_by(name: "3D"), Tag.find_by(name: "Fantasy")],
+  platforms: [Platform.find_by(name: "Xbox One"), Platform.find_by(name: "PlayStation 4"), Platform.find_by(name: "Windows")],
+)
 
-  user_game = UserGame.create(
-    user_id: user.id,
-    game_id: game.id,
-    game_status: :Planning,
-    game_note: Faker::Lorem.paragraph(sentence_count: 2),
-    start_date: Faker::Date.between(from: "2014-09-23", to: "2021-09-25"),
-    completed_date: Faker::Date.between(from: "2014-09-23", to: "2021-09-25"),
-    private: Faker::Boolean.boolean(true_ratio: 0.5),
-    rating: Faker::Number.between(from: 1, to: 5), review: Faker::Lorem.paragraph(sentence_count: 2),
-  )
-end
+Game.create(
+  name: "Pineapple on pizza",
+  description: "Pineapple on pizza is a short game about exploring an island full of dancing people, finding a way to ruin the party, and unexpectedly enjoying it.",
+  imageURL: "https://images.igdb.com/igdb/image/upload/t_cover_big/co69au.png",
+  bannerURL: "https://images.igdb.com/igdb/image/upload/t_screenshot_big/sclsut.jpg",
+  releaseDate: "2017-08-25",
+  avg_score: 7.0,
+  total_rating: 500,
+  genres: [Genre.find_by(name: "Role-playing"), Genre.find_by(name: "Adventure")],
+  tags: [Tag.find_by(name: "Singleplayer"), Tag.find_by(name: "Adventure"), Tag.find_by(name: "Action"), Tag.find_by(name: "3D"), Tag.find_by(name: "Soullike")],
+  platforms: [Platform.find_by(name: "Xbox One"), Platform.find_by(name: "PlayStation 4"), Platform.find_by(name: "Windows")],
+)
+
+Game.create(
+  name: "LEGO 2K Drive",
+  description: "Welcome to Bricklandia, home of a massive open-world LEGO driving adventure. Race anywhere, play with anyone, build your dream rides, and defeat a cast of wild racing rivals for the coveted Sky Trophy! In LEGO 2K Drive, your awesome transforming vehicle gives you the freedom to speed seamlessly across riveting racetracks, off-road terrain, and open waters. Explore the vast world of Bricklandia, show off your driving skills, and build vehicles brick-by-brick!",
+  imageURL: "https://images.igdb.com/igdb/image/upload/t_cover_big/co6ajx.png",
+  bannerURL: "https://images.igdb.com/igdb/image/upload/t_screenshot_big/sclsfi.jpg",
+  releaseDate: "2023-03-03",
+  avg_score: 9.2,
+  total_rating: 10,
+  genres: [Genre.find_by(name: "Adventure"), Genre.find_by(name: "Role-playing")],
+  tags: [Tag.find_by(name: "Singleplayer"), Tag.find_by(name: "Action"), Tag.find_by(name: "Fantasy")],
+  platforms: [Platform.find_by(name: "Nintendo Switch"), Platform.find_by(name: "Wii U")],
+)
+
+Game.create(
+  name: "Warhammer 40,000: Boltgun",
+  description: "Load up your Boltgun and unleash the awesome Space Marine arsenal to blast your way through an explosion of sprites, pixels and blood in a perfect blend of Warhammer 40,000, frenetic gameplay and the stylish visuals of 90’s retro shooters.",
+  imageURL: "https://images.igdb.com/igdb/image/upload/t_cover_big/co4taa.png",
+  bannerURL: "https://images.igdb.com/igdb/image/upload/t_screenshot_big/sch75h.jpg",
+  releaseDate: "2020-09-25",
+  avg_score: 6.2,
+  total_rating: 100,
+  genres: [Genre.find_by(name: "Adventure"), Genre.find_by(name: "Third-person shooter")],
+  tags: [Tag.find_by(name: "Singleplayer"), Tag.find_by(name: "Action"), Tag.find_by(name: "Zombies")],
+  platforms: [Platform.find_by(name: "PlayStation 4")],
+)
+
+Game.create(
+  name: "Skull and Bones",
+  description: "Enter the Golden Age of Piracy as you sail through rich merchant trade routes. Embody an insatiable pirate captain, dive into the battle for the ruling of the Indian Ocean and become the most feared pirate, alone or with your gang of up to 5 players.",
+  imageURL: "https://images.igdb.com/igdb/image/upload/t_cover_big/co4yl7.png",
+  bannerURL: "https://images.igdb.com/igdb/image/upload/t_screenshot_big/skl24txjdq6p9ele30ci.jpg",
+  releaseDate: "2012-02-02",
+  avg_score: 7.0,
+  total_rating: 800,
+  genres: [Genre.find_by(name: "Role-playing"), Genre.find_by(name: "Adventure")],
+  tags: [Tag.find_by(name: "Singleplayer"), Tag.find_by(name: "Adventure"), Tag.find_by(name: "Action"), Tag.find_by(name: "3D"), Tag.find_by(name: "Soullike")],
+  platforms: [Platform.find_by(name: "Xbox One"), Platform.find_by(name: "PlayStation 4"), Platform.find_by(name: "Windows")],
+)
+
+Game.create(
+  name: "Hollow Knight: Silksong",
+  description: "Explore a vast, haunted kingdom in Hollow Knight: Silksong, the sequel to the award winning action-adventure! Discover enchanting secrets and face foes in lethal, acrobatic combat as you ascend to the peak of a land ruled by silk and song.",
+  imageURL: "https://images.igdb.com/igdb/image/upload/t_cover_big/co3vtl.png",
+  bannerURL: "https://images.igdb.com/igdb/image/upload/t_screenshot_big/sc63aa.jpg",
+  releaseDate: "2023-05-13",
+  avg_score: 7.3,
+  total_rating: 2000,
+  genres: [Genre.find_by(name: "Turn-based strategy")],
+  tags: [Tag.find_by(name: "Singleplayer"), Tag.find_by(name: "Multiplayer"), Tag.find_by(name: "Fantasy")],
+  platforms: [Platform.find_by(name: "Windows")],
+)
+
+Game.create(
+  name: "System Shock",
+  description: "After 22 years, cyberpunk cult classic System Shock is getting an update. A reimagined version of the 1994 Windows PC game is in the works at Night Dive Studios for PC and Xbox One, and it's a project that company founder Stephen Kick says he can hardly believe is really happening.",
+  imageURL: "https://images.igdb.com/igdb/image/upload/t_cover_big/co1ik8.png",
+  bannerURL: "https://images.igdb.com/igdb/image/upload/t_screenshot_big/schdyv.jpg",
+  releaseDate: "2023-01-13",
+  avg_score: 3.0,
+  total_rating: 200,
+  genres: [Genre.find_by(name: "Role-playing"), Genre.find_by(name: "Turn-based strategy")],
+  tags: [Tag.find_by(name: "Singleplayer"), Tag.find_by(name: "Multiplayer"), Tag.find_by(name: "Adventure"), Tag.find_by(name: "Fantasy")],
+  platforms: [Platform.find_by(name: "Windows")],
+)
+
+Game.create(
+  name: "In the Valley of Gods",
+  description: "In the Valley of Gods is a single-player first person video game set in Egypt in the 1920s. You play as an explorer and filmmaker who, along with your old partner, has traveled to the middle of the desert in the hopes of making a seemingly-impossible discovery and an incredible film.",
+  imageURL: "https://images.igdb.com/igdb/image/upload/t_cover_big/co2eyk.png",
+  bannerURL: "https://images.igdb.com/igdb/image/upload/t_screenshot_big/vnojjpfo6moqftk4fedk.jpg",
+  releaseDate: "2016-10-20",
+  avg_score: 5.0,
+  total_rating: 1000,
+  genres: [Genre.find_by(name: "Role-playing"), Genre.find_by(name: "Turn-based strategy")],
+  tags: [Tag.find_by(name: "Singleplayer"), Tag.find_by(name: "Multiplayer"), Tag.find_by(name: "Adventure"), Tag.find_by(name: "Fantasy")],
+  platforms: [Platform.find_by(name: "Windows")],
+)
+
+Game.create(
+  name: "Blooming Business: Casino",
+  description: "Blooming Business: Casino is a business tycoon sim with a narrative twist. Build and run your own fantasy casino in a bustling world full of animals, drama and danger.",
+  imageURL: "https://images.igdb.com/igdb/image/upload/t_cover_big/co54sy.png",
+  bannerURL: "https://images.igdb.com/igdb/image/upload/t_screenshot_big/sccra3.jpg",
+  releaseDate: "2019-10-02",
+  avg_score: 8.0,
+  total_rating: 1000,
+  genres: [Genre.find_by(name: "Role-playing"), Genre.find_by(name: "Turn-based strategy")],
+  tags: [Tag.find_by(name: "Singleplayer"), Tag.find_by(name: "Adventure"), Tag.find_by(name: "Dungeons & Dragons")],
+  platforms: [Platform.find_by(name: "Windows")],
+)
+
+Game.create(
+  name: "Planet Zoo",
+  description: "Build a world for wildlife in Planet Zoo. From the creators of Planet Coaster and Zoo Tycoon comes the ultimate zoo sim. Construct detailed habitats, manage your zoo, and meet authentic living animals who think, feel and explore the world you create around them.",
+  imageURL: "https://images.igdb.com/igdb/image/upload/t_cover_big/co1kxq.png",
+  bannerURL: "https://images.igdb.com/igdb/image/upload/t_screenshot_big/sc6ev5.jpg",
+  releaseDate: "2022-04-21",
+  avg_score: 8.0,
+  total_rating: 5000,
+  genres: [Genre.find_by(name: "Role-playing"), Genre.find_by(name: "Turn-based strategy")],
+  tags: [Tag.find_by(name: "Singleplayer"), Tag.find_by(name: "Multiplayer"), Tag.find_by(name: "Zombies"), Tag.find_by(name: "Fantasy")],
+  platforms: [Platform.find_by(name: "PlayStation 5"), Platform.find_by(name: "Xbox Series X")],
+)
+
+Game.create(
+  name: "Rise of Industry",
+  description: "Rise of Industry is a strategic tycoon game that puts you in the shoes of an early 20th-century industrialist. Build and manage your growing empire in a living, breathing, and procedurally generated world that is constantly evolving and adapting to your playstyle.",
+  imageURL: "https://images.igdb.com/igdb/image/upload/t_cover_big/co1rge.png",
+  bannerURL: "https://images.igdb.com/igdb/image/upload/t_screenshot_big/ecpa5ddbyjoapoizvyox.jpg",
+  releaseDate: "2023-03-28",
+  avg_score: 7.0,
+  total_rating: 2000,
+  genres: [Genre.find_by(name: "Role-playing"), Genre.find_by(name: "Turn-based strategy")],
+  tags: [Tag.find_by(name: "Singleplayer"), Tag.find_by(name: "Simulator"), Tag.find_by(name: "Fantasy")],
+  platforms: [Platform.find_by(name: "Windows")],
+)
+
+Game.create(
+  name: "Murtop",
+  description: "Murtop is fast-paced arcade game packed with action, as if it was taken out directly from the 80's. Do you have enough coins to beat it?",
+  imageURL: "https://images.igdb.com/igdb/image/upload/t_cover_big/co61jt.png",
+  bannerURL: "https://images.igdb.com/igdb/image/upload/t_screenshot_big/scknri.jpg",
+  releaseDate: "1999-12-12",
+  avg_score: 8.0,
+  total_rating: 1000,
+  genres: [Genre.find_by(name: "Role-playing"), Genre.find_by(name: "Turn-based strategy")],
+  tags: [Tag.find_by(name: "Singleplayer"), Tag.find_by(name: "Adventure"), Tag.find_by(name: "Dungeons & Dragons")],
+  platforms: [Platform.find_by(name: "Windows"), Platform.find_by(name: "macOS")],
+)
+
+Game.create(
+  name: "Planet Alpha",
+  description: "Planet Alpha is an adventure set in a living alien world where you have the ability to manipulate the daytime.",
+  imageURL: "https://images.igdb.com/igdb/image/upload/t_cover_big/co1r66.png",
+  bannerURL: "https://images.igdb.com/igdb/image/upload/t_screenshot_big/qfqrfdbah622k8yfqdxb.jpg",
+  releaseDate: "2019-01-27",
+  avg_score: 6.8,
+  total_rating: 2050,
+  genres: [Genre.find_by(name: "Action"), Genre.find_by(name: "Adventure"), Genre.find_by(name: "Survival horror")],
+  tags: [Tag.find_by(name: "Singleplayer"), Tag.find_by(name: "Adventure"), Tag.find_by(name: "Action"), Tag.find_by(name: "3D"), Tag.find_by(name: "Fantasy")],
+  platforms: [Platform.find_by(name: "Xbox One"), Platform.find_by(name: "PlayStation 4"), Platform.find_by(name: "Windows")],
+)
+
+Game.create(
+  name: "Pepper Grinder",
+  description: "Pepper Grinder is an action platformer designed to be alot like oldschool Nintendo titles like Donkey Kong Country, Yoshi’s Island, and Super Mario World. Pepper uses her drill (Grinder, obviously) to plow through layers of soft dirt and launch herself into the air as she maneuvers herself across the landscape of each level.",
+  imageURL: "https://images.igdb.com/igdb/image/upload/t_cover_big/co6bv5.png",
+  bannerURL: "https://images.igdb.com/igdb/image/upload/t_screenshot_big/sc5qv5.jpg",
+  releaseDate: "2011-09-23",
+  avg_score: 5.5,
+  total_rating: 1300,
+  genres: [Genre.find_by(name: "Action"), Genre.find_by(name: "Adventure"), Genre.find_by(name: "Music")],
+  tags: [Tag.find_by(name: "Singleplayer"), Tag.find_by(name: "Adventure"), Tag.find_by(name: "Action"), Tag.find_by(name: "3D"), Tag.find_by(name: "Fantasy")],
+  platforms: [Platform.find_by(name: "Xbox One"), Platform.find_by(name: "PlayStation 4"), Platform.find_by(name: "Windows")],
+)
+
+Game.create(
+  name: "Degrees of Separation",
+  description: "Degrees of Separation is a puzzle platformer where cooperation is built into every move. Two contrasting souls, Ember and Rime, fall in love, but are separated by an enigmatic force, and must use their powers to progress through a spectacular world of fantasy and adventure. Players solve environmental obstacles by drawing upon the contrasting temperatures of warm and cold in single-player and cooperative multiplayer.",
+  imageURL: "https://images.igdb.com/igdb/image/upload/t_cover_big/co1rhd.png",
+  bannerURL: "https://images.igdb.com/igdb/image/upload/t_screenshot_big/sc5il2.jpg",
+  releaseDate: "2018-05-25",
+  avg_score: 7.0,
+  total_rating: 500,
+  genres: [Genre.find_by(name: "Role-playing"), Genre.find_by(name: "Adventure")],
+  tags: [Tag.find_by(name: "Singleplayer"), Tag.find_by(name: "Adventure"), Tag.find_by(name: "Action"), Tag.find_by(name: "3D"), Tag.find_by(name: "Soullike")],
+  platforms: [Platform.find_by(name: "Xbox One"), Platform.find_by(name: "PlayStation 4"), Platform.find_by(name: "Windows")],
+)
+
+# 25.times do
+#   user = User.create(
+#     username: Faker::Name.name,
+#     email: Faker::Internet.email,
+#     password: "password",
+#     banner_picture: Faker::LoremFlickr.image(size: "500x300",
+#                                              search_terms: ["game"]),
+#     user_picture: Faker::LoremFlickr.image(size: "300x300",
+#                                            search_terms: ["game"]),
+#     bio: Faker::Lorem.paragraph(sentence_count: 2),
+#     is_active: true,
+#     listsOrder: "planning,playing,completed,paused,dropped",
+#   )
+
+#   game = Game.create(
+#     name: Faker::Game.title,
+#     description: Faker::Lorem.paragraph(sentence_count: 2),
+#     imageURL: Faker::LoremFlickr.image(size: "300x300", search_terms: ["game"]),
+#     releaseDate: Faker::Date.between(from: "2014-09-23", to: "2021-09-25"),
+#     avg_score: Faker::Number.decimal(l_digits: 1, r_digits: 1),
+#     total_rating: Faker::Number.between(from: 1, to: 100),
+#   )
+#   2.times do
+#     game.genres << Genre.all.sample
+#     game.tags << Tag.all.sample
+#     game.platforms << Platform.all.sample
+#   end
+
+#   user_game = UserGame.create(
+#     user_id: user.id,
+#     game_id: game.id,
+#     game_status: :Planning,
+#     game_note: Faker::Lorem.paragraph(sentence_count: 2),
+#     start_date: Faker::Date.between(from: "2014-09-23", to: "2021-09-25"),
+#     completed_date: Faker::Date.between(from: "2014-09-23", to: "2021-09-25"),
+#     private: Faker::Boolean.boolean(true_ratio: 0.5),
+#     rating: Faker::Number.between(from: 1, to: 5), review: Faker::Lorem.paragraph(sentence_count: 2),
+#   )
+# end
 
 user1 = User.create(
   username: "Vv",
@@ -310,21 +505,6 @@ user1 = User.create(
   is_active: true,
   listsOrder: "planning,playing,completed,paused,dropped",
 )
-
-game1 = Game.create(
-  name: Faker::Game.title,
-  description: Faker::Lorem.paragraph(sentence_count: 2),
-  imageURL: "https://images.igdb.com/igdb/image/upload/t_cover_big/co5esn.png",
-  bannerURL: "https://images.igdb.com/igdb/image/upload/t_screenshot_big/sckeer.jpg",
-  releaseDate: Faker::Date.between(from: "2014-09-23", to: "2021-09-25"),
-  avg_score: Faker::Number.decimal(l_digits: 1, r_digits: 1),
-  total_rating: Faker::Number.between(from: 1, to: 100),
-)
-2.times do
-  game1.genres << Genre.all.sample
-  game1.tags << Tag.all.sample
-  game1.platforms << Platform.all.sample
-end
 
 UserGame.create(
   user_id: user1.id,
@@ -338,21 +518,6 @@ UserGame.create(
   review: Faker::Lorem.paragraph(sentence_count: 2),
 )
 
-game2 = Game.create(
-  name: "Halo 2",
-  description: Faker::Lorem.paragraph(sentence_count: 2),
-  imageURL: "https://images.igdb.com/igdb/image/upload/t_cover_big/co1r76.png",
-  bannerURL: "https://images.igdb.com/igdb/image/upload/t_screenshot_big/gin55k9eyfq8udk0taym.jpg",
-  releaseDate: Faker::Date.between(from: "2014-09-23", to: "2021-09-25"),
-  avg_score: Faker::Number.decimal(l_digits: 1, r_digits: 1),
-  total_rating: Faker::Number.between(from: 1, to: 100),
-)
-2.times do
-  game2.genres << Genre.all.sample
-  game2.tags << Tag.all.sample
-  game2.platforms << Platform.all.sample
-end
-
 UserGame.create(
   user_id: user1.id,
   game_id: game2.id,
@@ -364,21 +529,6 @@ UserGame.create(
   rating: Faker::Number.between(from: 1, to: 5),
   review: Faker::Lorem.paragraph(sentence_count: 2),
 )
-
-game3 = Game.create(
-  name: "Halo 3",
-  description: Faker::Lorem.paragraph(sentence_count: 2),
-  imageURL: "https://images.igdb.com/igdb/image/upload/t_cover_big/co3p2d.png",
-  bannerURL: "https://images.igdb.com/igdb/image/upload/t_screenshot_big/sckj6g.jpg",
-  releaseDate: Faker::Date.between(from: "2014-09-23", to: "2021-09-25"),
-  avg_score: Faker::Number.decimal(l_digits: 1, r_digits: 1),
-  total_rating: Faker::Number.between(from: 1, to: 100),
-)
-2.times do
-  game3.genres << Genre.all.sample
-  game3.tags << Tag.all.sample
-  game3.platforms << Platform.all.sample
-end
 
 UserGame.create(
   user_id: user1.id,
