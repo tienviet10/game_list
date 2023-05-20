@@ -7,8 +7,9 @@ module Queries
       argument :platform, [String], required: false
       argument :genre, [String], required: false
       argument :tag, [String], required: false
+      argument :year, Integer, required: false
 
-      def resolve(platform: nil, genre: nil, tag: nil)
+      def resolve(platform: nil, genre: nil, tag: nil, year: nil)
         allGames = ::Game.all
 
         # Return games by platform if platform argument is provided
@@ -24,6 +25,11 @@ module Queries
         # Return games by tag if tag argument is provided
         if (tag.present?)
           allGames = add_filter(allGames, :tags, :name, tag)
+        end
+
+        # Return games by tag if year argument is provided
+        if (year.present?)
+          allGames = allGames.where('EXTRACT(YEAR FROM "releaseDate") = ?', year)
         end
 
         return allGames.distinct.group("games.id")
