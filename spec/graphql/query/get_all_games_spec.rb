@@ -257,10 +257,36 @@ describe Queries::Game::GetAllGames, type: :request do
       expect(games_response.count).to eq(4)
     end
 
+    it "returns the correct game by a specific year" do
+      variables = {
+        year: 2014,
+      }
+
+      token = JWT.encode({ user_id: 0, exp: 7.days.from_now.to_i }, Rails.application.secrets.secret_key_base)
+      post "/graphql", params: { query: query, variables: variables.to_json }, headers: { "Authorization" => "Bearer #{token}" }
+      json_response = JSON.parse(response.body)
+      games_response = json_response["data"]["allGames"]
+
+      expect(games_response.count).to eq(1)
+    end
+
+    it "returns no games with an invalid year" do
+      variables = {
+        year: -1,
+      }
+
+      token = JWT.encode({ user_id: 0, exp: 7.days.from_now.to_i }, Rails.application.secrets.secret_key_base)
+      post "/graphql", params: { query: query, variables: variables.to_json }, headers: { "Authorization" => "Bearer #{token}" }
+      json_response = JSON.parse(response.body)
+      games_response = json_response["data"]["allGames"]
+
+      expect(games_response.count).to eq(0)
+    end
+
     def query
       <<~GQL
-        query getAllGames($platform: [String!], $genre: [String!], $tag: [String!]) {
-          allGames(platform: $platform, genre: $genre, tag: $tag) {
+        query getAllGames($platform: [String!], $genre: [String!], $tag: [String!], $year: Int) {
+          allGames(platform: $platform, genre: $genre, tag: $tag, year: $year) {
             name
             genres
             platforms
