@@ -455,6 +455,113 @@ Game.create(
   platforms: [Platform.find_by(name: "Xbox One"), Platform.find_by(name: "PlayStation 4"), Platform.find_by(name: "Windows")],
 )
 
+Game.create(
+  name: "Bramble: The Mountain King",
+  description: "Bramble: The Mountain King is a grim adventure set in a world inspired by dark, Nordic fables.",
+  imageURL: "https://images.igdb.com/igdb/image/upload/t_cover_big/co6f01.png",
+  bannerURL: "https://images.igdb.com/igdb/image/upload/t_screenshot_big/scagol.jpg",
+  releaseDate: "2023-05-15",
+  avg_score: 7.1,
+  total_rating: 700,
+  genres: [Genre.find_by(name: "Role-playing"), Genre.find_by(name: "Adventure")],
+  tags: [Tag.find_by(name: "Singleplayer"), Tag.find_by(name: "Adventure"), Tag.find_by(name: "Action"), Tag.find_by(name: "3D"), Tag.find_by(name: "Soullike")],
+  platforms: [Platform.find_by(name: "Xbox One"), Platform.find_by(name: "PlayStation 4"), Platform.find_by(name: "Windows")],
+)
+
+Game.create(
+  name: "Dredge",
+  description: "Dredge is a fishing adventure with a sinister undercurrent. Sell your catch, upgrade your vessel and dredge the depths for long-buried relics. Explore the stories of the strange locals and discover why some things are best left forgotten.",
+  imageURL: "https://images.igdb.com/igdb/image/upload/t_cover_big/co69zw.png",
+  bannerURL: "https://images.igdb.com/igdb/image/upload/t_screenshot_big/sccp17.jpg",
+  releaseDate: "2023-05-15",
+  avg_score: 7.7,
+  total_rating: 900,
+  genres: [Genre.find_by(name: "Role-playing"), Genre.find_by(name: "Adventure")],
+  tags: [Tag.find_by(name: "Singleplayer"), Tag.find_by(name: "Adventure"), Tag.find_by(name: "Action"), Tag.find_by(name: "3D"), Tag.find_by(name: "Soullike")],
+  platforms: [Platform.find_by(name: "Xbox One"), Platform.find_by(name: "PlayStation 4"), Platform.find_by(name: "Windows")],
+)
+
+Game.create(
+  name: "The Murder of Sonic the Hedgehog",
+  description: "A brand new Sonic experience from the minds of the Sonic Social team: The Murder of Sonic the Hedgehog is a visual novel, point-and-click adventure! It's Amy Rose's birthday and she's hosting a murder mystery party on the Mirage Express. When Sonic becomes the game's victim, everyone is off to get to the bottom of things. However, something feels a bit off - is this really an innocent game or something more sinister afoot?",
+  imageURL: "https://images.igdb.com/igdb/image/upload/t_cover_big/co6bk4.png",
+  bannerURL: "https://images.igdb.com/igdb/image/upload/t_screenshot_big/sclv7u.jpg",
+  releaseDate: "2020-05-15",
+  avg_score: 7.7,
+  total_rating: 50,
+  genres: [Genre.find_by(name: "Role-playing"), Genre.find_by(name: "Adventure")],
+  tags: [Tag.find_by(name: "Singleplayer"), Tag.find_by(name: "Adventure"), Tag.find_by(name: "Action"), Tag.find_by(name: "3D"), Tag.find_by(name: "Soullike")],
+  platforms: [Platform.find_by(name: "Xbox One"), Platform.find_by(name: "PlayStation 4"), Platform.find_by(name: "Windows")],
+)
+
+Game.create(
+  name: "Octopath Traveler II",
+  description: "This game is a brand-new entry in the Octopath Traveler series. It takes the series’ HD-2D graphics, a fusion of retro pixel art and 3DCG, to even greater heights.
+  In the world of Solistia, eight new travelers venture forth into an exciting new era.
+  Where will you go? What will you do? Whose tale will you bring to life?
+  Every path is yours to take. Embark on an adventure all your own.",
+  imageURL: "https://images.igdb.com/igdb/image/upload/t_cover_big/co684z.png",
+  bannerURL: "https://images.igdb.com/igdb/image/upload/t_screenshot_big/scix0e.jpg",
+  releaseDate: "2014-09-23",
+  avg_score: 6.5,
+  total_rating: 900,
+  genres: [Genre.find_by(name: "Action"), Genre.find_by(name: "Adventure"), Genre.find_by(name: "Music")],
+  tags: [Tag.find_by(name: "Singleplayer"), Tag.find_by(name: "Adventure"), Tag.find_by(name: "Action"), Tag.find_by(name: "3D"), Tag.find_by(name: "Fantasy")],
+  platforms: [Platform.find_by(name: "Xbox One"), Platform.find_by(name: "PlayStation 4"), Platform.find_by(name: "Windows")],
+)
+
+Game.create(
+  name: "Pokémon Shield",
+  description: "The world of Pokémon expands to include the Galar region in Pokémon Sword and Pokémon Shield!",
+  imageURL: "https://images.igdb.com/igdb/image/upload/t_cover_big/co1zk1.png",
+  bannerURL: "https://images.igdb.com/igdb/image/upload/t_screenshot_big/sc67pi.jpg",
+  releaseDate: "2013-05-25",
+  avg_score: 9.0,
+  total_rating: 700,
+  genres: [Genre.find_by(name: "Role-playing"), Genre.find_by(name: "Adventure")],
+  tags: [Tag.find_by(name: "Singleplayer"), Tag.find_by(name: "Adventure"), Tag.find_by(name: "Action"), Tag.find_by(name: "3D"), Tag.find_by(name: "Soullike")],
+  platforms: [Platform.find_by(name: "Xbox One"), Platform.find_by(name: "PlayStation 4"), Platform.find_by(name: "Windows")],
+)
+
+Game.create(
+  name: "Rocket League",
+  description: "Rocket League is a high-powered hybrid of arcade-style soccer and vehicular mayhem with easy-to-understand controls and fluid, physics-driven competition. Rocket League includes casual and competitive Online Matches, a fully-featured offline Season Mode, special “Mutators” that let you change the rules entirely, hockey and basketball-inspired Extra Modes, and more than 500 trillion possible cosmetic customization combinations.",
+  imageURL: "https://images.igdb.com/igdb/image/upload/t_cover_big/co5w0w.png",
+  bannerURL: "https://images.igdb.com/igdb/image/upload/t_screenshot_big/ygepetru87ka9nzqowr6.jpg",
+  releaseDate: "2021-06-15",
+  avg_score: 7.1,
+  total_rating: 700,
+  genres: [Genre.find_by(name: "Role-playing"), Genre.find_by(name: "Adventure")],
+  tags: [Tag.find_by(name: "Singleplayer"), Tag.find_by(name: "Adventure"), Tag.find_by(name: "Action"), Tag.find_by(name: "3D"), Tag.find_by(name: "Soullike")],
+  platforms: [Platform.find_by(name: "Xbox One"), Platform.find_by(name: "PlayStation 4"), Platform.find_by(name: "Windows")],
+)
+
+Game.create(
+  name: "Cassette Beasts",
+  description: "Grab your cassette player - it's time to transform! Collect awesome monster forms to use during turn-based battles in this indie open-world RPG. Combine any two monster forms using Cassette Beasts' Fusion System to create unique and powerful new ones!",
+  imageURL: "https://images.igdb.com/igdb/image/upload/t_cover_big/co5bqu.png",
+  bannerURL: "https://images.igdb.com/igdb/image/upload/t_screenshot_big/sca1u9.jpg",
+  releaseDate: "2019-05-15",
+  avg_score: 6.7,
+  total_rating: 500,
+  genres: [Genre.find_by(name: "Role-playing"), Genre.find_by(name: "Adventure")],
+  tags: [Tag.find_by(name: "Singleplayer"), Tag.find_by(name: "Adventure"), Tag.find_by(name: "Action"), Tag.find_by(name: "3D"), Tag.find_by(name: "Soullike")],
+  platforms: [Platform.find_by(name: "Xbox One"), Platform.find_by(name: "PlayStation 4"), Platform.find_by(name: "Windows")],
+)
+
+Game.create(
+  name: "Tunic",
+  description: "Tunic is an action adventure about a tiny fox in a big world. Explore the wilderness, discover spooky ruins, and fight terrible creatures from long ago.",
+  imageURL: "https://images.igdb.com/igdb/image/upload/t_cover_big/td1t8kb33gyo8mvhl2pc.png",
+  bannerURL: "https://images.igdb.com/igdb/image/upload/t_screenshot_big/sc8ggj.jpg",
+  releaseDate: "2017-05-15",
+  avg_score: 5.7,
+  total_rating: 550,
+  genres: [Genre.find_by(name: "Role-playing"), Genre.find_by(name: "Adventure")],
+  tags: [Tag.find_by(name: "Singleplayer"), Tag.find_by(name: "Adventure"), Tag.find_by(name: "Action"), Tag.find_by(name: "3D"), Tag.find_by(name: "Soullike")],
+  platforms: [Platform.find_by(name: "Xbox One"), Platform.find_by(name: "PlayStation 4"), Platform.find_by(name: "Windows")],
+)
+
 # 25.times do
 #   user = User.create(
 #     username: Faker::Name.name,
