@@ -4,9 +4,9 @@ class UserGame < ApplicationRecord
   before_save :set_default_values
 
   def set_default_values
-    self.game_status ||= :Playing
+    self.game_status ||= nil
     self.game_note ||= ""
-    self.start_date ||= Time.now
+    self.start_date ||= nil
     self.completed_date ||= nil
     self.private ||= false
     self.rating ||= 0
