@@ -8,7 +8,7 @@ module Types
     field :games_by_status_for_a_user, resolver: Queries::UserGames::GamesByStatusForAUser
     field :get_user_game_by_game_id, resolver: Queries::UserGames::GetUserGameByGameId
 
-    field :get_genres_platforms_tags, resolver: Queries::Game::GenresPlatformsTags
+    field :get_game_filters, resolver: Queries::Game::GetGameFilters
 
     field :get_all_games_by_platform, resolver: Queries::Game::GetAllGamesByPlatform
     field :get_all_games_by_genre, resolver: Queries::Game::GetAllGamesByGenre
