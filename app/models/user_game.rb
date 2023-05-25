@@ -9,7 +9,8 @@ class UserGame < ApplicationRecord
     self.completed_date ||= nil
     self.private ||= false
     self.rating ||= 0
-    self.review ||= ""
+    # self.review ||= ""
+    self.game_note ||= ""
   end
 
   has_many :game_journals

@@ -598,7 +598,7 @@ Game.create(
 #     start_date: Faker::Date.between(from: "2014-09-23", to: "2021-09-25"),
 #     completed_date: Faker::Date.between(from: "2014-09-23", to: "2021-09-25"),
 #     private: Faker::Boolean.boolean(true_ratio: 0.5),
-#     rating: Faker::Number.between(from: 1, to: 5), review: Faker::Lorem.paragraph(sentence_count: 2),
+#     rating: Faker::Number.between(from: 1, to: 5), game_note: Faker::Lorem.paragraph(sentence_count: 2),
 #   )
 # end
 
@@ -634,7 +634,7 @@ user_game_1 = UserGame.create(
   completed_date: Faker::Date.between(from: "2014-09-23", to: "2021-09-25"),
   private: Faker::Boolean.boolean(true_ratio: 0.5),
   rating: Faker::Number.between(from: 1, to: 5),
-  review: Faker::Lorem.paragraph(sentence_count: 2),
+  game_note: Faker::Lorem.paragraph(sentence_count: 2),
 )
 
 5.times do
@@ -652,7 +652,7 @@ user_game_2 = UserGame.create(
   completed_date: Faker::Date.between(from: "2014-09-23", to: "2021-09-25"),
   private: Faker::Boolean.boolean(true_ratio: 0.5),
   rating: Faker::Number.between(from: 1, to: 5),
-  review: Faker::Lorem.paragraph(sentence_count: 2),
+  game_note: Faker::Lorem.paragraph(sentence_count: 2),
 )
 
 5.times do
@@ -670,7 +670,7 @@ user_game_3 = UserGame.create(
   completed_date: Faker::Date.between(from: "2014-09-23", to: "2021-09-25"),
   private: Faker::Boolean.boolean(true_ratio: 0.5),
   rating: Faker::Number.between(from: 1, to: 5),
-  review: Faker::Lorem.paragraph(sentence_count: 2),
+  game_note: Faker::Lorem.paragraph(sentence_count: 2),
 )
 
 5.times do

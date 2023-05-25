@@ -283,7 +283,7 @@ CREATE TABLE public.user_games (
     completed_date timestamp without time zone,
     private boolean,
     rating integer,
-    review text,
+    game_note text,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
     game_status character varying
@@ -582,6 +582,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20230525013229'),
 ('20230525013743'),
 ('20230525070255'),
-('20230525210913');
+('20230525210913'),
+('20230525214716');
 
 
