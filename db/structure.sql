@@ -39,6 +39,38 @@ CREATE TABLE public.ar_internal_metadata (
 
 
 --
+-- Name: follows; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.follows (
+    id bigint NOT NULL,
+    follower_id bigint,
+    followed_id bigint,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: follows_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.follows_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: follows_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.follows_id_seq OWNED BY public.follows.id;
+
+
+--
 -- Name: games; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -316,6 +348,13 @@ ALTER SEQUENCE public.users_id_seq OWNED BY public.users.id;
 
 
 --
+-- Name: follows id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.follows ALTER COLUMN id SET DEFAULT nextval('public.follows_id_seq'::regclass);
+
+
+--
 -- Name: games id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -370,6 +409,14 @@ ALTER TABLE ONLY public.users ALTER COLUMN id SET DEFAULT nextval('public.users_
 
 ALTER TABLE ONLY public.ar_internal_metadata
     ADD CONSTRAINT ar_internal_metadata_pkey PRIMARY KEY (key);
+
+
+--
+-- Name: follows follows_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.follows
+    ADD CONSTRAINT follows_pkey PRIMARY KEY (id);
 
 
 --
@@ -437,6 +484,20 @@ ALTER TABLE ONLY public.users
 
 
 --
+-- Name: index_follows_on_followed_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_follows_on_followed_id ON public.follows USING btree (followed_id);
+
+
+--
+-- Name: index_follows_on_follower_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_follows_on_follower_id ON public.follows USING btree (follower_id);
+
+
+--
 -- Name: index_user_game_notes_on_user_game_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -474,6 +535,22 @@ ALTER TABLE ONLY public.user_games
 
 
 --
+-- Name: follows fk_rails_5ef72a3867; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.follows
+    ADD CONSTRAINT fk_rails_5ef72a3867 FOREIGN KEY (followed_id) REFERENCES public.users(id);
+
+
+--
+-- Name: follows fk_rails_622d34a301; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.follows
+    ADD CONSTRAINT fk_rails_622d34a301 FOREIGN KEY (follower_id) REFERENCES public.users(id);
+
+
+--
 -- Name: user_games fk_rails_a05b45437a; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -503,6 +580,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20230502192510'),
 ('20230513052953'),
 ('20230525013229'),
-('20230525013743');
+('20230525013743'),
+('20230525070255');
 
 

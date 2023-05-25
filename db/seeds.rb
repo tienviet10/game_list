@@ -613,6 +613,19 @@ user1 = User.create(
   listsOrder: "planning,playing,completed,paused,dropped",
 )
 
+10.times do
+  User.create(
+    username: Faker::Name.name,
+    email: Faker::Internet.email,
+    password: "password",
+    banner_picture: Faker::LoremFlickr.image(size: "500x300", search_terms: ["profile"]),
+    user_picture: Faker::LoremFlickr.image(size: "300x300", search_terms: ["profile"]),
+    bio: Faker::Lorem.paragraph(sentence_count: 2),
+    is_active: true,
+    listsOrder: "planning,playing,completed,paused,dropped",
+  )
+end
+
 user_game_1 = UserGame.create(
   user_id: user1.id,
   game_id: game1.id,
@@ -647,7 +660,6 @@ user_game_2 = UserGame.create(
   UserGameNote.create(
     user_game_id: user_game_2.id,
     game_note: Faker::Lorem.paragraph(sentence_count: 2),
-
   )
 end
 
@@ -666,6 +678,5 @@ user_game_3 = UserGame.create(
   UserGameNote.create(
     user_game_id: user_game_3.id,
     game_note: Faker::Lorem.paragraph(sentence_count: 2),
-
   )
 end
