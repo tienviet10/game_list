@@ -17,7 +17,7 @@ module Types
       field :updated_at, GraphQL::Types::ISO8601DateTime, null: false
 
       def game_notes
-        object.game_notes.map(&:game_note)
+        object.user_game_notes.map(&:game_note)
       end
     end
   end
