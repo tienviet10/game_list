@@ -12,7 +12,7 @@ class UserGame < ApplicationRecord
     self.review ||= ""
   end
 
-  has_many :user_game_notes
+  has_many :game_journals
   belongs_to :user
   belongs_to :game
 end

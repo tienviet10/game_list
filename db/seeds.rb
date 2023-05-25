@@ -638,10 +638,9 @@ user_game_1 = UserGame.create(
 )
 
 5.times do
-  UserGameNote.create(
+  GameJournal.create(
     user_game_id: user_game_1.id,
-    game_note: Faker::Lorem.paragraph(sentence_count: 2),
-
+    game_journal: Faker::Lorem.paragraph(sentence_count: 2),
   )
 end
 
@@ -657,9 +656,9 @@ user_game_2 = UserGame.create(
 )
 
 5.times do
-  UserGameNote.create(
+  GameJournal.create(
     user_game_id: user_game_2.id,
-    game_note: Faker::Lorem.paragraph(sentence_count: 2),
+    game_journal: Faker::Lorem.paragraph(sentence_count: 2),
   )
 end
 
@@ -675,8 +674,8 @@ user_game_3 = UserGame.create(
 )
 
 5.times do
-  UserGameNote.create(
+  GameJournal.create(
     user_game_id: user_game_3.id,
-    game_note: Faker::Lorem.paragraph(sentence_count: 2),
+    game_journal: Faker::Lorem.paragraph(sentence_count: 2),
   )
 end
