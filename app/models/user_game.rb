@@ -5,7 +5,6 @@ class UserGame < ApplicationRecord
 
   def set_default_values
     self.game_status ||= nil
-    self.game_note ||= ""
     self.start_date ||= nil
     self.completed_date ||= nil
     self.private ||= false
@@ -13,6 +12,7 @@ class UserGame < ApplicationRecord
     self.review ||= ""
   end
 
+  has_many :user_game_notes
   belongs_to :user
   belongs_to :game
 end

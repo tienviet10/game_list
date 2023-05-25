@@ -208,6 +208,38 @@ ALTER SEQUENCE public.tags_id_seq OWNED BY public.tags.id;
 
 
 --
+-- Name: user_game_notes; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.user_game_notes (
+    id bigint NOT NULL,
+    user_game_id bigint NOT NULL,
+    game_note text,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: user_game_notes_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.user_game_notes_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: user_game_notes_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.user_game_notes_id_seq OWNED BY public.user_game_notes.id;
+
+
+--
 -- Name: user_games; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -215,15 +247,14 @@ CREATE TABLE public.user_games (
     id bigint NOT NULL,
     user_id bigint NOT NULL,
     game_id bigint NOT NULL,
-    game_status public.game_status,
-    game_note text,
     start_date timestamp without time zone,
     completed_date timestamp without time zone,
     private boolean,
     rating integer,
     review text,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    game_status character varying
 );
 
 
@@ -313,6 +344,13 @@ ALTER TABLE ONLY public.tags ALTER COLUMN id SET DEFAULT nextval('public.tags_id
 
 
 --
+-- Name: user_game_notes id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.user_game_notes ALTER COLUMN id SET DEFAULT nextval('public.user_game_notes_id_seq'::regclass);
+
+
+--
 -- Name: user_games id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -375,6 +413,14 @@ ALTER TABLE ONLY public.tags
 
 
 --
+-- Name: user_game_notes user_game_notes_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.user_game_notes
+    ADD CONSTRAINT user_game_notes_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: user_games user_games_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -391,6 +437,13 @@ ALTER TABLE ONLY public.users
 
 
 --
+-- Name: index_user_game_notes_on_user_game_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_user_game_notes_on_user_game_id ON public.user_game_notes USING btree (user_game_id);
+
+
+--
 -- Name: index_user_games_on_game_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -402,6 +455,14 @@ CREATE INDEX index_user_games_on_game_id ON public.user_games USING btree (game_
 --
 
 CREATE INDEX index_user_games_on_user_id ON public.user_games USING btree (user_id);
+
+
+--
+-- Name: user_game_notes fk_rails_383db603cd; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.user_game_notes
+    ADD CONSTRAINT fk_rails_383db603cd FOREIGN KEY (user_game_id) REFERENCES public.user_games(id);
 
 
 --
@@ -440,6 +501,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20230429013042'),
 ('20230429054255'),
 ('20230502192510'),
-('20230513052953');
+('20230513052953'),
+('20230525013229'),
+('20230525013743');
 
 
