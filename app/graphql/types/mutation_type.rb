@@ -7,5 +7,8 @@ module Types
     field :add_user_games, mutation: Mutations::UserGames::AddUserGames
     field :delete_user_games, mutation: Mutations::UserGames::DeleteUserGames
     field :edit_user_games, mutation: Mutations::UserGames::EditUserGames
+
+    field :add_follows_by_id, mutation: Mutations::Users::AddFollowsById
+    field :remove_follows_by_id, mutation: Mutations::Users::RemoveFollowsById
   end
 end
