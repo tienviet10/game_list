@@ -12,9 +12,14 @@ module Types
       field :avg_score, Float, null: true
       field :total_rating, Integer, null: true
 
+      field :is_game_added, Boolean, null: false
       field :genres, [String], null: false
       field :tags, [String], null: false
       field :platforms, [String], null: false
+
+      def is_game_added
+        object.user_games.where(user_id: context[:current_user]).exists?
+      end
 
       def genres
         object.genres.map(&:name)

@@ -301,7 +301,7 @@ Game.create(
 
 Game.create(
   name: "Warhammer 40,000: Boltgun",
-  description: "Load up your Boltgun and unleash the awesome Space Marine arsenal to blast your way through an explosion of sprites, pixels and blood in a perfect blend of Warhammer 40,000, frenetic gameplay and the stylish visuals of 90’s retro shooters.",
+  description: "Load up your Boltgun and unleash the awesome Space Marine arsenal to blast your way through an explosion of sprites, pixels and blood in a perfect blend of Warhammer 40,000, frenetic gameplay and the stylish visuals of 90's retro shooters.",
   imageURL: "https://images.igdb.com/igdb/image/upload/t_cover_big/co4taa.png",
   bannerURL: "https://images.igdb.com/igdb/image/upload/t_screenshot_big/sch75h.jpg",
   releaseDate: "2020-09-25",
@@ -431,7 +431,7 @@ Game.create(
 
 Game.create(
   name: "Pepper Grinder",
-  description: "Pepper Grinder is an action platformer designed to be alot like oldschool Nintendo titles like Donkey Kong Country, Yoshi’s Island, and Super Mario World. Pepper uses her drill (Grinder, obviously) to plow through layers of soft dirt and launch herself into the air as she maneuvers herself across the landscape of each level.",
+  description: "Pepper Grinder is an action platformer designed to be alot like oldschool Nintendo titles like Donkey Kong Country, Yoshi's Island, and Super Mario World. Pepper uses her drill (Grinder, obviously) to plow through layers of soft dirt and launch herself into the air as she maneuvers herself across the landscape of each level.",
   imageURL: "https://images.igdb.com/igdb/image/upload/t_cover_big/co6bv5.png",
   bannerURL: "https://images.igdb.com/igdb/image/upload/t_screenshot_big/sc5qv5.jpg",
   releaseDate: "2011-09-23",
@@ -496,7 +496,7 @@ Game.create(
 
 Game.create(
   name: "Octopath Traveler II",
-  description: "This game is a brand-new entry in the Octopath Traveler series. It takes the series’ HD-2D graphics, a fusion of retro pixel art and 3DCG, to even greater heights.
+  description: "This game is a brand-new entry in the Octopath Traveler series. It takes the series' HD-2D graphics, a fusion of retro pixel art and 3DCG, to even greater heights.
   In the world of Solistia, eight new travelers venture forth into an exciting new era.
   Where will you go? What will you do? Whose tale will you bring to life?
   Every path is yours to take. Embark on an adventure all your own.",
@@ -511,8 +511,8 @@ Game.create(
 )
 
 Game.create(
-  name: "Pokémon Shield",
-  description: "The world of Pokémon expands to include the Galar region in Pokémon Sword and Pokémon Shield!",
+  name: "Pokemon Shield",
+  description: "The world of Pokemon expands to include the Galar region in Pokemon Sword and Pokemon Shield!",
   imageURL: "https://images.igdb.com/igdb/image/upload/t_cover_big/co1zk1.png",
   bannerURL: "https://images.igdb.com/igdb/image/upload/t_screenshot_big/sc67pi.jpg",
   releaseDate: "2013-05-25",
@@ -525,7 +525,7 @@ Game.create(
 
 Game.create(
   name: "Rocket League",
-  description: "Rocket League is a high-powered hybrid of arcade-style soccer and vehicular mayhem with easy-to-understand controls and fluid, physics-driven competition. Rocket League includes casual and competitive Online Matches, a fully-featured offline Season Mode, special “Mutators” that let you change the rules entirely, hockey and basketball-inspired Extra Modes, and more than 500 trillion possible cosmetic customization combinations.",
+  description: "Rocket League is a high-powered hybrid of arcade-style soccer and vehicular mayhem with easy-to-understand controls and fluid, physics-driven competition. Rocket League includes casual and competitive Online Matches, a fully-featured offline Season Mode, special 'Mutators' that let you change the rules entirely, hockey and basketball-inspired Extra Modes, and more than 500 trillion possible cosmetic customization combinations.",
   imageURL: "https://images.igdb.com/igdb/image/upload/t_cover_big/co5w0w.png",
   bannerURL: "https://images.igdb.com/igdb/image/upload/t_screenshot_big/ygepetru87ka9nzqowr6.jpg",
   releaseDate: "2021-06-15",
@@ -598,7 +598,7 @@ Game.create(
 #     start_date: Faker::Date.between(from: "2014-09-23", to: "2021-09-25"),
 #     completed_date: Faker::Date.between(from: "2014-09-23", to: "2021-09-25"),
 #     private: Faker::Boolean.boolean(true_ratio: 0.5),
-#     rating: Faker::Number.between(from: 1, to: 5), review: Faker::Lorem.paragraph(sentence_count: 2),
+#     rating: Faker::Number.between(from: 1, to: 5), game_note: Faker::Lorem.paragraph(sentence_count: 2),
 #   )
 # end
 
@@ -613,38 +613,69 @@ user1 = User.create(
   listsOrder: "planning,playing,completed,paused,dropped",
 )
 
-UserGame.create(
+10.times do
+  User.create(
+    username: Faker::Name.name,
+    email: Faker::Internet.email,
+    password: "password",
+    banner_picture: Faker::LoremFlickr.image(size: "500x300", search_terms: ["profile"]),
+    user_picture: Faker::LoremFlickr.image(size: "300x300", search_terms: ["profile"]),
+    bio: Faker::Lorem.paragraph(sentence_count: 2),
+    is_active: true,
+    listsOrder: "planning,playing,completed,paused,dropped",
+  )
+end
+
+user_game_1 = UserGame.create(
   user_id: user1.id,
   game_id: game1.id,
   game_status: :Planning,
-  game_note: Faker::Lorem.paragraph(sentence_count: 2),
   start_date: Faker::Date.between(from: "2014-09-23", to: "2021-09-25"),
   completed_date: Faker::Date.between(from: "2014-09-23", to: "2021-09-25"),
   private: Faker::Boolean.boolean(true_ratio: 0.5),
   rating: Faker::Number.between(from: 1, to: 5),
-  review: Faker::Lorem.paragraph(sentence_count: 2),
+  game_note: Faker::Lorem.paragraph(sentence_count: 2),
 )
 
-UserGame.create(
+5.times do
+  GameJournal.create(
+    user_game_id: user_game_1.id,
+    game_journal: Faker::Lorem.paragraph(sentence_count: 2),
+  )
+end
+
+user_game_2 = UserGame.create(
   user_id: user1.id,
   game_id: game2.id,
   game_status: :Playing,
-  game_note: Faker::Lorem.paragraph(sentence_count: 2),
   start_date: Faker::Date.between(from: "2014-09-23", to: "2021-09-25"),
   completed_date: Faker::Date.between(from: "2014-09-23", to: "2021-09-25"),
   private: Faker::Boolean.boolean(true_ratio: 0.5),
   rating: Faker::Number.between(from: 1, to: 5),
-  review: Faker::Lorem.paragraph(sentence_count: 2),
+  game_note: Faker::Lorem.paragraph(sentence_count: 2),
 )
 
-UserGame.create(
+5.times do
+  GameJournal.create(
+    user_game_id: user_game_2.id,
+    game_journal: Faker::Lorem.paragraph(sentence_count: 2),
+  )
+end
+
+user_game_3 = UserGame.create(
   user_id: user1.id,
   game_id: game3.id,
   game_status: :Playing,
-  game_note: Faker::Lorem.paragraph(sentence_count: 2),
   start_date: Faker::Date.between(from: "2014-09-23", to: "2021-09-25"),
   completed_date: Faker::Date.between(from: "2014-09-23", to: "2021-09-25"),
   private: Faker::Boolean.boolean(true_ratio: 0.5),
   rating: Faker::Number.between(from: 1, to: 5),
-  review: Faker::Lorem.paragraph(sentence_count: 2),
+  game_note: Faker::Lorem.paragraph(sentence_count: 2),
 )
+
+5.times do
+  GameJournal.create(
+    user_game_id: user_game_3.id,
+    game_journal: Faker::Lorem.paragraph(sentence_count: 2),
+  )
+end

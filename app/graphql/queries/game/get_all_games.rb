@@ -12,6 +12,20 @@ module Queries
       def resolve(platform: nil, genre: nil, tag: nil, year: nil)
         allGames = ::Game.all
 
+        # Determine if the game is added by the user
+        # user = ::User.find_by(id: context[:current_user])
+        # if user.present?
+        #   allGames = allGames.map do |game|
+        #     game.is_game_added = user.user_games.exists?(game_id: game.id)
+        #     game
+        #   end
+        # else
+        #   allGames = allGames.map do |game|
+        #     game.isGameAdded = false
+        #     game
+        #   end
+        # end
+
         # Return games by platform if platform argument is provided
         if (platform.present?)
           allGames = add_filter(allGames, :platforms, :name, platform)

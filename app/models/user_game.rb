@@ -5,14 +5,15 @@ class UserGame < ApplicationRecord
 
   def set_default_values
     self.game_status ||= nil
-    self.game_note ||= ""
     self.start_date ||= nil
     self.completed_date ||= nil
     self.private ||= false
     self.rating ||= 0
-    self.review ||= ""
+    # self.review ||= ""
+    self.game_note ||= ""
   end
 
+  has_many :game_journals
   belongs_to :user
   belongs_to :game
 end
