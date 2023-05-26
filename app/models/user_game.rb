@@ -9,11 +9,10 @@ class UserGame < ApplicationRecord
     self.completed_date ||= nil
     self.private ||= false
     self.rating ||= 0
-    # self.review ||= ""
     self.game_note ||= ""
   end
 
-  has_many :game_journals
+  has_many :game_journals, dependent: :destroy
   belongs_to :user
   belongs_to :game
 end
