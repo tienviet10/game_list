@@ -8,13 +8,15 @@ class User < ApplicationRecord
   validate :password_presence_on_update, on: :update
   validates :password, length: { minimum: 6 }, on: :create
 
-  has_many :user_games
+  has_many :user_games, dependent: :destroy
   has_many :games, through: :user_games
 
   has_many :follows, foreign_key: :follower_id, dependent: :destroy
   has_many :inverse_follows, foreign_key: :followed_id, class_name: "Follow", dependent: :destroy
   has_many :followed_users, through: :follows, source: :followed
   has_many :followers, through: :inverse_follows, source: :follower
+
+  has_many :game_journals, dependent: :destroy
 
   private
 

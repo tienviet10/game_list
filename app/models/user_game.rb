@@ -12,7 +12,6 @@ class UserGame < ApplicationRecord
     self.game_note ||= ""
   end
 
-  has_many :game_journals, dependent: :destroy
   belongs_to :user
   belongs_to :game
 end

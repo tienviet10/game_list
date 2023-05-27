@@ -76,8 +76,9 @@ ALTER SEQUENCE public.follows_id_seq OWNED BY public.follows.id;
 
 CREATE TABLE public.game_journals (
     id bigint NOT NULL,
-    user_game_id bigint NOT NULL,
-    game_journal text,
+    game_id bigint NOT NULL,
+    user_id bigint NOT NULL,
+    content text,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL
 );
@@ -498,10 +499,17 @@ CREATE INDEX index_follows_on_follower_id ON public.follows USING btree (followe
 
 
 --
--- Name: index_game_journals_on_user_game_id; Type: INDEX; Schema: public; Owner: -
+-- Name: index_game_journals_on_game_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_game_journals_on_user_game_id ON public.game_journals USING btree (user_game_id);
+CREATE INDEX index_game_journals_on_game_id ON public.game_journals USING btree (game_id);
+
+
+--
+-- Name: index_game_journals_on_user_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_game_journals_on_user_id ON public.game_journals USING btree (user_id);
 
 
 --
@@ -519,11 +527,11 @@ CREATE INDEX index_user_games_on_user_id ON public.user_games USING btree (user_
 
 
 --
--- Name: game_journals fk_rails_383db603cd; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: game_journals fk_rails_193a9dcb98; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.game_journals
-    ADD CONSTRAINT fk_rails_383db603cd FOREIGN KEY (user_game_id) REFERENCES public.user_games(id);
+    ADD CONSTRAINT fk_rails_193a9dcb98 FOREIGN KEY (game_id) REFERENCES public.games(id);
 
 
 --
@@ -559,6 +567,14 @@ ALTER TABLE ONLY public.user_games
 
 
 --
+-- Name: game_journals fk_rails_e27cca67d8; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.game_journals
+    ADD CONSTRAINT fk_rails_e27cca67d8 FOREIGN KEY (user_id) REFERENCES public.users(id);
+
+
+--
 -- PostgreSQL database dump complete
 --
 
@@ -583,6 +599,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20230525013743'),
 ('20230525070255'),
 ('20230525210913'),
-('20230525214716');
+('20230525214716'),
+('20230526234618'),
+('20230526235838');
 
 
