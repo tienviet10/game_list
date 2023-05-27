@@ -8,13 +8,11 @@ module Mutations
       argument :private, Boolean, required: false
       argument :start_date, GraphQL::Types::ISO8601DateTime, required: false
       argument :completed_date, GraphQL::Types::ISO8601DateTime, required: false
-      # CREATE NEW INSTANCE OF GAME_JOURNAL IF EXIST
-      argument :journals, String, required: false
 
       field :user_game, Types::UserGame::UserGameType, null: true
       field :errors, [String], null: true
 
-      def resolve(game_id:, game_status: nil, rating: nil, journals: nil, game_note: nil, private: nil, start_date: nil, completed_date: nil)
+      def resolve(game_id:, game_status: nil, rating: nil, game_note: nil, private: nil, start_date: nil, completed_date: nil)
         begin
           current_user = context[:current_user] unless context[:current_user].nil?
         rescue => e
@@ -31,11 +29,6 @@ module Mutations
             return { user_game: nil, errors: [e.message] }
           end
           userGame.rating = rating unless rating.nil?
-          # userGame.game_note = game_note unless game_note.nil?
-          if journals.present?
-            journals_1 = GameJournal.new(game_journal: journals)
-            userGame.game_journals << journals_1
-          end
 
           userGame.game_note = game_note unless game_note.nil?
           userGame.private = private unless private.nil?
