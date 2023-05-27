@@ -18,5 +18,7 @@ module Types
     field :get_user_by_id, resolver: Queries::User::GetUserById
 
     field :get_all_follows, resolver: Queries::User::GetAllFollows
+
+    field :get_all_status_updates_for_a_user, resolver: Queries::UserGames::GetAllStatusUpdatesForAUser
   end
 end
