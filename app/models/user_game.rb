@@ -14,4 +14,27 @@ class UserGame < ApplicationRecord
 
   belongs_to :user
   belongs_to :game
+
+  has_many :status_updates, dependent: :destroy
+
+  # HERE IS THE MAGIC THAT CREATE OR UPDATE THE USERGAME WILL CREATE A STATUS UPDATE
+  after_create :create_initial_status_update
+  after_update :create_status_update_on_status_change
+
+  def create_initial_status_update
+    create_status_update
+  end
+
+  def create_status_update_on_status_change
+    return unless saved_change_to_game_status?
+
+    create_status_update
+  end
+
+  private
+
+  def create_status_update
+    status = Status.find_by(status: game_status)
+    status_updates.create(status: status, user_game: self)
+  end
 end

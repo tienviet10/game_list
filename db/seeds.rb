@@ -68,6 +68,12 @@ platforms = [
 
 ]
 
+Status.create(status: "Planning")
+Status.create(status: "Playing")
+Status.create(status: "Completed")
+Status.create(status: "Paused")
+Status.create(status: "Dropped")
+
 genres.each do |genre|
   Genre.create(name: genre)
 end
