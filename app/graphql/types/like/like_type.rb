@@ -13,7 +13,13 @@ module Types
       end
 
       def likeable
-        p "object.likeable_type: #{object}"
+        # object.likeable_type = "StatusUpdate"
+        # object: {
+        #   id: "1",
+        #   likeable_id: status_update.id,
+        #   likeable_type: "StatusUpdate",
+        #   user_id: like.user_id,
+        #}
         object.likeable_type.constantize.find(object.likeable_id)
       end
     end

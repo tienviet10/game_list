@@ -3,7 +3,7 @@ module Queries
     class GetAllStatusUpdatesForAUser < Queries::BaseQuery
       description "Get all status updates for a user"
 
-      type [Types::UserGame::GameStatusType], null: false
+      type [Types::UserGame::StatusUpdateType], null: false
 
       def resolve()
         raise GraphQL::ExecutionError, "User not authenticated" unless context[:current_user]
@@ -12,14 +12,7 @@ module Queries
 
         status_order_by_update = all_user_game.map do |user_game|
           user_game.status_updates.map do |status_update|
-            {
-              "id" => status_update.id,
-              "status" => ::Status.find(status_update.status_id).status,
-              "game_name" => user_game.game.name,
-              "game_id" => user_game.game.id,
-              "updated_at" => status_update.updated_at,
-              "imageURL" => user_game.game.imageURL,
-            }
+            status_update
           end
         end
 
