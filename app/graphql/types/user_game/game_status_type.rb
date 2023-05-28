@@ -1,6 +1,7 @@
 module Types
   module UserGame
     class GameStatusType < Types::BaseObject
+      field :id, ID, null: false
       field :status, String, null: false
       field :game_name, String, null: false
       field :game_id, ID, null: false

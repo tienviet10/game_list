@@ -10,5 +10,8 @@ module Types
 
     field :add_follows_by_id, mutation: Mutations::Users::AddFollowsById
     field :remove_follows_by_id, mutation: Mutations::Users::RemoveFollowsById
+
+    field :add_like_to_likeable, mutation: Mutations::Likes::AddLikeToLikeable
+    field :remove_like_from_likeable, mutation: Mutations::Likes::RemoveLikeFromLikeable
   end
 end
