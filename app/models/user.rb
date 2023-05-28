@@ -18,6 +18,8 @@ class User < ApplicationRecord
 
   has_many :game_journals, dependent: :destroy
 
+  has_many :likes, dependent: :destroy
+
   private
 
   def password_presence_on_update
