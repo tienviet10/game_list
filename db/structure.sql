@@ -76,8 +76,9 @@ ALTER SEQUENCE public.follows_id_seq OWNED BY public.follows.id;
 
 CREATE TABLE public.game_journals (
     id bigint NOT NULL,
-    user_game_id bigint NOT NULL,
-    game_journal text,
+    game_id bigint NOT NULL,
+    user_id bigint NOT NULL,
+    content text,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL
 );
@@ -241,6 +242,69 @@ CREATE TABLE public.schema_migrations (
 
 
 --
+-- Name: status_updates; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.status_updates (
+    id bigint NOT NULL,
+    user_game_id bigint NOT NULL,
+    status_id bigint NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: status_updates_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.status_updates_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: status_updates_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.status_updates_id_seq OWNED BY public.status_updates.id;
+
+
+--
+-- Name: statuses; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.statuses (
+    id bigint NOT NULL,
+    status character varying,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: statuses_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.statuses_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: statuses_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.statuses_id_seq OWNED BY public.statuses.id;
+
+
+--
 -- Name: tags; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -383,6 +447,20 @@ ALTER TABLE ONLY public.platforms ALTER COLUMN id SET DEFAULT nextval('public.pl
 
 
 --
+-- Name: status_updates id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.status_updates ALTER COLUMN id SET DEFAULT nextval('public.status_updates_id_seq'::regclass);
+
+
+--
+-- Name: statuses id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.statuses ALTER COLUMN id SET DEFAULT nextval('public.statuses_id_seq'::regclass);
+
+
+--
 -- Name: tags id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -460,6 +538,22 @@ ALTER TABLE ONLY public.schema_migrations
 
 
 --
+-- Name: status_updates status_updates_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.status_updates
+    ADD CONSTRAINT status_updates_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: statuses statuses_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.statuses
+    ADD CONSTRAINT statuses_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: tags tags_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -498,10 +592,31 @@ CREATE INDEX index_follows_on_follower_id ON public.follows USING btree (followe
 
 
 --
--- Name: index_game_journals_on_user_game_id; Type: INDEX; Schema: public; Owner: -
+-- Name: index_game_journals_on_game_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_game_journals_on_user_game_id ON public.game_journals USING btree (user_game_id);
+CREATE INDEX index_game_journals_on_game_id ON public.game_journals USING btree (game_id);
+
+
+--
+-- Name: index_game_journals_on_user_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_game_journals_on_user_id ON public.game_journals USING btree (user_id);
+
+
+--
+-- Name: index_status_updates_on_status_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_status_updates_on_status_id ON public.status_updates USING btree (status_id);
+
+
+--
+-- Name: index_status_updates_on_user_game_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_status_updates_on_user_game_id ON public.status_updates USING btree (user_game_id);
 
 
 --
@@ -519,11 +634,19 @@ CREATE INDEX index_user_games_on_user_id ON public.user_games USING btree (user_
 
 
 --
--- Name: game_journals fk_rails_383db603cd; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: status_updates fk_rails_007881d083; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.status_updates
+    ADD CONSTRAINT fk_rails_007881d083 FOREIGN KEY (user_game_id) REFERENCES public.user_games(id);
+
+
+--
+-- Name: game_journals fk_rails_193a9dcb98; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.game_journals
-    ADD CONSTRAINT fk_rails_383db603cd FOREIGN KEY (user_game_id) REFERENCES public.user_games(id);
+    ADD CONSTRAINT fk_rails_193a9dcb98 FOREIGN KEY (game_id) REFERENCES public.games(id);
 
 
 --
@@ -559,6 +682,22 @@ ALTER TABLE ONLY public.user_games
 
 
 --
+-- Name: game_journals fk_rails_e27cca67d8; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.game_journals
+    ADD CONSTRAINT fk_rails_e27cca67d8 FOREIGN KEY (user_id) REFERENCES public.users(id);
+
+
+--
+-- Name: status_updates fk_rails_ea2637c252; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.status_updates
+    ADD CONSTRAINT fk_rails_ea2637c252 FOREIGN KEY (status_id) REFERENCES public.statuses(id);
+
+
+--
 -- PostgreSQL database dump complete
 --
 
@@ -583,6 +722,10 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20230525013743'),
 ('20230525070255'),
 ('20230525210913'),
-('20230525214716');
+('20230525214716'),
+('20230526234618'),
+('20230526235838'),
+('20230527033635'),
+('20230527034609');
 
 

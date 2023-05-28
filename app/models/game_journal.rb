@@ -1,5 +1,4 @@
 class GameJournal < ApplicationRecord
-  belongs_to :user_game
-
-  # alias_attribute :game_journal, :game_note
+  belongs_to :game
+  belongs_to :user
 end

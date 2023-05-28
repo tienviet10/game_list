@@ -68,6 +68,12 @@ platforms = [
 
 ]
 
+Status.create(status: "Planning")
+Status.create(status: "Playing")
+Status.create(status: "Completed")
+Status.create(status: "Paused")
+Status.create(status: "Dropped")
+
 genres.each do |genre|
   Genre.create(name: genre)
 end
@@ -639,8 +645,9 @@ user_game_1 = UserGame.create(
 
 5.times do
   GameJournal.create(
-    user_game_id: user_game_1.id,
-    game_journal: Faker::Lorem.paragraph(sentence_count: 2),
+    user_id: user1.id,
+    game_id: game1.id,
+    content: Faker::Lorem.paragraph(sentence_count: 2),
   )
 end
 
@@ -657,8 +664,9 @@ user_game_2 = UserGame.create(
 
 5.times do
   GameJournal.create(
-    user_game_id: user_game_2.id,
-    game_journal: Faker::Lorem.paragraph(sentence_count: 2),
+    user_id: user1.id,
+    game_id: game2.id,
+    content: Faker::Lorem.paragraph(sentence_count: 2),
   )
 end
 
@@ -675,7 +683,8 @@ user_game_3 = UserGame.create(
 
 5.times do
   GameJournal.create(
-    user_game_id: user_game_3.id,
-    game_journal: Faker::Lorem.paragraph(sentence_count: 2),
+    user_id: user1.id,
+    game_id: game3.id,
+    content: Faker::Lorem.paragraph(sentence_count: 2),
   )
 end
