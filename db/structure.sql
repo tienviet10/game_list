@@ -202,6 +202,39 @@ ALTER SEQUENCE public.genres_id_seq OWNED BY public.genres.id;
 
 
 --
+-- Name: likes; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.likes (
+    id bigint NOT NULL,
+    user_id bigint NOT NULL,
+    likeable_type character varying NOT NULL,
+    likeable_id bigint NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: likes_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.likes_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: likes_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.likes_id_seq OWNED BY public.likes.id;
+
+
+--
 -- Name: platforms; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -440,6 +473,13 @@ ALTER TABLE ONLY public.genres ALTER COLUMN id SET DEFAULT nextval('public.genre
 
 
 --
+-- Name: likes id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.likes ALTER COLUMN id SET DEFAULT nextval('public.likes_id_seq'::regclass);
+
+
+--
 -- Name: platforms id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -519,6 +559,14 @@ ALTER TABLE ONLY public.games
 
 ALTER TABLE ONLY public.genres
     ADD CONSTRAINT genres_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: likes likes_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.likes
+    ADD CONSTRAINT likes_pkey PRIMARY KEY (id);
 
 
 --
@@ -606,6 +654,34 @@ CREATE INDEX index_game_journals_on_user_id ON public.game_journals USING btree 
 
 
 --
+-- Name: index_likes_on_likeable; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_likes_on_likeable ON public.likes USING btree (likeable_type, likeable_id);
+
+
+--
+-- Name: index_likes_on_likeable_type_and_likeable_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_likes_on_likeable_type_and_likeable_id ON public.likes USING btree (likeable_type, likeable_id);
+
+
+--
+-- Name: index_likes_on_user_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_likes_on_user_id ON public.likes USING btree (user_id);
+
+
+--
+-- Name: index_likes_on_user_id_and_likeable_type_and_likeable_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_likes_on_user_id_and_likeable_type_and_likeable_id ON public.likes USING btree (user_id, likeable_type, likeable_id);
+
+
+--
 -- Name: index_status_updates_on_status_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -647,6 +723,14 @@ ALTER TABLE ONLY public.status_updates
 
 ALTER TABLE ONLY public.game_journals
     ADD CONSTRAINT fk_rails_193a9dcb98 FOREIGN KEY (game_id) REFERENCES public.games(id);
+
+
+--
+-- Name: likes fk_rails_1e09b5dabf; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.likes
+    ADD CONSTRAINT fk_rails_1e09b5dabf FOREIGN KEY (user_id) REFERENCES public.users(id);
 
 
 --
@@ -726,6 +810,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20230526234618'),
 ('20230526235838'),
 ('20230527033635'),
-('20230527034609');
+('20230527034609'),
+('20230528013050');
 
 
