@@ -17,13 +17,12 @@ module Queries
               "game_name" => user_game.game.name,
               "game_id" => user_game.game.id,
               "updated_at" => status_update.updated_at,
+              "imageURL" => user_game.game.imageURL,
             }
           end
         end
 
-        result = status_order_by_update.flatten.sort_by { |status| status["updated_at"] }.reverse
-        p result
-        result
+        status_order_by_update.flatten.sort_by { |status| status["updated_at"] }.reverse
       rescue => e
         Rails.logger.error("Error retrieving all status updates for a user: #{e.message}")
         []
