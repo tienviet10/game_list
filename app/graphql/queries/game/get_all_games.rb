@@ -57,9 +57,9 @@ module Queries
           case sort_by
           when "name"
             allGames = allGames.order(name: :asc)
-          when "newest"
+          when "newest_releases"
             allGames = allGames.order(releaseDate: :desc)
-          when "oldest"
+          when "oldest_releases"
             allGames = allGames.order(releaseDate: :asc)
           when "avg_score"
             allGames = allGames.order(avg_score: :desc)
