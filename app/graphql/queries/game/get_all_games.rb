@@ -8,8 +8,10 @@ module Queries
       argument :genre, [String], required: false
       argument :tag, [String], required: false
       argument :year, Integer, required: false
+      argument :search, String, required: false
+      argument :sort_by, String, required: false
 
-      def resolve(platform: nil, genre: nil, tag: nil, year: nil)
+      def resolve(platform: nil, genre: nil, tag: nil, year: nil, search: nil, sort_by: nil)
         allGames = ::Game.all
 
         # Determine if the game is added by the user
@@ -44,6 +46,26 @@ module Queries
         # Return games by tag if year argument is provided
         if (year.present?)
           allGames = allGames.where('EXTRACT(YEAR FROM "releaseDate") = ?', year)
+        end
+
+        # Perform text search if search argument is provided
+        if (search.present?)
+          allGames = allGames.where("name ILIKE ?", "%#{search}%")
+        end
+
+        if (sort_by.present?)
+          case sort_by
+          when "name"
+            allGames = allGames.order(name: :asc)
+          when "newest"
+            allGames = allGames.order(releaseDate: :desc)
+          when "oldest"
+            allGames = allGames.order(releaseDate: :asc)
+          when "avg_score"
+            allGames = allGames.order(avg_score: :desc)
+          when "total_rating"
+            allGames = allGames.order(total_rating: :desc)
+          end
         end
 
         return allGames.distinct.group("games.id")
