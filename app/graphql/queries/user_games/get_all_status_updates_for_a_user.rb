@@ -10,13 +10,13 @@ module Queries
 
         all_user_game = ::UserGame.where(user_id: context[:current_user])
 
-        status_order_by_update = all_user_game.map do |user_game|
+        all_status_changes = all_user_game.map do |user_game|
           user_game.status_updates.map do |status_update|
             status_update
           end
         end
 
-        status_order_by_update.flatten.sort_by { |status| status["updated_at"] }.reverse
+        all_status_changes.flatten.sort_by { |status| status["updated_at"] }.reverse
       rescue => e
         Rails.logger.error("Error retrieving all status updates for a user: #{e.message}")
         []

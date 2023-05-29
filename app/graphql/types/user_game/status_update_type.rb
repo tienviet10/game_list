@@ -2,15 +2,11 @@ module Types
   module UserGame
     class StatusUpdateType < Types::BaseObject
       field :id, ID, null: false
-      field :status, String, null: false
+      field :status, String, null: true
       field :game_name, String, null: false
       field :game_id, ID, null: false
       field :updated_at, GraphQL::Types::ISO8601DateTime, null: false
       field :imageURL, String, null: false
-
-      def status
-        ::Status.find(object.status_id).status
-      end
 
       def game_name
         ::UserGame.find(object.user_game_id).game.name
