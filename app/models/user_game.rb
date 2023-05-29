@@ -27,14 +27,13 @@ class UserGame < ApplicationRecord
 
   def create_status_update_on_status_change
     return unless saved_change_to_game_status?
-
+    p "status changed"
     create_status_update
   end
 
   private
 
   def create_status_update
-    status = Status.find_by(status: game_status)
-    status_updates.create(status: status, user_game: self)
+    status_updates.create(status: game_status, user_game: self)
   end
 end
