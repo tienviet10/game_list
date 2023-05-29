@@ -281,9 +281,9 @@ CREATE TABLE public.schema_migrations (
 CREATE TABLE public.status_updates (
     id bigint NOT NULL,
     user_game_id bigint NOT NULL,
-    status_id bigint NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    status public.game_status
 );
 
 
@@ -682,13 +682,6 @@ CREATE UNIQUE INDEX index_likes_on_user_id_and_likeable_type_and_likeable_id ON 
 
 
 --
--- Name: index_status_updates_on_status_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_status_updates_on_status_id ON public.status_updates USING btree (status_id);
-
-
---
 -- Name: index_status_updates_on_user_game_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -774,14 +767,6 @@ ALTER TABLE ONLY public.game_journals
 
 
 --
--- Name: status_updates fk_rails_ea2637c252; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.status_updates
-    ADD CONSTRAINT fk_rails_ea2637c252 FOREIGN KEY (status_id) REFERENCES public.statuses(id);
-
-
---
 -- PostgreSQL database dump complete
 --
 
@@ -811,6 +796,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20230526235838'),
 ('20230527033635'),
 ('20230527034609'),
-('20230528013050');
+('20230528013050'),
+('20230529073403'),
+('20230529075517');
 
 
