@@ -9,9 +9,9 @@ module Queries
       argument :tag, [String], required: false
       argument :year, Integer, required: false
       argument :search, String, required: false
-      argument :sort_by, String, required: false
+      argument :sortBy, String, required: false
 
-      def resolve(platform: nil, genre: nil, tag: nil, year: nil, search: nil, sort_by: nil)
+      def resolve(platform: nil, genre: nil, tag: nil, year: nil, search: nil, sortBy: nil)
         allGames = ::Game.all
 
         # Determine if the game is added by the user
@@ -50,11 +50,11 @@ module Queries
 
         # Perform text search if search argument is provided
         if (search.present?)
-          allGames = allGames.where("name ILIKE ?", "%#{search}%")
+          allGames = allGames.where("games.name ILIKE ?", "%#{search}%")
         end
 
-        if (sort_by.present?)
-          case sort_by
+        if (sortBy.present?)
+          case sortBy
           when "name"
             allGames = allGames.order(name: :asc)
           when "newest_releases"
