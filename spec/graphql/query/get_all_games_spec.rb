@@ -27,7 +27,7 @@ describe Queries::Game::GetAllGames, type: :request do
              bannerURL: "https://images.igdb.com/igdb/image/upload/t_screenshot_big/gin55k9eyfq8udk0taym.jpg",
              releaseDate: "2014-09-23",
              avg_score: 4.5,
-             total_rating: 1000,
+             total_rating: 900,
              genres: [genre1, genre3, genre5],
              tags: [tag2, tag3, tag4],
              platforms: [platform1, platform2, platform3, platform4])
@@ -83,10 +83,24 @@ describe Queries::Game::GetAllGames, type: :request do
              bannerURL: "https://images.igdb.com/igdb/image/upload/t_screenshot_big/sckj6g.jpg",
              releaseDate: "2017-03-03",
              avg_score: 9.5,
-             total_rating: 1000,
+             total_rating: 690,
              genres: [genre1, genre5],
              tags: [tag2, tag3, tag4],
              platforms: [platform4])
+    }
+
+    let!(:game6) {
+      create(:game,
+             name: "Dark Souls II Scholar of the First Sin",
+             description: "Dark Souls II: Scholar of the First Sin is the complete Dark Souls II experience, adding to the 2014's critically acclaimed title, Dark Souls II not only its three DLC chapters; Crown Of The Sunken King, Crown Of The Old Iron King, and Crown Of The Ivory King but as well an array of all-new content.",
+             imageURL: "https://images.igdb.com/igdb/image/upload/t_cover_big/co20um.png",
+             bannerURL: "https://images.igdb.com/igdb/image/upload/t_screenshot_big/g8roegct3qyzmnubhoeb.jpg",
+             releaseDate: "2015-04-02",
+             avg_score: 8.5,
+             total_rating: 850,
+             genres: [genre1, genre5],
+             tags: [tag2, tag3, tag4],
+             platforms: [platform1, platform2, platform3])
     }
 
     it "returns all games with their genres, platforms, and tags (without filters)" do
@@ -95,7 +109,7 @@ describe Queries::Game::GetAllGames, type: :request do
       json_response = JSON.parse(response.body)
       games_response = json_response["data"]["allGames"]
 
-      expect(games_response.count).to eq(5)
+      expect(games_response.count).to eq(6)
     end
 
     it "returns all games with 1 specific platform (Nintendo Switch)" do
@@ -118,7 +132,7 @@ describe Queries::Game::GetAllGames, type: :request do
       end
     end
 
-    it "returns all games with 1 specific genre (Action)" do
+    it "returns all games with 2 specific genre (Action)" do
       variables = {
         "genre": [genre1.name],
       }
@@ -128,11 +142,12 @@ describe Queries::Game::GetAllGames, type: :request do
       json_response = JSON.parse(response.body)
       games_response = json_response["data"]["allGames"]
 
-      expect(games_response.count).to eq(4)
+      expect(games_response.count).to eq(5)
       expect(games_response).to include(include("name" => game1.name))
       expect(games_response).to include(include("name" => game3.name))
       expect(games_response).to include(include("name" => game4.name))
       expect(games_response).to include(include("name" => game5.name))
+      expect(games_response).to include(include("name" => game6.name))
 
       games_response.each do |game_response|
         expect(game_response["genres"]).to include(genre1.name)
@@ -149,11 +164,12 @@ describe Queries::Game::GetAllGames, type: :request do
       json_response = JSON.parse(response.body)
       games_response = json_response["data"]["allGames"]
 
-      expect(games_response.count).to eq(4)
+      expect(games_response.count).to eq(5)
       expect(games_response).to include(include("name" => game1.name))
       expect(games_response).to include(include("name" => game3.name))
       expect(games_response).to include(include("name" => game4.name))
       expect(games_response).to include(include("name" => game5.name))
+      expect(games_response).to include(include("name" => game6.name))
 
       games_response.each do |game_response|
         expect(game_response["tags"]).to include(tag2.name)
@@ -240,7 +256,7 @@ describe Queries::Game::GetAllGames, type: :request do
       json_response = JSON.parse(response.body)
       games_response = json_response["data"]["allGames"]
 
-      expect(games_response.count).to eq(4)
+      expect(games_response.count).to eq(5)
     end
 
     it "returns the correct games with multiple array filters" do
@@ -254,7 +270,7 @@ describe Queries::Game::GetAllGames, type: :request do
       json_response = JSON.parse(response.body)
       games_response = json_response["data"]["allGames"]
 
-      expect(games_response.count).to eq(4)
+      expect(games_response.count).to eq(5)
     end
 
     it "returns the correct game by a specific year" do
@@ -283,10 +299,149 @@ describe Queries::Game::GetAllGames, type: :request do
       expect(games_response.count).to eq(0)
     end
 
+    it "skips invalid entries (empty strings) from the search" do
+      variables = {
+        "tag": [""],
+      }
+
+      token = JWT.encode({ user_id: 0, exp: 7.days.from_now.to_i }, Rails.application.secrets.secret_key_base)
+      post "/graphql", params: { query: query, variables: variables }, headers: { "Authorization" => "Bearer #{token}" }
+      json_response = JSON.parse(response.body)
+      games_response = json_response["data"]["allGames"]
+
+      expect(games_response.count).to eq(6)
+    end
+
+    it "returns all games that match a specific search" do
+      variables = {
+        "search": "Dark Souls",
+      }
+
+      token = JWT.encode({ user_id: 0, exp: 7.days.from_now.to_i }, Rails.application.secrets.secret_key_base)
+      post "/graphql", params: { query: query, variables: variables }, headers: { "Authorization" => "Bearer #{token}" }
+      json_response = JSON.parse(response.body)
+      games_response = json_response["data"]["allGames"]
+
+      expect(games_response.count).to eq(2)
+    end
+
+    it "returns all games that match a specific search (2)" do
+      variables = {
+        "search": "Legend",
+      }
+
+      token = JWT.encode({ user_id: 0, exp: 7.days.from_now.to_i }, Rails.application.secrets.secret_key_base)
+      post "/graphql", params: { query: query, variables: variables }, headers: { "Authorization" => "Bearer #{token}" }
+      json_response = JSON.parse(response.body)
+      games_response = json_response["data"]["allGames"]
+
+      expect(games_response.count).to eq(1)
+    end
+
+    it "returns all games sorted by name" do
+      variables = {
+        "sortBy": "name",
+      }
+
+      token = JWT.encode({ user_id: 0, exp: 7.days.from_now.to_i }, Rails.application.secrets.secret_key_base)
+      post "/graphql", params: { query: query, variables: variables }, headers: { "Authorization" => "Bearer #{token}" }
+      json_response = JSON.parse(response.body)
+      games_response = json_response["data"]["allGames"]
+
+      expect(games_response.count).to eq(6)
+
+      expect(games_response[0]).to (include("name" => game3.name))
+      expect(games_response[1]).to (include("name" => game6.name))
+      expect(games_response[2]).to (include("name" => game4.name))
+      expect(games_response[3]).to (include("name" => game2.name))
+      expect(games_response[4]).to (include("name" => game1.name))
+      expect(games_response[5]).to (include("name" => game5.name))
+    end
+
+    it "returns all games sorted by newest_releases" do
+      variables = {
+        "sortBy": "newest_releases",
+      }
+
+      token = JWT.encode({ user_id: 0, exp: 7.days.from_now.to_i }, Rails.application.secrets.secret_key_base)
+      post "/graphql", params: { query: query, variables: variables }, headers: { "Authorization" => "Bearer #{token}" }
+      json_response = JSON.parse(response.body)
+      games_response = json_response["data"]["allGames"]
+
+      expect(games_response.count).to eq(6)
+
+      expect(games_response[0]).to (include("name" => game4.name))
+      expect(games_response[1]).to (include("name" => game5.name))
+      expect(games_response[2]).to (include("name" => game6.name))
+      expect(games_response[3]).to (include("name" => game1.name))
+      expect(games_response[4]).to (include("name" => game2.name))
+      expect(games_response[5]).to (include("name" => game3.name))
+    end
+
+    it "returns all games sorted by oldest_releases" do
+      variables = {
+        "sortBy": "oldest_releases",
+      }
+
+      token = JWT.encode({ user_id: 0, exp: 7.days.from_now.to_i }, Rails.application.secrets.secret_key_base)
+      post "/graphql", params: { query: query, variables: variables }, headers: { "Authorization" => "Bearer #{token}" }
+      json_response = JSON.parse(response.body)
+      games_response = json_response["data"]["allGames"]
+
+      expect(games_response.count).to eq(6)
+
+      expect(games_response[5]).to (include("name" => game4.name))
+      expect(games_response[4]).to (include("name" => game5.name))
+      expect(games_response[3]).to (include("name" => game6.name))
+      expect(games_response[2]).to (include("name" => game1.name))
+      expect(games_response[1]).to (include("name" => game2.name))
+      expect(games_response[0]).to (include("name" => game3.name))
+    end
+
+    it "returns all games sorted by oldest_releases" do
+      variables = {
+        "sortBy": "avg_score",
+      }
+
+      token = JWT.encode({ user_id: 0, exp: 7.days.from_now.to_i }, Rails.application.secrets.secret_key_base)
+      post "/graphql", params: { query: query, variables: variables }, headers: { "Authorization" => "Bearer #{token}" }
+      json_response = JSON.parse(response.body)
+      games_response = json_response["data"]["allGames"]
+
+      expect(games_response.count).to eq(6)
+
+      expect(games_response[5]).to (include("name" => game3.name))
+      expect(games_response[4]).to (include("name" => game1.name))
+      expect(games_response[3]).to (include("name" => game2.name))
+      expect(games_response[2]).to (include("name" => game4.name))
+      expect(games_response[1]).to (include("name" => game6.name))
+      expect(games_response[0]).to (include("name" => game5.name))
+    end
+
+    it "returns all games sorted by oldest_releases" do
+      variables = {
+        "sortBy": "total_rating",
+      }
+
+      token = JWT.encode({ user_id: 0, exp: 7.days.from_now.to_i }, Rails.application.secrets.secret_key_base)
+      post "/graphql", params: { query: query, variables: variables }, headers: { "Authorization" => "Bearer #{token}" }
+      json_response = JSON.parse(response.body)
+      games_response = json_response["data"]["allGames"]
+
+      expect(games_response.count).to eq(6)
+
+      expect(games_response[0]).to (include("name" => game3.name))
+      expect(games_response[1]).to (include("name" => game2.name))
+      expect(games_response[2]).to (include("name" => game4.name))
+      expect(games_response[3]).to (include("name" => game1.name))
+      expect(games_response[4]).to (include("name" => game6.name))
+      expect(games_response[5]).to (include("name" => game5.name))
+    end
+
     def query
       <<~GQL
-        query getAllGames($platform: [String!], $genre: [String!], $tag: [String!], $year: Int) {
-          allGames(platform: $platform, genre: $genre, tag: $tag, year: $year) {
+        query getAllGames($platform: [String!], $genre: [String!], $tag: [String!], $year: Int, $search: String, $sortBy: String) {
+          allGames(platform: $platform, genre: $genre, tag: $tag, year: $year, search: $search, sortBy: $sortBy) {
             name
             genres
             platforms
