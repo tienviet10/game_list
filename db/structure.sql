@@ -383,7 +383,8 @@ CREATE TABLE public.user_games (
     game_note text,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
-    game_status character varying
+    game_status character varying,
+    is_active boolean DEFAULT true
 );
 
 
@@ -798,6 +799,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20230527034609'),
 ('20230528013050'),
 ('20230529073403'),
-('20230529075517');
+('20230529075517'),
+('20230531040209');
 
 

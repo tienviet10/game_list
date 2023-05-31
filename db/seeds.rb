@@ -637,6 +637,11 @@ user_game_1 = UserGame.create(
   game_note: Faker::Lorem.paragraph(sentence_count: 2),
 )
 
+5.times do StatusUpdate.create(
+  user_game_id: user_game_1.id,
+  status: ["Playing", "Paused", "Dropped", "Completed", "Planning"].sample,
+) end
+
 5.times do
   GameJournal.create(
     user_id: user1.id,
@@ -656,6 +661,11 @@ user_game_2 = UserGame.create(
   game_note: Faker::Lorem.paragraph(sentence_count: 2),
 )
 
+5.times do StatusUpdate.create(
+  user_game_id: user_game_2.id,
+  status: ["Playing", "Paused", "Dropped", "Completed", "Planning"].sample,
+) end
+
 5.times do
   GameJournal.create(
     user_id: user1.id,
@@ -674,6 +684,11 @@ user_game_3 = UserGame.create(
   rating: Faker::Number.between(from: 1, to: 5),
   game_note: Faker::Lorem.paragraph(sentence_count: 2),
 )
+
+5.times do StatusUpdate.create(
+  user_game_id: user_game_3.id,
+  status: ["Playing", "Paused", "Dropped", "Completed", "Planning"].sample,
+) end
 
 5.times do
   GameJournal.create(
