@@ -1,5 +1,5 @@
 class UserGame < ApplicationRecord
-  include PGEnum(game_status: %w[Playing Completed Paused Planning Dropped])
+  include PGEnum(game_status: %w[Playing Completed Paused Planning Dropped Inactive])
 
   before_save :set_default_values
 
