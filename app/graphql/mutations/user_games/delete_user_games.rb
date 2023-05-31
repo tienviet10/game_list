@@ -12,7 +12,8 @@ module Mutations
         else
           user_game = UserGame.find_by(user_id: context[:current_user], game_id: game_id)
           if user_game
-            user_game.destroy
+            user_game.game_status = "Inactive"
+            user_game.save
             { user_game: user_game, errors: [] }
           else
             { user_game: nil, errors: ["User Game not found"] }

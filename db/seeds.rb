@@ -610,7 +610,7 @@ user1 = User.create(
   user_picture: "https://avatoon.me/wp-content/uploads/2021/09/Cartoon-Pic-Ideas-for-DP-Profile-01.png",
   bio: Faker::Lorem.paragraph(sentence_count: 2),
   is_active: true,
-  listsOrder: "planning,playing,completed,paused,dropped",
+  listsOrder: "planning,playing,completed,paused,dropped,justAdded",
 )
 
 10.times do
@@ -622,7 +622,7 @@ user1 = User.create(
     user_picture: Faker::LoremFlickr.image(size: "300x300", search_terms: ["profile"]),
     bio: Faker::Lorem.paragraph(sentence_count: 2),
     is_active: true,
-    listsOrder: "planning,playing,completed,paused,dropped",
+    listsOrder: "planning,playing,completed,paused,dropped,justAdded",
   )
 end
 
@@ -636,6 +636,11 @@ user_game_1 = UserGame.create(
   rating: Faker::Number.between(from: 1, to: 5),
   game_note: Faker::Lorem.paragraph(sentence_count: 2),
 )
+
+5.times do StatusUpdate.create(
+  user_game_id: user_game_1.id,
+  status: ["Playing", "Paused", "Dropped", "Completed", "Planning"].sample,
+) end
 
 5.times do
   GameJournal.create(
@@ -656,6 +661,11 @@ user_game_2 = UserGame.create(
   game_note: Faker::Lorem.paragraph(sentence_count: 2),
 )
 
+5.times do StatusUpdate.create(
+  user_game_id: user_game_2.id,
+  status: ["Playing", "Paused", "Dropped", "Completed", "Planning"].sample,
+) end
+
 5.times do
   GameJournal.create(
     user_id: user1.id,
@@ -674,6 +684,11 @@ user_game_3 = UserGame.create(
   rating: Faker::Number.between(from: 1, to: 5),
   game_note: Faker::Lorem.paragraph(sentence_count: 2),
 )
+
+5.times do StatusUpdate.create(
+  user_game_id: user_game_3.id,
+  status: ["Playing", "Paused", "Dropped", "Completed", "Planning"].sample,
+) end
 
 5.times do
   GameJournal.create(

@@ -18,7 +18,8 @@ CREATE TYPE public.game_status AS ENUM (
     'Completed',
     'Paused',
     'Planning',
-    'Dropped'
+    'Dropped',
+    'Inactive'
 );
 
 
@@ -307,37 +308,6 @@ ALTER SEQUENCE public.status_updates_id_seq OWNED BY public.status_updates.id;
 
 
 --
--- Name: statuses; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.statuses (
-    id bigint NOT NULL,
-    status character varying,
-    created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
-);
-
-
---
--- Name: statuses_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE public.statuses_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: statuses_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE public.statuses_id_seq OWNED BY public.statuses.id;
-
-
---
 -- Name: tags; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -376,14 +346,14 @@ CREATE TABLE public.user_games (
     id bigint NOT NULL,
     user_id bigint NOT NULL,
     game_id bigint NOT NULL,
+    game_status public.game_status,
     start_date timestamp without time zone,
     completed_date timestamp without time zone,
     private boolean,
     rating integer,
     game_note text,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL,
-    game_status character varying
+    updated_at timestamp(6) without time zone NOT NULL
 );
 
 
@@ -494,13 +464,6 @@ ALTER TABLE ONLY public.status_updates ALTER COLUMN id SET DEFAULT nextval('publ
 
 
 --
--- Name: statuses id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.statuses ALTER COLUMN id SET DEFAULT nextval('public.statuses_id_seq'::regclass);
-
-
---
 -- Name: tags id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -591,14 +554,6 @@ ALTER TABLE ONLY public.schema_migrations
 
 ALTER TABLE ONLY public.status_updates
     ADD CONSTRAINT status_updates_pkey PRIMARY KEY (id);
-
-
---
--- Name: statuses statuses_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.statuses
-    ADD CONSTRAINT statuses_pkey PRIMARY KEY (id);
 
 
 --
@@ -798,6 +753,10 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20230527034609'),
 ('20230528013050'),
 ('20230529073403'),
-('20230529075517');
+('20230529075517'),
+('20230531040209'),
+('20230531070911'),
+('20230531071041'),
+('20230531071441');
 
 

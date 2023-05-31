@@ -31,6 +31,6 @@ class User < ApplicationRecord
   end
 
   def set_default_values
-    self.listsOrder ||= "planning,playing,completed,paused,dropped"
+    self.listsOrder ||= "planning,playing,completed,paused,dropped,justAdded"
   end
 end

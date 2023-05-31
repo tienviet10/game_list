@@ -12,12 +12,14 @@ module Queries
         completed = fetch_games_by_status(:Completed)
         paused = fetch_games_by_status(:Paused)
         dropped = fetch_games_by_status(:Dropped)
+        justAdded = fetch_games_by_status(nil)
 
         playingCount = playing.count
         planningCount = planning.count
         completedCount = completed.count
         pausedCount = paused.count
         droppedCount = dropped.count
+        justAddedCount = justAdded.count
 
         begin
           {
@@ -26,12 +28,15 @@ module Queries
             "completed" => completed,
             "paused" => paused,
             "dropped" => dropped,
+            "justAdded" => justAdded,
             "playingCount" => playingCount,
             "planningCount" => planningCount,
             "completedCount" => completedCount,
             "pausedCount" => pausedCount,
             "droppedCount" => droppedCount,
-            "totalCount" => playingCount + planningCount + completedCount + pausedCount + droppedCount,
+            "justAddedCount" => justAddedCount,
+            "totalCount" => playingCount + planningCount + completedCount + pausedCount + droppedCount + justAddedCount,
+
             "listsOrder" => ::User.find_by(id: context[:current_user]).listsOrder,
             "errors": [],
           }
@@ -43,11 +48,13 @@ module Queries
             "completed" => [],
             "paused" => [],
             "dropped" => [],
+            "justAdded" => [],
             "playingCount" => 0,
             "planningCount" => 0,
             "completedCount" => 0,
             "pausedCount" => 0,
             "droppedCount" => 0,
+            "justAddedCount" => 0,
             "totalCount" => 0,
             "listsOrder" => "",
             "errors": [e.message],
