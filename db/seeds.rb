@@ -610,7 +610,7 @@ user1 = User.create(
   user_picture: "https://avatoon.me/wp-content/uploads/2021/09/Cartoon-Pic-Ideas-for-DP-Profile-01.png",
   bio: Faker::Lorem.paragraph(sentence_count: 2),
   is_active: true,
-  listsOrder: "planning,playing,completed,paused,dropped",
+  listsOrder: "planning,playing,completed,paused,dropped,justAdded",
 )
 
 10.times do
@@ -622,7 +622,7 @@ user1 = User.create(
     user_picture: Faker::LoremFlickr.image(size: "300x300", search_terms: ["profile"]),
     bio: Faker::Lorem.paragraph(sentence_count: 2),
     is_active: true,
-    listsOrder: "planning,playing,completed,paused,dropped",
+    listsOrder: "planning,playing,completed,paused,dropped,justAdded",
   )
 end
 
