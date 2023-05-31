@@ -408,7 +408,6 @@ describe Queries::Game::GetAllGames, type: :request do
       json_response = JSON.parse(response.body)
       games_response = json_response["data"]["allGames"]
 
-      puts games_response
       expect(games_response.count).to eq(6)
 
       expect(games_response[5]).to (include("name" => game3.name))
@@ -429,7 +428,6 @@ describe Queries::Game::GetAllGames, type: :request do
       json_response = JSON.parse(response.body)
       games_response = json_response["data"]["allGames"]
 
-      puts games_response
       expect(games_response.count).to eq(6)
 
       expect(games_response[0]).to (include("name" => game3.name))
@@ -448,7 +446,6 @@ describe Queries::Game::GetAllGames, type: :request do
             genres
             platforms
             tags
-            releaseDate
           }
         }
       GQL
