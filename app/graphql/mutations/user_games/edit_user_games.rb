@@ -21,7 +21,20 @@ module Mutations
 
         userGame = UserGame.find_by(user_id: context[:current_user], game_id: game_id)
         if userGame.nil?
-          { user_game: nil, errors: ["User Game not found"] }
+          user_game_new = UserGame.new(user_id: context[:current_user], game_id: game_id)
+
+          user_game_new.rating = rating unless rating.nil?
+          user_game_new.game_status = game_status unless game_status.nil?
+          user_game_new.game_note = game_note unless game_note.nil?
+          user_game_new.private = private unless private.nil?
+          user_game_new.start_date = start_date unless start_date.nil?
+          user_game_new.completed_date = completed_date unless completed_date.nil?
+
+          if user_game_new.save
+            { user_game: user_game_new, errors: [] }
+          else
+            { user_game: nil, errors: user_game_new.errors.full_messages }
+          end
         else
           begin
             userGame.game_status = game_status unless game_status.nil?
