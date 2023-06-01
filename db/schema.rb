@@ -10,21 +10,43 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_04_14_205207) do
+ActiveRecord::Schema.define(version: 2023_05_31_071441) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  # These are custom enum types that must be created before they can be used in the schema definition
+  create_enum "game_status", ["Playing", "Completed", "Paused", "Planning", "Dropped", "Inactive"]
+
+  create_table "follows", force: :cascade do |t|
+    t.bigint "follower_id"
+    t.bigint "followed_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["followed_id"], name: "index_follows_on_followed_id"
+    t.index ["follower_id"], name: "index_follows_on_follower_id"
+  end
+
+  create_table "game_journals", force: :cascade do |t|
+    t.bigint "game_id", null: false
+    t.bigint "user_id", null: false
+    t.text "content"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["game_id"], name: "index_game_journals_on_game_id"
+    t.index ["user_id"], name: "index_game_journals_on_user_id"
+  end
 
   create_table "games", force: :cascade do |t|
     t.string "name"
     t.text "description"
     t.string "imageURL"
-    t.string "bannerURL"
     t.datetime "releaseDate"
     t.decimal "avg_score", precision: 3, scale: 1
     t.integer "total_rating"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "bannerURL"
   end
 
   create_table "games_genres", id: false, force: :cascade do |t|
@@ -48,10 +70,30 @@ ActiveRecord::Schema.define(version: 2023_04_14_205207) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "likes", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.string "likeable_type", null: false
+    t.bigint "likeable_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["likeable_type", "likeable_id"], name: "index_likes_on_likeable"
+    t.index ["likeable_type", "likeable_id"], name: "index_likes_on_likeable_type_and_likeable_id"
+    t.index ["user_id", "likeable_type", "likeable_id"], name: "index_likes_on_user_id_and_likeable_type_and_likeable_id", unique: true
+    t.index ["user_id"], name: "index_likes_on_user_id"
+  end
+
   create_table "platforms", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "status_updates", force: :cascade do |t|
+    t.bigint "user_game_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.enum "status", as: "game_status"
+    t.index ["user_game_id"], name: "index_status_updates_on_user_game_id"
   end
 
   create_table "tags", force: :cascade do |t|
@@ -63,15 +105,14 @@ ActiveRecord::Schema.define(version: 2023_04_14_205207) do
   create_table "user_games", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.bigint "game_id", null: false
-    t.string "game_status"
-    t.text "game_note"
     t.datetime "start_date"
     t.datetime "completed_date"
     t.boolean "private"
     t.integer "rating"
-    t.text "review"
+    t.text "game_note"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "game_status"
     t.index ["game_id"], name: "index_user_games_on_game_id"
     t.index ["user_id"], name: "index_user_games_on_user_id"
   end
@@ -86,8 +127,15 @@ ActiveRecord::Schema.define(version: 2023_04_14_205207) do
     t.boolean "is_active"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "listsOrder"
   end
 
+  add_foreign_key "follows", "users", column: "followed_id"
+  add_foreign_key "follows", "users", column: "follower_id"
+  add_foreign_key "game_journals", "games"
+  add_foreign_key "game_journals", "users"
+  add_foreign_key "likes", "users"
+  add_foreign_key "status_updates", "user_games"
   add_foreign_key "user_games", "games"
   add_foreign_key "user_games", "users"
 end
