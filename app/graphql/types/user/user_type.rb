@@ -12,6 +12,10 @@ module Types
       field :listsOrder, String, null: true
       field :user_games, [Types::UserGame::UserGameType], null: false
       field :games, [Types::Game::GameType], null: false
+
+      field :followed_users, [Types::User::UserType], null: false
+      field :followers, [Types::User::UserType], null: false
+
       field :created_at, GraphQL::Types::ISO8601DateTime, null: false
     end
   end
