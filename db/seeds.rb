@@ -613,18 +613,105 @@ user1 = User.create(
   listsOrder: "planning,playing,completed,paused,dropped,justAdded",
 )
 
+user2 = User.create(
+  username: "Chang",
+  email: "chang@gmail.com",
+  password: "password",
+  banner_picture: "https://images.igdb.com/igdb/image/upload/t_screenshot_big/kky41w6g87pnw8omnoff.jpg",
+  user_picture: "https://robohash.org/#{Faker::Lorem.word}.png?size=300x300&set=set1",
+  bio: Faker::Lorem.paragraph(sentence_count: 2),
+  is_active: true,
+  listsOrder: "planning,playing,completed,paused,dropped,justAdded",
+)
+
+user3 = User.create(
+  username: "Andrew",
+  email: "andrew@gmail.com",
+  password: "password",
+  banner_picture: "https://images.igdb.com/igdb/image/upload/t_screenshot_big/kky41w6g87pnw8omnoff.jpg",
+  user_picture: "https://robohash.org/#{Faker::Lorem.word}.png?size=300x300&set=set1",
+  bio: Faker::Lorem.paragraph(sentence_count: 2),
+  is_active: true,
+  listsOrder: "planning,playing,completed,paused,dropped,justAdded",
+)
+
+user4 = User.create(
+  username: "Nathan",
+  email: "nathan@example.com",
+  password: "password",
+  banner_picture: "https://images.igdb.com/igdb/image/upload/t_screenshot_big/kky41w6g87pnw8omnoff.jpg",
+  user_picture: "https://robohash.org/#{Faker::Lorem.word}.png?size=300x300&set=set1",
+  bio: Faker::Lorem.paragraph(sentence_count: 2),
+  is_active: true,
+  listsOrder: "planning,playing,completed,paused,dropped,justAdded",
+)
+
+user5 = User.create(
+  username: "Jenny",
+  email: "jenny@example.com",
+  password: "password",
+  banner_picture: "https://images.igdb.com/igdb/image/upload/t_screenshot_big/kky41w6g87pnw8omnoff.jpg",
+  user_picture: "https://robohash.org/#{Faker::Lorem.word}.png?size=300x300&set=set1",
+  bio: Faker::Lorem.paragraph(sentence_count: 2),
+  is_active: true,
+  listsOrder: "planning,playing,completed,paused,dropped,justAdded",
+)
+
+user6 = User.create(
+  username: "Megan",
+  email: "megan@example.com",
+  password: "password",
+  banner_picture: "https://images.igdb.com/igdb/image/upload/t_screenshot_big/kky41w6g87pnw8omnoff.jpg",
+  user_picture: "https://robohash.org/#{Faker::Lorem.word}.png?size=300x300&set=set1",
+  bio: Faker::Lorem.paragraph(sentence_count: 2),
+  is_active: true,
+  listsOrder: "planning,playing,completed,paused,dropped,justAdded",
+)
+
 10.times do
   User.create(
     username: Faker::Name.name,
     email: Faker::Internet.email,
     password: "password",
     banner_picture: Faker::LoremFlickr.image(size: "500x300", search_terms: ["profile"]),
-    user_picture: Faker::LoremFlickr.image(size: "300x300", search_terms: ["profile"]),
+    user_picture: "https://robohash.org/#{Faker::Lorem.word}.png?size=300x300&set=set1",
     bio: Faker::Lorem.paragraph(sentence_count: 2),
     is_active: true,
     listsOrder: "planning,playing,completed,paused,dropped,justAdded",
   )
 end
+
+Follow.create(
+  follower_id: "1",
+  followed_id: "2",
+)
+
+Follow.create(
+  follower_id: "1",
+  followed_id: "3",
+)
+Follow.create(
+  follower_id: "1",
+  followed_id: "4",
+)
+Follow.create(
+  follower_id: "1",
+  followed_id: "5",
+)
+
+Follow.create(
+  follower_id: "14",
+  followed_id: "1",
+)
+
+Follow.create(
+  follower_id: "12",
+  followed_id: "1",
+)
+Follow.create(
+  follower_id: "10",
+  followed_id: "1",
+)
 
 user_game_1 = UserGame.create(
   user_id: user1.id,
