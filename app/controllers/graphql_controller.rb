@@ -54,7 +54,7 @@ class GraphqlController < ApplicationController
       return
     end
     token = request.headers["Authorization"]&.split&.last
-    decoded_token = JWT.decode(token, Rails.application.secrets.secret_key_base, true, { algorithm: "HS256" })
+    decoded_token = JWT.decode(token, ENV["SECRET_KEY_BASE"], true, { algorithm: "HS256" })
     if decoded_token[0]["user_id"].present? && decoded_token[0]["exp"] > Time.now.to_i
       @current_user = decoded_token[0]["user_id"]
     else
