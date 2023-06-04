@@ -7,12 +7,30 @@ development:
   <<: *default
   database: <%= ENV['DATABASE_DEVELOPMENT_DATABASE'] %>
   username: <%= ENV['DATABASE_USERNAME'] %>
+  password: <%= ENV['DATABASE_PASSWORD'] %>
 
 test:
   <<: *default
   database: <%= ENV['DATABASE_TEST_DATABASE'] %>
   username: <%= ENV['DATABASE_USERNAME'] %>
+  password: <%= ENV['DATABASE_PASSWORD'] %>
 
 production:
   <<: *default
   url: <%= ENV['DATABASE_URL'] %>
+# default: &default
+#   adapter: postgresql
+#   encoding: unicode
+#   pool: 5
+
+# development:
+#   <<: *default
+#   database: grapghql_game_list
+
+# test:
+#   <<: *default
+#   database: grapghql_game_list
+
+# production:
+#   <<: *default
+#   url: <%= ENV['DATABASE_URL'] %>
