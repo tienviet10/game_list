@@ -31,14 +31,15 @@ gem "graphql", "~> 2.0.20"
 
 gem "jwt", "~> 2.7.0"
 
+# Use Enum types in ActiveRecord
+gem "activerecord-pg_enum"
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem "byebug", platforms: [:mri, :mingw, :x64_mingw]
   gem "dotenv-rails"
   gem "factory_bot_rails"
   gem "rspec-rails"
-  # Use Enum types in ActiveRecord
-  gem "activerecord-pg_enum"
 end
 
 group :development do
