@@ -12,7 +12,7 @@ module Mutations
       def resolve(username:, email:, password:)
         user = User.new(username: username, email: email, password: password, is_active: true)
         if user.save
-          token = JWT.encode({ user_id: user.id, exp: 30.days.from_now.to_i }, Rails.application.secrets.secret_key_base)
+          token = JWT.encode({ user_id: user.id, exp: 30.days.from_now.to_i }, ENV["SECRET_KEY_BASE"])
           {
             user: user,
             token: token,
