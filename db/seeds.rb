@@ -668,7 +668,7 @@ user6 = User.create(
   listsOrder: "planning,playing,completed,paused,dropped,justAdded",
 )
 
-10.times do
+30.times do
   User.create(
     username: Faker::Name.name,
     email: Faker::Internet.email,
@@ -784,3 +784,36 @@ user_game_3 = UserGame.create(
     content: Faker::Lorem.paragraph(sentence_count: 2),
   )
 end
+
+2.times do
+  Like.create(
+    user_id: Faker::Number.between(from: 1, to: 30),
+    likeable_id: StatusUpdate.first.id,
+    likeable_type: "StatusUpdate",
+  )
+end
+
+3.times do
+  Like.create(
+    user_id: Faker::Number.between(from: 1, to: 30),
+    likeable_id: 12,
+    likeable_type: "StatusUpdate",
+  )
+end
+4.times do
+  Like.create(
+    user_id: Faker::Number.between(from: 1, to: 30),
+    likeable_id: 10,
+    likeable_type: "StatusUpdate",
+  )
+end
+Like.create(
+  user_id: user5.id,
+  likeable_id: 8,
+  likeable_type: "StatusUpdate",
+)
+Like.create(
+  user_id: user2.id,
+  likeable_id: 6,
+  likeable_type: "StatusUpdate",
+)
