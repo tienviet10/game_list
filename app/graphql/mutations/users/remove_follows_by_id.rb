@@ -14,7 +14,8 @@ module Mutations
           follow = Follow.find_by(follower_id: context[:current_user], followed_id: followed_id)
           if follow
             follow.destroy
-            { follow: follow, errors: [] }
+            current_user = User.find_by(id: context[:current_user])
+            { follow: current_user, errors: [] }
           else
             { follow: nil, errors: ["Follow not found"] }
           end

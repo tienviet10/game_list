@@ -34,7 +34,7 @@ module Mutations
         else
           follow = Follow.new(follower_id: current_user.id, followed_id: followed_id)
           if follow.save
-            return { follow: follow, errors: [] }
+            return { follow: current_user, errors: [] }
           else
             return { follow: nil, errors: ["Cannot add the new follow!"] }
           end
