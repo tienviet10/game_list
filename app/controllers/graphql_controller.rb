@@ -49,7 +49,7 @@ class GraphqlController < ApplicationController
   end
 
   def verify_jwt_token
-    if params[:query].include?("login") || params[:query].include?("register") || params[:query].include?("IntrospectionQuery")
+    if params[:query].include?("login") || params[:query].include?("register") || params[:query].include?("IntrospectionQuery") || params[:query].include?("GetAllGames")
       @current_user = nil
       return
     end
