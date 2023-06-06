@@ -209,10 +209,10 @@ ALTER SEQUENCE public.genres_id_seq OWNED BY public.genres.id;
 CREATE TABLE public.likes (
     id bigint NOT NULL,
     user_id bigint NOT NULL,
-    likeable_type character varying NOT NULL,
-    likeable_id bigint NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    likeable_type character varying,
+    likeable_id bigint
 );
 
 
@@ -274,8 +274,6 @@ CREATE TABLE public.posts (
     id bigint NOT NULL,
     text character varying,
     user_id bigint NOT NULL,
-    like_type character varying,
-    like_id bigint,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL
 );
@@ -665,31 +663,10 @@ CREATE INDEX index_likes_on_likeable ON public.likes USING btree (likeable_type,
 
 
 --
--- Name: index_likes_on_likeable_type_and_likeable_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_likes_on_likeable_type_and_likeable_id ON public.likes USING btree (likeable_type, likeable_id);
-
-
---
 -- Name: index_likes_on_user_id; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX index_likes_on_user_id ON public.likes USING btree (user_id);
-
-
---
--- Name: index_likes_on_user_id_and_likeable_type_and_likeable_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE UNIQUE INDEX index_likes_on_user_id_and_likeable_type_and_likeable_id ON public.likes USING btree (user_id, likeable_type, likeable_id);
-
-
---
--- Name: index_posts_on_like; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_posts_on_like ON public.posts USING btree (like_type, like_id);
 
 
 --
@@ -830,6 +807,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20230531071041'),
 ('20230531071441'),
 ('20230606163245'),
-('20230606164159');
+('20230606164159'),
+('20230606172225');
 
 
