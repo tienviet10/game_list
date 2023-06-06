@@ -3,6 +3,7 @@ module Types
     class StatusUpdateType < Types::BaseObject
       field :id, ID, null: false
       field :username, String, null: false
+      field :user_id, String, null: false
       field :user_picture, String, null: false
       field :status, String, null: true
       field :game_name, String, null: false
@@ -15,6 +16,10 @@ module Types
 
       def username
         ::User.find(object.user_game.user_id).username
+      end
+
+      def user_id
+        ::User.find(object.user_game.user_id).id
       end
 
       def user_picture

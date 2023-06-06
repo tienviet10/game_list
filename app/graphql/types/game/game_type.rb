@@ -18,7 +18,9 @@ module Types
       field :platforms, [String], null: false
 
       def is_game_added
-        object.user_games.where(user_id: context[:current_user]).exists? && object.user_games.find_by(user_id: context[:current_user]).game_status != "Inactive"
+        result = object.user_games.where(user_id: context[:current_user]).exists? && object.user_games.find_by(user_id: context[:current_user]).game_status != "Inactive"
+
+        result
       end
 
       def genres
