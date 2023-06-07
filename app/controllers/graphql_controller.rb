@@ -49,11 +49,14 @@ class GraphqlController < ApplicationController
   end
 
   def verify_jwt_token
+    if %w[GetAllGames GetGameFilters].include?(params[:operationName])
+      @current_user ||= nil
+      return
+    end
+
     if params[:query].include?("login") || params[:query].include?("register") || params[:query].include?("IntrospectionQuery")
       @current_user = nil
       return
-    elsif params[:query].include?("GetAllGames")
-      @current_user ||= nil
     end
     token = request.headers["Authorization"]&.split&.last
     decoded_token = JWT.decode(token, ENV["SECRET_KEY_BASE"], true, { algorithm: "HS256" })
