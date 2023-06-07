@@ -118,348 +118,355 @@ describe Queries::Game::GetAllGames, type: :request do
              platforms: [platform1, platform2, platform3, platform4, platform5])
     }
 
-    # it "returns all games with their genres, platforms, and tags (without filters)" do
-    #   token = JWT.encode({ user_id: 0, exp: 7.days.from_now.to_i }, Rails.application.secrets.secret_key_base)
-    #   post "/graphql", params: { query: query }, headers: { "Authorization" => "Bearer #{token}" }
-    #   json_response = JSON.parse(response.body)
-    #   games_response = json_response["data"]["allGames"]
-
-    #   expect(games_response.count).to eq(6)
-    # end
-
-    # it "returns all games with 1 specific platform (Nintendo Switch)" do
-    #   variables = {
-    #     "platform": [platform4.name],
-    #   }
-
-    #   token = JWT.encode({ user_id: 0, exp: 7.days.from_now.to_i }, Rails.application.secrets.secret_key_base)
-    #   post "/graphql", params: { query: query, variables: variables }, headers: { "Authorization" => "Bearer #{token}" }
-    #   json_response = JSON.parse(response.body)
-    #   games_response = json_response["data"]["allGames"]
-
-    #   expect(games_response.count).to eq(2)
-
-    #   expect(games_response).to include(include("name" => game1.name))
-    #   expect(games_response).to include(include("name" => game5.name))
-
-    #   games_response.each do |game_response|
-    #     expect(game_response["platforms"]).to include(platform4.name)
-    #   end
-    # end
-
-    # it "returns all games with 2 specific genre (Action)" do
-    #   variables = {
-    #     "genre": [genre1.name],
-    #   }
-
-    #   token = JWT.encode({ user_id: 0, exp: 7.days.from_now.to_i }, Rails.application.secrets.secret_key_base)
-    #   post "/graphql", params: { query: query, variables: variables }, headers: { "Authorization" => "Bearer #{token}" }
-    #   json_response = JSON.parse(response.body)
-    #   games_response = json_response["data"]["allGames"]
-
-    #   expect(games_response.count).to eq(5)
-    #   expect(games_response).to include(include("name" => game1.name))
-    #   expect(games_response).to include(include("name" => game3.name))
-    #   expect(games_response).to include(include("name" => game4.name))
-    #   expect(games_response).to include(include("name" => game5.name))
-    #   expect(games_response).to include(include("name" => game6.name))
-
-    #   games_response.each do |game_response|
-    #     expect(game_response["genres"]).to include(genre1.name)
-    #   end
-    # end
-
-    # it "returns all games with 1 specific tag (Singleplayer)" do
-    #   variables = {
-    #     "tag": [tag2.name],
-    #   }
-
-    #   token = JWT.encode({ user_id: 0, exp: 7.days.from_now.to_i }, Rails.application.secrets.secret_key_base)
-    #   post "/graphql", params: { query: query, variables: variables }, headers: { "Authorization" => "Bearer #{token}" }
-    #   json_response = JSON.parse(response.body)
-    #   games_response = json_response["data"]["allGames"]
-
-    #   expect(games_response.count).to eq(5)
-    #   expect(games_response).to include(include("name" => game1.name))
-    #   expect(games_response).to include(include("name" => game3.name))
-    #   expect(games_response).to include(include("name" => game4.name))
-    #   expect(games_response).to include(include("name" => game5.name))
-    #   expect(games_response).to include(include("name" => game6.name))
-
-    #   games_response.each do |game_response|
-    #     expect(game_response["tags"]).to include(tag2.name)
-    #   end
-    # end
-
-    # it "returns 0 games with an invalid search tag" do
-    #   variables = {
-    #     "tag": [tag5.name],
-    #   }
-
-    #   token = JWT.encode({ user_id: 0, exp: 7.days.from_now.to_i }, Rails.application.secrets.secret_key_base)
-    #   post "/graphql", params: { query: query, variables: variables }, headers: { "Authorization" => "Bearer #{token}" }
-    #   json_response = JSON.parse(response.body)
-    #   games_response = json_response["data"]["allGames"]
-
-    #   expect(games_response.count).to eq(0)
-    # end
-
-    # it "returns 0 games with an invalid search tag" do
-    #   variables = {
-    #     "tag": [tag5.name],
-    #   }
-
-    #   token = JWT.encode({ user_id: 0, exp: 7.days.from_now.to_i }, Rails.application.secrets.secret_key_base)
-    #   post "/graphql", params: { query: query, variables: variables }, headers: { "Authorization" => "Bearer #{token}" }
-    #   json_response = JSON.parse(response.body)
-    #   games_response = json_response["data"]["allGames"]
-
-    #   expect(games_response.count).to eq(0)
-    # end
-
-    # it "returns 0 games with many filters" do
-    #   variables = {
-    #     "platform": [platform4.name],
-    #     "genre": [genre1.name],
-    #     "tag": [tag5.name],
-    #   }
-
-    #   token = JWT.encode({ user_id: 0, exp: 7.days.from_now.to_i }, Rails.application.secrets.secret_key_base)
-    #   post "/graphql", params: { query: query, variables: variables }, headers: { "Authorization" => "Bearer #{token}" }
-    #   json_response = JSON.parse(response.body)
-    #   games_response = json_response["data"]["allGames"]
-
-    #   expect(games_response.count).to eq(0)
-    # end
-
-    # it "returns 1 game with the exact filters required" do
-    #   variables = {
-    #     "platform": [platform1.name, platform2.name, platform3.name],
-    #     "genre": [genre2.name],
-    #     "tag": [tag1.name, tag3.name],
-    #   }
-
-    #   token = JWT.encode({ user_id: 0, exp: 7.days.from_now.to_i }, Rails.application.secrets.secret_key_base)
-    #   post "/graphql", params: { query: query, variables: variables }, headers: { "Authorization" => "Bearer #{token}" }
-    #   json_response = JSON.parse(response.body)
-    #   games_response = json_response["data"]["allGames"]
-
-    #   expect(games_response.count).to eq(1)
-    # end
-
-    # it "does not returns duplicates when the same arguments are passed multiple times" do
-    #   variables = {
-    #     "genre": [genre2.name, genre2.name],
-    #   }
-
-    #   token = JWT.encode({ user_id: 0, exp: 7.days.from_now.to_i }, Rails.application.secrets.secret_key_base)
-    #   post "/graphql", params: { query: query, variables: variables }, headers: { "Authorization" => "Bearer #{token}" }
-    #   json_response = JSON.parse(response.body)
-    #   games_response = json_response["data"]["allGames"]
-
-    #   expect(games_response.count).to eq(1)
-    # end
-
-    # it "does not returns duplicates" do
-    #   variables = {
-    #     "genre": [genre1.name],
-    #     "tag": [tag3.name],
-    #   }
-
-    #   token = JWT.encode({ user_id: 0, exp: 7.days.from_now.to_i }, Rails.application.secrets.secret_key_base)
-    #   post "/graphql", params: { query: query, variables: variables }, headers: { "Authorization" => "Bearer #{token}" }
-    #   json_response = JSON.parse(response.body)
-    #   games_response = json_response["data"]["allGames"]
-
-    #   expect(games_response.count).to eq(5)
-    # end
-
-    # it "returns the correct games with multiple array filters" do
-    #   variables = {
-    #     "genre": [genre1.name, genre5.name],
-    #     "tag": [tag2.name, tag3.name],
-    #   }
-
-    #   token = JWT.encode({ user_id: 0, exp: 7.days.from_now.to_i }, Rails.application.secrets.secret_key_base)
-    #   post "/graphql", params: { query: query, variables: variables }, headers: { "Authorization" => "Bearer #{token}" }
-    #   json_response = JSON.parse(response.body)
-    #   games_response = json_response["data"]["allGames"]
-
-    #   expect(games_response.count).to eq(5)
-    # end
-
-    # it "returns the correct game by a specific year" do
-    #   variables = {
-    #     year: 2014,
-    #   }
-
-    #   token = JWT.encode({ user_id: 0, exp: 7.days.from_now.to_i }, Rails.application.secrets.secret_key_base)
-    #   post "/graphql", params: { query: query, variables: variables.to_json }, headers: { "Authorization" => "Bearer #{token}" }
-    #   json_response = JSON.parse(response.body)
-    #   games_response = json_response["data"]["allGames"]
-
-    #   expect(games_response.count).to eq(1)
-    # end
-
-    # it "returns no games with an invalid year" do
-    #   variables = {
-    #     year: -1,
-    #   }
-
-    #   token = JWT.encode({ user_id: 0, exp: 7.days.from_now.to_i }, Rails.application.secrets.secret_key_base)
-    #   post "/graphql", params: { query: query, variables: variables.to_json }, headers: { "Authorization" => "Bearer #{token}" }
-    #   json_response = JSON.parse(response.body)
-    #   games_response = json_response["data"]["allGames"]
-
-    #   expect(games_response.count).to eq(0)
-    # end
-
-    # it "skips invalid entries (empty strings) from the search" do
-    #   variables = {
-    #     "tag": [""],
-    #   }
-
-    #   token = JWT.encode({ user_id: 0, exp: 7.days.from_now.to_i }, Rails.application.secrets.secret_key_base)
-    #   post "/graphql", params: { query: query, variables: variables }, headers: { "Authorization" => "Bearer #{token}" }
-    #   json_response = JSON.parse(response.body)
-    #   games_response = json_response["data"]["allGames"]
-
-    #   expect(games_response.count).to eq(6)
-    # end
-
-    # it "returns all games that match a specific search" do
-    #   variables = {
-    #     "search": "Dark Souls",
-    #   }
-
-    #   token = JWT.encode({ user_id: 0, exp: 7.days.from_now.to_i }, Rails.application.secrets.secret_key_base)
-    #   post "/graphql", params: { query: query, variables: variables }, headers: { "Authorization" => "Bearer #{token}" }
-    #   json_response = JSON.parse(response.body)
-    #   games_response = json_response["data"]["allGames"]
-
-    #   expect(games_response.count).to eq(2)
-    # end
-
-    # it "returns all games that match a specific search (2)" do
-    #   variables = {
-    #     "search": "Legend",
-    #   }
-
-    #   token = JWT.encode({ user_id: 0, exp: 7.days.from_now.to_i }, Rails.application.secrets.secret_key_base)
-    #   post "/graphql", params: { query: query, variables: variables }, headers: { "Authorization" => "Bearer #{token}" }
-    #   json_response = JSON.parse(response.body)
-    #   games_response = json_response["data"]["allGames"]
-
-    #   expect(games_response.count).to eq(1)
-    # end
-
-    # it "returns all games sorted by name" do
-    #   variables = {
-    #     "sortBy": "name",
-    #   }
-
-    #   token = JWT.encode({ user_id: 0, exp: 7.days.from_now.to_i }, Rails.application.secrets.secret_key_base)
-    #   post "/graphql", params: { query: query, variables: variables }, headers: { "Authorization" => "Bearer #{token}" }
-    #   json_response = JSON.parse(response.body)
-    #   games_response = json_response["data"]["allGames"]
-
-    #   expect(games_response.count).to eq(6)
-
-    #   expect(games_response[0]).to (include("name" => game3.name))
-    #   expect(games_response[1]).to (include("name" => game6.name))
-    #   expect(games_response[2]).to (include("name" => game4.name))
-    #   expect(games_response[3]).to (include("name" => game2.name))
-    #   expect(games_response[4]).to (include("name" => game1.name))
-    #   expect(games_response[5]).to (include("name" => game5.name))
-    # end
-
-    # it "returns all games sorted by newest_releases" do
-    #   variables = {
-    #     "sortBy": "newest_releases",
-    #   }
-
-    #   token = JWT.encode({ user_id: 0, exp: 7.days.from_now.to_i }, Rails.application.secrets.secret_key_base)
-    #   post "/graphql", params: { query: query, variables: variables }, headers: { "Authorization" => "Bearer #{token}" }
-    #   json_response = JSON.parse(response.body)
-    #   games_response = json_response["data"]["allGames"]
-
-    #   expect(games_response.count).to eq(6)
-
-    #   expect(games_response[0]).to (include("name" => game4.name))
-    #   expect(games_response[1]).to (include("name" => game5.name))
-    #   expect(games_response[2]).to (include("name" => game6.name))
-    #   expect(games_response[3]).to (include("name" => game1.name))
-    #   expect(games_response[4]).to (include("name" => game2.name))
-    #   expect(games_response[5]).to (include("name" => game3.name))
-    # end
-
-    # it "returns all games sorted by oldest_releases" do
-    #   variables = {
-    #     "sortBy": "oldest_releases",
-    #   }
-
-    #   token = JWT.encode({ user_id: 0, exp: 7.days.from_now.to_i }, Rails.application.secrets.secret_key_base)
-    #   post "/graphql", params: { query: query, variables: variables }, headers: { "Authorization" => "Bearer #{token}" }
-    #   json_response = JSON.parse(response.body)
-    #   games_response = json_response["data"]["allGames"]
-
-    #   expect(games_response.count).to eq(6)
-
-    #   expect(games_response[5]).to (include("name" => game4.name))
-    #   expect(games_response[4]).to (include("name" => game5.name))
-    #   expect(games_response[3]).to (include("name" => game6.name))
-    #   expect(games_response[2]).to (include("name" => game1.name))
-    #   expect(games_response[1]).to (include("name" => game2.name))
-    #   expect(games_response[0]).to (include("name" => game3.name))
-    # end
-
-    # it "returns all games sorted by avg_score" do
-    #   variables = {
-    #     "sortBy": "avg_score",
-    #   }
-
-    #   token = JWT.encode({ user_id: 0, exp: 7.days.from_now.to_i }, Rails.application.secrets.secret_key_base)
-    #   post "/graphql", params: { query: query, variables: variables }, headers: { "Authorization" => "Bearer #{token}" }
-    #   json_response = JSON.parse(response.body)
-    #   games_response = json_response["data"]["allGames"]
-
-    #   expect(games_response.count).to eq(6)
-
-    #   expect(games_response[5]).to (include("name" => game3.name))
-    #   expect(games_response[4]).to (include("name" => game1.name))
-    #   expect(games_response[3]).to (include("name" => game2.name))
-    #   expect(games_response[2]).to (include("name" => game4.name))
-    #   expect(games_response[1]).to (include("name" => game6.name))
-    #   expect(games_response[0]).to (include("name" => game5.name))
-    # end
-
-    # it "returns all games sorted by total_rating" do
-    #   variables = {
-    #     "sortBy": "total_rating",
-    #   }
-
-    #   token = JWT.encode({ user_id: 1, exp: 7.days.from_now.to_i }, Rails.application.secrets.secret_key_base)
-    #   post "/graphql", params: { query: query, variables: variables }, headers: { "Authorization" => "Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJleHAiOjE2ODg0NDEwNjR9.9oj9lSWaHDoEwqkkY3gHSVnprim-Ezu6dBeiOdprOj0" }
-    #   puts response.body
-    #   json_response = JSON.parse(response.body)
-    #   games_response = json_response["data"]["allGames"]
-
-    #   expect(games_response.count).to eq(6)
-
-    #   expect(games_response[0]).to (include("name" => game3.name))
-    #   expect(games_response[1]).to (include("name" => game2.name))
-    #   expect(games_response[2]).to (include("name" => game4.name))
-    #   expect(games_response[3]).to (include("name" => game1.name))
-    #   expect(games_response[4]).to (include("name" => game6.name))
-    #   expect(games_response[5]).to (include("name" => game5.name))
-    # end
+    it "returns all games with their genres, platforms, and tags (without filters)" do
+      token = JWT.encode({ user_id: 0, exp: 7.days.from_now.to_i }, ENV["SECRET_KEY_BASE"])
+      post "/graphql", params: { query: query }, headers: { "Authorization" => "Bearer #{token}" }
+      json_response = JSON.parse(response.body)
+      games_response = json_response["data"]["allGames"]
+
+      expect(games_response.count).to eq(7)
+    end
+
+    it "returns all games with 1 specific platform (Nintendo Switch)" do
+      variables = {
+        "platform": [platform4.name],
+      }
+
+      token = JWT.encode({ user_id: 0, exp: 7.days.from_now.to_i }, ENV["SECRET_KEY_BASE"])
+      post "/graphql", params: { query: query, variables: variables }, headers: { "Authorization" => "Bearer #{token}" }
+      json_response = JSON.parse(response.body)
+      games_response = json_response["data"]["allGames"]
+
+      expect(games_response.count).to eq(3)
+
+      expect(games_response).to include(include("name" => game1.name))
+      expect(games_response).to include(include("name" => game5.name))
+      expect(games_response).to include(include("name" => game7.name))
+
+      games_response.each do |game_response|
+        expect(game_response["platforms"]).to include(platform4.name)
+      end
+    end
+
+    it "returns all games with 2 specific genre (Action)" do
+      variables = {
+        "genre": [genre1.name],
+      }
+
+      token = JWT.encode({ user_id: 0, exp: 7.days.from_now.to_i }, ENV["SECRET_KEY_BASE"])
+      post "/graphql", params: { query: query, variables: variables }, headers: { "Authorization" => "Bearer #{token}" }
+      json_response = JSON.parse(response.body)
+      games_response = json_response["data"]["allGames"]
+
+      expect(games_response.count).to eq(6)
+      expect(games_response).to include(include("name" => game1.name))
+      expect(games_response).to include(include("name" => game3.name))
+      expect(games_response).to include(include("name" => game4.name))
+      expect(games_response).to include(include("name" => game5.name))
+      expect(games_response).to include(include("name" => game6.name))
+      expect(games_response).to include(include("name" => game7.name))
+
+      games_response.each do |game_response|
+        expect(game_response["genres"]).to include(genre1.name)
+      end
+    end
+
+    it "returns all games with 1 specific tag (Singleplayer)" do
+      variables = {
+        "tag": [tag2.name],
+      }
+
+      token = JWT.encode({ user_id: 0, exp: 7.days.from_now.to_i }, ENV["SECRET_KEY_BASE"])
+      post "/graphql", params: { query: query, variables: variables }, headers: { "Authorization" => "Bearer #{token}" }
+      json_response = JSON.parse(response.body)
+      games_response = json_response["data"]["allGames"]
+
+      expect(games_response.count).to eq(6)
+      expect(games_response).to include(include("name" => game1.name))
+      expect(games_response).to include(include("name" => game3.name))
+      expect(games_response).to include(include("name" => game4.name))
+      expect(games_response).to include(include("name" => game5.name))
+      expect(games_response).to include(include("name" => game6.name))
+      expect(games_response).to include(include("name" => game7.name))
+
+      games_response.each do |game_response|
+        expect(game_response["tags"]).to include(tag2.name)
+      end
+    end
+
+    it "returns 0 games with an invalid search tag" do
+      variables = {
+        "tag": [tag5.name],
+      }
+
+      token = JWT.encode({ user_id: 0, exp: 7.days.from_now.to_i }, ENV["SECRET_KEY_BASE"])
+      post "/graphql", params: { query: query, variables: variables }, headers: { "Authorization" => "Bearer #{token}" }
+      json_response = JSON.parse(response.body)
+      games_response = json_response["data"]["allGames"]
+
+      expect(games_response.count).to eq(0)
+    end
+
+    it "returns 0 games with an invalid search tag" do
+      variables = {
+        "tag": [tag5.name],
+      }
+
+      token = JWT.encode({ user_id: 0, exp: 7.days.from_now.to_i }, ENV["SECRET_KEY_BASE"])
+      post "/graphql", params: { query: query, variables: variables }, headers: { "Authorization" => "Bearer #{token}" }
+      json_response = JSON.parse(response.body)
+      games_response = json_response["data"]["allGames"]
+
+      expect(games_response.count).to eq(0)
+    end
+
+    it "returns 0 games with many filters" do
+      variables = {
+        "platform": [platform4.name],
+        "genre": [genre1.name],
+        "tag": [tag5.name],
+      }
+
+      token = JWT.encode({ user_id: 0, exp: 7.days.from_now.to_i }, ENV["SECRET_KEY_BASE"])
+      post "/graphql", params: { query: query, variables: variables }, headers: { "Authorization" => "Bearer #{token}" }
+      json_response = JSON.parse(response.body)
+      games_response = json_response["data"]["allGames"]
+
+      expect(games_response.count).to eq(0)
+    end
+
+    it "returns 2 game with the exact filters required" do
+      variables = {
+        "platform": [platform1.name, platform2.name, platform3.name],
+        "genre": [genre2.name],
+        "tag": [tag1.name, tag3.name],
+      }
+
+      token = JWT.encode({ user_id: 0, exp: 7.days.from_now.to_i }, ENV["SECRET_KEY_BASE"])
+      post "/graphql", params: { query: query, variables: variables }, headers: { "Authorization" => "Bearer #{token}" }
+      json_response = JSON.parse(response.body)
+      games_response = json_response["data"]["allGames"]
+
+      expect(games_response.count).to eq(2)
+    end
+
+    it "does not returns duplicates when the same arguments are passed multiple times" do
+      variables = {
+        "genre": [genre2.name, genre2.name],
+      }
+
+      token = JWT.encode({ user_id: 0, exp: 7.days.from_now.to_i }, ENV["SECRET_KEY_BASE"])
+      post "/graphql", params: { query: query, variables: variables }, headers: { "Authorization" => "Bearer #{token}" }
+      json_response = JSON.parse(response.body)
+      games_response = json_response["data"]["allGames"]
+
+      expect(games_response.count).to eq(2)
+    end
+
+    it "does not returns duplicates" do
+      variables = {
+        "genre": [genre1.name],
+        "tag": [tag3.name],
+      }
+
+      token = JWT.encode({ user_id: 0, exp: 7.days.from_now.to_i }, ENV["SECRET_KEY_BASE"])
+      post "/graphql", params: { query: query, variables: variables }, headers: { "Authorization" => "Bearer #{token}" }
+      json_response = JSON.parse(response.body)
+      games_response = json_response["data"]["allGames"]
+
+      expect(games_response.count).to eq(6)
+    end
+
+    it "returns the correct games with multiple array filters" do
+      variables = {
+        "genre": [genre1.name, genre5.name],
+        "tag": [tag2.name, tag3.name],
+      }
+
+      token = JWT.encode({ user_id: 0, exp: 7.days.from_now.to_i }, ENV["SECRET_KEY_BASE"])
+      post "/graphql", params: { query: query, variables: variables }, headers: { "Authorization" => "Bearer #{token}" }
+      json_response = JSON.parse(response.body)
+      games_response = json_response["data"]["allGames"]
+
+      expect(games_response.count).to eq(5)
+    end
+
+    it "returns the correct game by a specific year" do
+      variables = {
+        year: 2014,
+      }
+
+      token = JWT.encode({ user_id: 0, exp: 7.days.from_now.to_i }, ENV["SECRET_KEY_BASE"])
+      post "/graphql", params: { query: query, variables: variables.to_json }, headers: { "Authorization" => "Bearer #{token}" }
+      json_response = JSON.parse(response.body)
+      games_response = json_response["data"]["allGames"]
+
+      expect(games_response.count).to eq(1)
+    end
+
+    it "returns no games with an invalid year" do
+      variables = {
+        year: -1,
+      }
+
+      token = JWT.encode({ user_id: 0, exp: 7.days.from_now.to_i }, ENV["SECRET_KEY_BASE"])
+      post "/graphql", params: { query: query, variables: variables.to_json }, headers: { "Authorization" => "Bearer #{token}" }
+      json_response = JSON.parse(response.body)
+      games_response = json_response["data"]["allGames"]
+
+      expect(games_response.count).to eq(0)
+    end
+
+    it "skips invalid entries (empty strings) from the search" do
+      variables = {
+        "tag": [""],
+      }
+
+      token = JWT.encode({ user_id: 0, exp: 7.days.from_now.to_i }, ENV["SECRET_KEY_BASE"])
+      post "/graphql", params: { query: query, variables: variables }, headers: { "Authorization" => "Bearer #{token}" }
+      json_response = JSON.parse(response.body)
+      games_response = json_response["data"]["allGames"]
+
+      expect(games_response.count).to eq(7)
+    end
+
+    it "returns all games that match a specific search" do
+      variables = {
+        "search": "Dark Souls",
+      }
+
+      token = JWT.encode({ user_id: 0, exp: 7.days.from_now.to_i }, ENV["SECRET_KEY_BASE"])
+      post "/graphql", params: { query: query, variables: variables }, headers: { "Authorization" => "Bearer #{token}" }
+      json_response = JSON.parse(response.body)
+      games_response = json_response["data"]["allGames"]
+
+      expect(games_response.count).to eq(2)
+    end
+
+    it "returns all games that match a specific search (2)" do
+      variables = {
+        "search": "Legend",
+      }
+
+      token = JWT.encode({ user_id: 0, exp: 7.days.from_now.to_i }, ENV["SECRET_KEY_BASE"])
+      post "/graphql", params: { query: query, variables: variables }, headers: { "Authorization" => "Bearer #{token}" }
+      json_response = JSON.parse(response.body)
+      games_response = json_response["data"]["allGames"]
+
+      expect(games_response.count).to eq(1)
+    end
+
+    it "returns all games sorted by name" do
+      variables = {
+        "sortBy": "name",
+      }
+
+      token = JWT.encode({ user_id: 0, exp: 7.days.from_now.to_i }, ENV["SECRET_KEY_BASE"])
+      post "/graphql", params: { query: query, variables: variables }, headers: { "Authorization" => "Bearer #{token}" }
+      json_response = JSON.parse(response.body)
+      games_response = json_response["data"]["allGames"]
+
+      expect(games_response.count).to eq(7)
+
+      expect(games_response[0]).to (include("name" => game3.name))
+      expect(games_response[1]).to (include("name" => game6.name))
+      expect(games_response[2]).to (include("name" => game4.name))
+      expect(games_response[3]).to (include("name" => game2.name))
+      expect(games_response[4]).to (include("name" => game1.name))
+      expect(games_response[5]).to (include("name" => game7.name))
+      expect(games_response[6]).to (include("name" => game5.name))
+    end
+
+    it "returns all games sorted by newest_releases" do
+      variables = {
+        "sortBy": "newest_releases",
+      }
+
+      token = JWT.encode({ user_id: 0, exp: 7.days.from_now.to_i }, ENV["SECRET_KEY_BASE"])
+      post "/graphql", params: { query: query, variables: variables }, headers: { "Authorization" => "Bearer #{token}" }
+      json_response = JSON.parse(response.body)
+      games_response = json_response["data"]["allGames"]
+
+      expect(games_response.count).to eq(7)
+
+      expect(games_response[0]).to (include("name" => game7.name))
+      expect(games_response[1]).to (include("name" => game4.name))
+      expect(games_response[2]).to (include("name" => game5.name))
+      expect(games_response[3]).to (include("name" => game6.name))
+      expect(games_response[4]).to (include("name" => game1.name))
+      expect(games_response[5]).to (include("name" => game2.name))
+      expect(games_response[6]).to (include("name" => game3.name))
+    end
+
+    it "returns all games sorted by oldest_releases" do
+      variables = {
+        "sortBy": "oldest_releases",
+      }
+
+      token = JWT.encode({ user_id: 0, exp: 7.days.from_now.to_i }, ENV["SECRET_KEY_BASE"])
+      post "/graphql", params: { query: query, variables: variables }, headers: { "Authorization" => "Bearer #{token}" }
+      json_response = JSON.parse(response.body)
+      games_response = json_response["data"]["allGames"]
+
+      expect(games_response.count).to eq(7)
+
+      expect(games_response[0]).to (include("name" => game3.name))
+      expect(games_response[1]).to (include("name" => game2.name))
+      expect(games_response[2]).to (include("name" => game1.name))
+      expect(games_response[3]).to (include("name" => game6.name))
+      expect(games_response[4]).to (include("name" => game5.name))
+      expect(games_response[5]).to (include("name" => game4.name))
+      expect(games_response[6]).to (include("name" => game7.name))
+    end
+
+    it "returns all games sorted by avg_score" do
+      variables = {
+        "sortBy": "avg_score",
+      }
+
+      token = JWT.encode({ user_id: 1, exp: 7.days.from_now.to_i }, ENV["SECRET_KEY_BASE"])
+      post "/graphql", params: { query: query, variables: variables }, headers: { "Authorization" => "Bearer #{token}" }
+      json_response = JSON.parse(response.body)
+      games_response = json_response["data"]["allGames"]
+
+      expect(games_response.count).to eq(7)
+
+      expect(games_response[0]).to (include("name" => game5.name))
+      expect(games_response[1]).to (include("name" => game6.name))
+      expect(games_response[2]).to (include("name" => game4.name))
+      expect(games_response[3]).to (include("name" => game7.name))
+      expect(games_response[4]).to (include("name" => game2.name))
+      expect(games_response[5]).to (include("name" => game1.name))
+      expect(games_response[6]).to (include("name" => game3.name))
+    end
+
+    it "returns all games sorted by total_rating" do
+      variables = {
+        "sortBy": "total_rating",
+      }
+
+      token = JWT.encode({ user_id: 1, exp: 7.days.from_now.to_i }, ENV["SECRET_KEY_BASE"])
+      post "/graphql", params: { query: query, variables: variables }, headers: { "Authorization" => "Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJleHAiOjE2ODg0NDEwNjR9.9oj9lSWaHDoEwqkkY3gHSVnprim-Ezu6dBeiOdprOj0" }
+      json_response = JSON.parse(response.body)
+      games_response = json_response["data"]["allGames"]
+
+      expect(games_response.count).to eq(7)
+
+      expect(games_response[0]).to (include("name" => game3.name))
+      expect(games_response[1]).to (include("name" => game2.name))
+      expect(games_response[2]).to (include("name" => game4.name))
+      expect(games_response[3]).to (include("name" => game1.name))
+      expect(games_response[4]).to (include("name" => game6.name))
+      expect(games_response[5]).to (include("name" => game7.name))
+      expect(games_response[6]).to (include("name" => game5.name))
+    end
 
     it "returns all games that aren't on the Playstation 5" do
       variables = {
         "excludedPlatforms": [platform1.name],
       }
 
-      token = JWT.encode({ user_id: 1, exp: 7.days.from_now.to_i }, Rails.application.secrets.secret_key_base)
+      token = JWT.encode({ user_id: 1, exp: 7.days.from_now.to_i }, ENV["SECRET_KEY_BASE"])
       post "/graphql", params: { query: query, variables: variables }, headers: { "Authorization" => "Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJleHAiOjE2ODg0NDEwNjR9.9oj9lSWaHDoEwqkkY3gHSVnprim-Ezu6dBeiOdprOj0" }
       json_response = JSON.parse(response.body)
       games_response = json_response["data"]["allGames"]
@@ -473,7 +480,7 @@ describe Queries::Game::GetAllGames, type: :request do
         "excludedPlatforms": [platform4.name],
       }
 
-      token = JWT.encode({ user_id: 0, exp: 7.days.from_now.to_i }, Rails.application.secrets.secret_key_base)
+      token = JWT.encode({ user_id: 0, exp: 7.days.from_now.to_i }, ENV["SECRET_KEY_BASE"])
       post "/graphql", params: { query: query, variables: variables }, headers: { "Authorization" => "Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJleHAiOjE2ODg0NDEwNjR9.9oj9lSWaHDoEwqkkY3gHSVnprim-Ezu6dBeiOdprOj0" }
       json_response = JSON.parse(response.body)
       games_response = json_response["data"]["allGames"]
@@ -494,7 +501,7 @@ describe Queries::Game::GetAllGames, type: :request do
         "excludedPlatforms": [platform4.name, platform5.name],
       }
 
-      token = JWT.encode({ user_id: 0, exp: 7.days.from_now.to_i }, Rails.application.secrets.secret_key_base)
+      token = JWT.encode({ user_id: 0, exp: 7.days.from_now.to_i }, ENV["SECRET_KEY_BASE"])
       post "/graphql", params: { query: query, variables: variables }, headers: { "Authorization" => "Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJleHAiOjE2ODg0NDEwNjR9.9oj9lSWaHDoEwqkkY3gHSVnprim-Ezu6dBeiOdprOj0" }
       json_response = JSON.parse(response.body)
       games_response = json_response["data"]["allGames"]
@@ -515,7 +522,7 @@ describe Queries::Game::GetAllGames, type: :request do
         "excludedGenres": [genre1.name],
       }
 
-      token = JWT.encode({ user_id: 1, exp: 7.days.from_now.to_i }, Rails.application.secrets.secret_key_base)
+      token = JWT.encode({ user_id: 1, exp: 7.days.from_now.to_i }, ENV["SECRET_KEY_BASE"])
       post "/graphql", params: { query: query, variables: variables }, headers: { "Authorization" => "Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJleHAiOjE2ODg0NDEwNjR9.9oj9lSWaHDoEwqkkY3gHSVnprim-Ezu6dBeiOdprOj0" }
       json_response = JSON.parse(response.body)
       games_response = json_response["data"]["allGames"]
@@ -529,7 +536,7 @@ describe Queries::Game::GetAllGames, type: :request do
         "excludedGenres": [genre3.name],
       }
 
-      token = JWT.encode({ user_id: 0, exp: 7.days.from_now.to_i }, Rails.application.secrets.secret_key_base)
+      token = JWT.encode({ user_id: 0, exp: 7.days.from_now.to_i }, ENV["SECRET_KEY_BASE"])
       post "/graphql", params: { query: query, variables: variables }, headers: { "Authorization" => "Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJleHAiOjE2ODg0NDEwNjR9.9oj9lSWaHDoEwqkkY3gHSVnprim-Ezu6dBeiOdprOj0" }
       json_response = JSON.parse(response.body)
       games_response = json_response["data"]["allGames"]
@@ -550,7 +557,7 @@ describe Queries::Game::GetAllGames, type: :request do
         "excludedGenres": [genre2.name, genre3.name],
       }
 
-      token = JWT.encode({ user_id: 0, exp: 7.days.from_now.to_i }, Rails.application.secrets.secret_key_base)
+      token = JWT.encode({ user_id: 0, exp: 7.days.from_now.to_i }, ENV["SECRET_KEY_BASE"])
       post "/graphql", params: { query: query, variables: variables }, headers: { "Authorization" => "Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJleHAiOjE2ODg0NDEwNjR9.9oj9lSWaHDoEwqkkY3gHSVnprim-Ezu6dBeiOdprOj0" }
       json_response = JSON.parse(response.body)
       games_response = json_response["data"]["allGames"]
@@ -571,7 +578,7 @@ describe Queries::Game::GetAllGames, type: :request do
         "excludedTags": [tag1.name],
       }
 
-      token = JWT.encode({ user_id: 1, exp: 7.days.from_now.to_i }, Rails.application.secrets.secret_key_base)
+      token = JWT.encode({ user_id: 1, exp: 7.days.from_now.to_i }, ENV["SECRET_KEY_BASE"])
       post "/graphql", params: { query: query, variables: variables }, headers: { "Authorization" => "Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJleHAiOjE2ODg0NDEwNjR9.9oj9lSWaHDoEwqkkY3gHSVnprim-Ezu6dBeiOdprOj0" }
       json_response = JSON.parse(response.body)
       games_response = json_response["data"]["allGames"]
@@ -593,7 +600,7 @@ describe Queries::Game::GetAllGames, type: :request do
         "excludedTags": [tag4.name],
       }
 
-      token = JWT.encode({ user_id: 0, exp: 7.days.from_now.to_i }, Rails.application.secrets.secret_key_base)
+      token = JWT.encode({ user_id: 0, exp: 7.days.from_now.to_i }, ENV["SECRET_KEY_BASE"])
       post "/graphql", params: { query: query, variables: variables }, headers: { "Authorization" => "Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJleHAiOjE2ODg0NDEwNjR9.9oj9lSWaHDoEwqkkY3gHSVnprim-Ezu6dBeiOdprOj0" }
       json_response = JSON.parse(response.body)
       games_response = json_response["data"]["allGames"]
@@ -615,7 +622,7 @@ describe Queries::Game::GetAllGames, type: :request do
         "excludedTags": [tag3.name],
       }
 
-      token = JWT.encode({ user_id: 0, exp: 7.days.from_now.to_i }, Rails.application.secrets.secret_key_base)
+      token = JWT.encode({ user_id: 0, exp: 7.days.from_now.to_i }, ENV["SECRET_KEY_BASE"])
       post "/graphql", params: { query: query, variables: variables }, headers: { "Authorization" => "Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJleHAiOjE2ODg0NDEwNjR9.9oj9lSWaHDoEwqkkY3gHSVnprim-Ezu6dBeiOdprOj0" }
       json_response = JSON.parse(response.body)
       games_response = json_response["data"]["allGames"]
@@ -628,7 +635,7 @@ describe Queries::Game::GetAllGames, type: :request do
         "excludedTags": [tag2.name, tag4.name],
       }
 
-      token = JWT.encode({ user_id: 0, exp: 7.days.from_now.to_i }, Rails.application.secrets.secret_key_base)
+      token = JWT.encode({ user_id: 0, exp: 7.days.from_now.to_i }, ENV["SECRET_KEY_BASE"])
       post "/graphql", params: { query: query, variables: variables }, headers: { "Authorization" => "Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJleHAiOjE2ODg0NDEwNjR9.9oj9lSWaHDoEwqkkY3gHSVnprim-Ezu6dBeiOdprOj0" }
       json_response = JSON.parse(response.body)
       games_response = json_response["data"]["allGames"]
