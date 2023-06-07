@@ -20,5 +20,8 @@ module Types
     field :get_all_follows, resolver: Queries::User::GetAllFollows
 
     field :get_all_status_updates_for_a_user, resolver: Queries::UserGames::GetAllStatusUpdatesForAUser
+    field :get_global_status_updates, resolver: Queries::UserGames::GetGlobalStatusUpdates
+
+    field :get_global_posts, resolver: Queries::Posts::GetGlobalPosts
   end
 end
