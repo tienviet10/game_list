@@ -48,24 +48,56 @@ class GraphqlController < ApplicationController
     render json: { errors: [{ message: e.message, backtrace: e.backtrace }], data: {} }, status: 500
   end
 
-  def verify_jwt_token
-    if %w[GetAllGames GetGameFilters].include?(params[:operationName])
-      @current_user ||= nil
-      return
-    end
+  # def verify_jwt_token
+  #   # if %w[GetAllGames GetGameFilters].include?(params[:operationName])
+  #   #   @current_user ||= nil
+  #   #   return
+  #   # end
 
+  #   if params[:query].include?("login") || params[:query].include?("register") || params[:query].include?("IntrospectionQuery")
+  #     @current_user = nil
+  #     return
+  #   end
+  #   token = request.headers["Authorization"]&.split&.last
+  #   decoded_token = JWT.decode(token, ENV["SECRET_KEY_BASE"], true, { algorithm: "HS256" })
+  #   p "GetAllGames or GetGameFilters #{decoded_token}"
+  #   p "GetAllGames or GetGameFilters #{token}"
+  #   if decoded_token[0]["user_id"].present? && decoded_token[0]["exp"] > Time.now.to_i
+  #     @current_user = decoded_token[0]["user_id"]
+  #     return
+  #   elsif %w[GetAllGames GetGameFilters].include?(params[:operationName])
+  #     @current_user = nil
+  #     return
+  #   else
+  #     p "Invalid token"
+  #     @current_user = nil
+  #     raise GraphQL::ExecutionError, "Invalid token"
+  #   end
+  # rescue JWT::DecodeError, GraphQL::ExecutionError => e
+  #   render json: { error: "Unauthorized", message: "Please login again" }, status: :unauthorized
+  # end
+  def verify_jwt_token
     if params[:query].include?("login") || params[:query].include?("register") || params[:query].include?("IntrospectionQuery")
       @current_user = nil
       return
     end
+
     token = request.headers["Authorization"]&.split&.last
-    decoded_token = JWT.decode(token, ENV["SECRET_KEY_BASE"], true, { algorithm: "HS256" })
-    if decoded_token[0]["user_id"].present? && decoded_token[0]["exp"] > Time.now.to_i
-      @current_user = decoded_token[0]["user_id"]
-    else
-      @current_user = nil
-      raise GraphQL::ExecutionError, "Invalid token"
+    if token
+      decoded_token = JWT.decode(token, ENV["SECRET_KEY_BASE"], true, { algorithm: "HS256" })
+      if decoded_token[0]["user_id"].present? && decoded_token[0]["exp"] > Time.now.to_i
+        @current_user = decoded_token[0]["user_id"]
+        return
+      end
     end
+
+    if %w[GetAllGames GetGameFilters].include?(params[:operationName])
+      @current_user = nil
+      return
+    end
+
+    @current_user = nil
+    raise GraphQL::ExecutionError, "Invalid token"
   rescue JWT::DecodeError, GraphQL::ExecutionError => e
     render json: { error: "Unauthorized", message: "Please login again" }, status: :unauthorized
   end
