@@ -34,5 +34,7 @@ class User < ApplicationRecord
 
   def set_default_values
     self.listsOrder ||= "planning,playing,completed,paused,dropped,justAdded"
+    self.user_picture ||= "https://robohash.org/#{self.username}.png?size=300x300&set=set1"
+    self.banner_picture ||= "https://cdn.mos.cms.futurecdn.net/LJkg8nGCYXBycPtCCMgEtF.jpg"
   end
 end
