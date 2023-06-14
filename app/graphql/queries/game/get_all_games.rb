@@ -10,8 +10,10 @@ module Queries
       argument :year, Integer, required: false
       argument :search, String, required: false
       argument :sortBy, String, required: false
+      argument :limit, Integer, required: false
+      argument :offset, Integer, required: false
 
-      def resolve(platform: nil, genre: nil, tag: nil, year: nil, search: nil, sortBy: nil)
+      def resolve(platform: nil, genre: nil, tag: nil, year: nil, search: nil, sortBy: nil, limit: nil, offset: nil)
         allGames = ::Game.all
 
         # Return games by platform if platform argument is provided
@@ -52,6 +54,14 @@ module Queries
           when "total_rating"
             allGames = allGames.order(total_rating: :desc)
           end
+        end
+
+        if (limit.present?)
+          allGames = allGames.limit(limit)
+        end
+
+        if offset.present?
+          allGames = allGames.offset(offset)
         end
 
         return allGames.distinct.group("games.id")
