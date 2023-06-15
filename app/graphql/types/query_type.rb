@@ -4,6 +4,7 @@ module Types
     include GraphQL::Types::Relay::HasNodesField
 
     field :all_games, resolver: Queries::Game::GetAllGames
+    field :get_game_by_id, resolver: Queries::Game::GetGameById
     field :games_for_a_user, resolver: Queries::UserGames::GamesForAUser
     field :games_by_status_for_a_user, resolver: Queries::UserGames::GamesByStatusForAUser
     field :get_user_game_by_game_id, resolver: Queries::UserGames::GetUserGameByGameId
