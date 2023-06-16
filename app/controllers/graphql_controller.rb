@@ -91,7 +91,7 @@ class GraphqlController < ApplicationController
       end
     end
 
-    if %w[GetAllGames GetGameFilters].include?(params[:operationName])
+    if %w[GetAllGames GetGameFilters GetGameById].include?(params[:operationName])
       @current_user = nil
       return
     end
