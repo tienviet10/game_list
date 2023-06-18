@@ -14,6 +14,8 @@ module Types
       field :liked_users, [Types::User::UserType], null: false
       field :likes_count, Integer, null: false
 
+      field :comments, [Types::Comment::CommentType], null: false
+
       def username
         ::User.find(object.user_game.user_id).username
       end

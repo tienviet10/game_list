@@ -14,6 +14,8 @@ module Types
     field :add_like_to_likeable, mutation: Mutations::Likes::AddLikeToLikeable
     field :remove_like_from_likeable, mutation: Mutations::Likes::RemoveLikeFromLikeable
 
+    field :add_comment_to_commentable, mutation: Mutations::Comments::AddCommentToCommentable
+
     field :create_post, mutation: Mutations::Posts::CreatePost
   end
 end
