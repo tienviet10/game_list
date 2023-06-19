@@ -10,6 +10,8 @@ module Types
       field :liked_users, [Types::User::UserType], null: false
       field :likes_count, Integer, null: false
 
+      field :comments, [Types::Comment::CommentType], null: false
+
       field :created_at, GraphQL::Types::ISO8601DateTime, null: false
       field :updated_at, GraphQL::Types::ISO8601DateTime, null: false
 
@@ -31,6 +33,10 @@ module Types
 
       def liked_users
         object.likes.map(&:user)
+      end
+
+      def comments
+        object.comments
       end
     end
   end
