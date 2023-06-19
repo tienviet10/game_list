@@ -40,6 +40,40 @@ CREATE TABLE public.ar_internal_metadata (
 
 
 --
+-- Name: comments; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.comments (
+    id bigint NOT NULL,
+    body text,
+    user_id bigint NOT NULL,
+    commentable_type character varying NOT NULL,
+    commentable_id bigint NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: comments_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.comments_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: comments_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.comments_id_seq OWNED BY public.comments.id;
+
+
+--
 -- Name: follows; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -447,6 +481,13 @@ ALTER SEQUENCE public.users_id_seq OWNED BY public.users.id;
 
 
 --
+-- Name: comments id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.comments ALTER COLUMN id SET DEFAULT nextval('public.comments_id_seq'::regclass);
+
+
+--
 -- Name: follows id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -529,6 +570,14 @@ ALTER TABLE ONLY public.users ALTER COLUMN id SET DEFAULT nextval('public.users_
 
 ALTER TABLE ONLY public.ar_internal_metadata
     ADD CONSTRAINT ar_internal_metadata_pkey PRIMARY KEY (key);
+
+
+--
+-- Name: comments comments_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.comments
+    ADD CONSTRAINT comments_pkey PRIMARY KEY (id);
 
 
 --
@@ -628,6 +677,27 @@ ALTER TABLE ONLY public.users
 
 
 --
+-- Name: index_comments_on_commentable; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_comments_on_commentable ON public.comments USING btree (commentable_type, commentable_id);
+
+
+--
+-- Name: index_comments_on_commentable_type_and_commentable_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_comments_on_commentable_type_and_commentable_id ON public.comments USING btree (commentable_type, commentable_id);
+
+
+--
+-- Name: index_comments_on_user_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_comments_on_user_id ON public.comments USING btree (user_id);
+
+
+--
 -- Name: index_follows_on_followed_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -703,6 +773,14 @@ CREATE INDEX index_user_games_on_user_id ON public.user_games USING btree (user_
 
 ALTER TABLE ONLY public.status_updates
     ADD CONSTRAINT fk_rails_007881d083 FOREIGN KEY (user_game_id) REFERENCES public.user_games(id);
+
+
+--
+-- Name: comments fk_rails_03de2dc08c; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.comments
+    ADD CONSTRAINT fk_rails_03de2dc08c FOREIGN KEY (user_id) REFERENCES public.users(id);
 
 
 --
@@ -808,6 +886,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20230531071441'),
 ('20230606163245'),
 ('20230606164159'),
-('20230606172225');
+('20230606172225'),
+('20230618081417');
 
 
