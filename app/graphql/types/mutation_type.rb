@@ -16,6 +16,7 @@ module Types
 
     field :add_comment_to_commentable, mutation: Mutations::Comments::AddCommentToCommentable
     field :remove_comment_from_commentable, mutation: Mutations::Comments::RemoveCommentFromCommentable
+    field :edit_comment_by_id, mutation: Mutations::Comments::EditCommentById
 
     field :create_post, mutation: Mutations::Posts::CreatePost
   end
