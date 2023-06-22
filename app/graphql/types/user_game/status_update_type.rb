@@ -2,6 +2,7 @@ module Types
   module UserGame
     class StatusUpdateType < Types::BaseObject
       field :id, ID, null: false
+      field :user, Types::User::UserType, null: false
       field :username, String, null: false
       field :user_id, String, null: false
       field :user_picture, String, null: false
@@ -15,6 +16,10 @@ module Types
       field :likes_count, Integer, null: false
 
       field :comments, [Types::Comment::CommentType], null: false
+
+      def user
+        ::User.find(object.user_game.user_id)
+      end
 
       def username
         ::User.find(object.user_game.user_id).username

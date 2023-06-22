@@ -62531,5 +62531,59 @@
 		"themes": ["Fantasy"],
 		"total_rating": 80.38135593220338,
 		"total_rating_count": 7
+	},
+	{
+		"id": 125165,
+		"cover": "//images.igdb.com/igdb/image/upload/t_cover_big/co69sm.jpg",
+		"first_release_date": 1685664000,
+		"genres": ["Role-playing (RPG)", "Hack and slash/Beat 'em up"],
+		"name": "Diablo IV",
+		"platforms": [
+			"PC (Microsoft Windows)",
+			"PlayStation 4",
+			"Xbox One",
+			"PlayStation 5",
+			"Xbox Series X|S"
+		],
+		"screenshots": [
+			"//images.igdb.com/igdb/image/upload/t_screenshot_big/sc78f4.jpg",
+			"//images.igdb.com/igdb/image/upload/t_screenshot_big/sc78f5.jpg",
+			"//images.igdb.com/igdb/image/upload/t_screenshot_big/sc78f6.jpg",
+			"//images.igdb.com/igdb/image/upload/t_screenshot_big/sc78f7.jpg",
+			"//images.igdb.com/igdb/image/upload/t_screenshot_big/sc78f8.jpg",
+			"//images.igdb.com/igdb/image/upload/t_screenshot_big/sc78f9.jpg",
+			"//images.igdb.com/igdb/image/upload/t_screenshot_big/sc78fa.jpg",
+			"//images.igdb.com/igdb/image/upload/t_screenshot_big/sc78fb.jpg",
+			"//images.igdb.com/igdb/image/upload/t_screenshot_big/sc78fc.jpg",
+			"//images.igdb.com/igdb/image/upload/t_screenshot_big/sc78fd.jpg"
+		],
+		"slug": "diablo-iv",
+		"summary": "Endless demons to slaughter. Deep customization through Talents, Skill Points, Runes, and Legendary loot. Randomized dungeons contained in a dynamic open world. Survive and conquer darkness—or succumb to the shadows.",
+		"themes": ["Action", "Fantasy", "Horror"],
+		"total_rating": 90.97328838454291,
+		"total_rating_count": 26
+	},
+	{
+		"id": 125,
+		"cover": "//images.igdb.com/igdb/image/upload/t_cover_big/co3ggo.jpg",
+		"first_release_date": 851990400,
+		"genres": ["Role-playing (RPG)", "Strategy"],
+		"name": "Diablo",
+		"platforms": ["PC (Microsoft Windows)", "PlayStation", "Mac"],
+		"screenshots": [
+			"//images.igdb.com/igdb/image/upload/t_screenshot_big/e7jcsiwijzxdt1sqzbvb.jpg",
+			"//images.igdb.com/igdb/image/upload/t_screenshot_big/tckn5cydm0w2cf8tjv2l.jpg",
+			"//images.igdb.com/igdb/image/upload/t_screenshot_big/sc884t.jpg",
+			"//images.igdb.com/igdb/image/upload/t_screenshot_big/sc884u.jpg",
+			"//images.igdb.com/igdb/image/upload/t_screenshot_big/sc884v.jpg",
+			"//images.igdb.com/igdb/image/upload/t_screenshot_big/sc884w.jpg",
+			"//images.igdb.com/igdb/image/upload/t_screenshot_big/sc884x.jpg",
+			"//images.igdb.com/igdb/image/upload/t_screenshot_big/sc884y.jpg"
+		],
+		"slug": "diablo",
+		"summary": "Diablo is an isometric strategy RPG and one of the most well-known examples of the action-RPG subgenre. Although some of the game mechanics resemble a typical RPG, all actions are done in real-time just like in an action game. The player have to kill hordes of monsters through randomized dungeon levels in order to gain experience points, gold and a variety of equipment to bolster the hero's monster-killing potency.",
+		"themes": ["Action", "Fantasy", "Horror", "Historical"],
+		"total_rating": 83.92196592238405,
+		"total_rating_count": 453
 	}
 ]
