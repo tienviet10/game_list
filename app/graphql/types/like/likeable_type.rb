@@ -1,9 +1,13 @@
 module Types
   module Like
     class LikeableType < Types::BaseUnion
-      possible_types Types::UserGame::StatusUpdateType, Types::User::FollowType, Types::Post::PostType
+      possible_types Types::UserGame::StatusUpdateType, Types::User::FollowType, Types::Post::PostType,
+                     Types::Game::GameType
       def self.resolve_type(object, context)
         case object.class.name
+
+        when "Game"
+          Types::Game::GameType
         when "StatusUpdate"
           # What is object when likeable_type = "StatusUpdate"
           # object: {
