@@ -13,12 +13,19 @@ module Types
       field :total_rating, Integer, null: true
 
       field :is_game_added, Boolean, null: false
+      field :is_game_liked, Boolean, null: false
       field :genres, [String], null: false
       field :tags, [String], null: false
       field :platforms, [String], null: false
 
       def is_game_added
         result = object.user_games.where(user_id: context[:current_user]).exists? && object.user_games.find_by(user_id: context[:current_user]).game_status != "Inactive"
+
+        result
+      end
+
+      def is_game_liked
+        result = object.likes.where(user_id: context[:current_user]).exists?
 
         result
       end
