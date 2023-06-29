@@ -14,6 +14,7 @@ module Queries
       argument :offset, Integer, required: false
 
       def resolve(platform: nil, genre: nil, tag: nil, year: nil, search: nil, sortBy: nil, limit: nil, offset: nil)
+        #TODO: NOT GRAB ALL GAME IN THE FIRST PLACE
         allGames = ::Game.all
 
         # Return games by platform if platform argument is provided
