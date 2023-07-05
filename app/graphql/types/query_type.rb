@@ -24,7 +24,9 @@ module Types
     field :get_global_status_updates, resolver: Queries::UserGames::GetGlobalStatusUpdates
 
     field :get_global_posts, resolver: Queries::Posts::GetGlobalPosts
+    field :get_global_socials, resolver: Queries::Posts::GetGlobalSocials
 
     field :get_all_liked_games, resolver: Queries::Like::GetAllLikedGames
+
   end
 end
