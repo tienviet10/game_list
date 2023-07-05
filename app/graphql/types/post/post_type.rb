@@ -2,11 +2,11 @@ module Types
   module Post
     class PostType < Types::BaseObject
       field :id, ID, null: false
-      field :text, String, null: true
+      field :text, String, null: false
       field :user, Types::User::UserType, null: false
-      field :user_id, String, null: true
-      field :user_picture, String, null: true
-      field :username, String, null: true
+      field :user_id, String, null: false
+      field :user_picture, String, null: false
+      field :username, String, null: false
 
       field :liked_users, [Types::User::UserType], null: false
       field :likes_count, Integer, null: false
