@@ -13,9 +13,9 @@ module Queries
       argument :year, Integer, required: false
       argument :search, String, required: false
       argument :sortBy, String, required: false
-      argument :limit, Integer, required: false, default_value: 10, prepare: ->(limit, ctx) { [limit, 30].min }
+      argument :limit, Integer, required: false, default_value: 30, prepare: ->(limit, ctx) { [limit, 50].min }
 
-      def resolve(platform: nil, genre: nil, tag: nil, excludedPlatforms: nil, excludedGenres: nil, excludedTags: nil, year: nil, search: nil, sortBy: nil)
+      def resolve(platform: nil, genre: nil, tag: nil, excludedPlatforms: nil, excludedGenres: nil, excludedTags: nil, year: nil, search: nil, sortBy: nil, limit: nil)
         allGames = ::Game.where(nil)
 
         # Determine if the game is added by the user
