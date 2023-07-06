@@ -13,9 +13,10 @@ module Queries
       argument :year, Integer, required: false
       argument :search, String, required: false
       argument :sortBy, String, required: false
+      argument :limit, Integer, required: false, default_value: 10, prepare: ->(limit, ctx) { [limit, 30].min }
 
       def resolve(platform: nil, genre: nil, tag: nil, excludedPlatforms: nil, excludedGenres: nil, excludedTags: nil, year: nil, search: nil, sortBy: nil)
-        allGames = ::Game.all
+        allGames = ::Game.where(nil)
 
         # Determine if the game is added by the user
         # user = ::User.find_by(id: context[:current_user])
@@ -83,7 +84,7 @@ module Queries
           end
         end
 
-        return allGames.distinct.group("games.id")
+        return allGames.distinct.limit(limit)
       end
 
       def add_filter(games_table, table_type, column_name, value)
@@ -92,7 +93,7 @@ module Queries
           return games_table
         end
 
-        games_table.joins(table_type).where(table_type => { column_name => value }).having("COUNT(DISTINCT #{table_type}.#{column_name}) = ?", value.length)
+        games_table.joins(table_type).where(table_type => { column_name => value }).having("COUNT(DISTINCT #{table_type}.#{column_name}) = ?", value.length).group("games.id")
       end
 
       def exclude_filter(games_table, table_type, column_name, value)
@@ -101,7 +102,7 @@ module Queries
           return games_table
         end
 
-        games_table.where.not(id: games_table.joins(table_type).where(table_type => { column_name => value }))
+        games_table.where.not(id: games_table.joins(table_type).where(table_type => { column_name => value })).group("games.id")
       end
     end
   end
