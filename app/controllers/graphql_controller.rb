@@ -58,10 +58,13 @@ class GraphqlController < ApplicationController
     if decoded_token[0]["user_id"].present? && decoded_token[0]["exp"] > Time.now.to_i
       @current_user = decoded_token[0]["user_id"]
     else
+      # The token could be decoded but was missing a user_id or expiered
+      cookies.delete :token
       @current_user = nil
       raise GraphQL::ExecutionError, "Invalid token"
     end
   rescue JWT::DecodeError, GraphQL::ExecutionError => e
+    cookies.delete :token
     render json: { error: "Unauthorized", message: "Please login again" }, status: :unauthorized
   end
 end
