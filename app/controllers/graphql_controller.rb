@@ -49,7 +49,7 @@ class GraphqlController < ApplicationController
   end
 
   def verify_jwt_token
-    if params[:query].include?("login") || params[:query].include?("register") || params[:query].include?("IntrospectionQuery") || params[:query].include?("GetAllGames")
+    if params[:query].include?("login") || params[:query].include?("register") || params[:query].include?("IntrospectionQuery") || params[:query].include?("GetAllGames") || params[:query].include?("GetGameFilters")
       @current_user = nil
       return
     end
@@ -59,12 +59,12 @@ class GraphqlController < ApplicationController
       @current_user = decoded_token[0]["user_id"]
     else
       # The token could be decoded but was missing a user_id or expiered
-      cookies.delete :token
+      cookies.delete(:token)
       @current_user = nil
       raise GraphQL::ExecutionError, "Invalid token"
     end
   rescue JWT::DecodeError, GraphQL::ExecutionError => e
-    cookies.delete :token
+    cookies.delete(:token)
     render json: { error: "Unauthorized", message: "Please login again" }, status: :unauthorized
   end
 end
