@@ -48,11 +48,13 @@ class GraphqlController < ApplicationController
     render json: { errors: [{ message: e.message, backtrace: e.backtrace }], data: {} }, status: 500
   end
 
+  # Verify JWT token
   def verify_jwt_token
-    if params[:query].include?("login") || params[:query].include?("register") || params[:query].include?("IntrospectionQuery") || params[:query].include?("GetAllGames") || params[:query].include?("GetGameFilters")
+    if params[:query].include?("login") || params[:query].include?("register") || params[:query].include?("IntrospectionQuery") || params[:query].include?("GetAllGames") || params[:query].include?("GetGameFilters") || params[:query].include?("GetGameById")
       @current_user = nil
       return
     end
+
     token = request.headers["Authorization"]&.split&.last
     decoded_token = JWT.decode(token, ENV["SECRET_KEY_BASE"], true, { algorithm: "HS256" })
     if decoded_token[0]["user_id"].present? && decoded_token[0]["exp"] > Time.now.to_i
