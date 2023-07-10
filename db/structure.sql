@@ -40,6 +40,40 @@ CREATE TABLE public.ar_internal_metadata (
 
 
 --
+-- Name: comments; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.comments (
+    id bigint NOT NULL,
+    body text,
+    user_id bigint NOT NULL,
+    commentable_type character varying NOT NULL,
+    commentable_id bigint NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: comments_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.comments_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: comments_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.comments_id_seq OWNED BY public.comments.id;
+
+
+--
 -- Name: follows; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -209,10 +243,10 @@ ALTER SEQUENCE public.genres_id_seq OWNED BY public.genres.id;
 CREATE TABLE public.likes (
     id bigint NOT NULL,
     user_id bigint NOT NULL,
-    likeable_type character varying NOT NULL,
-    likeable_id bigint NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    likeable_type character varying,
+    likeable_id bigint
 );
 
 
@@ -264,6 +298,38 @@ CREATE SEQUENCE public.platforms_id_seq
 --
 
 ALTER SEQUENCE public.platforms_id_seq OWNED BY public.platforms.id;
+
+
+--
+-- Name: posts; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.posts (
+    id bigint NOT NULL,
+    text character varying,
+    user_id bigint NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: posts_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.posts_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: posts_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.posts_id_seq OWNED BY public.posts.id;
 
 
 --
@@ -415,6 +481,13 @@ ALTER SEQUENCE public.users_id_seq OWNED BY public.users.id;
 
 
 --
+-- Name: comments id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.comments ALTER COLUMN id SET DEFAULT nextval('public.comments_id_seq'::regclass);
+
+
+--
 -- Name: follows id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -457,6 +530,13 @@ ALTER TABLE ONLY public.platforms ALTER COLUMN id SET DEFAULT nextval('public.pl
 
 
 --
+-- Name: posts id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.posts ALTER COLUMN id SET DEFAULT nextval('public.posts_id_seq'::regclass);
+
+
+--
 -- Name: status_updates id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -490,6 +570,14 @@ ALTER TABLE ONLY public.users ALTER COLUMN id SET DEFAULT nextval('public.users_
 
 ALTER TABLE ONLY public.ar_internal_metadata
     ADD CONSTRAINT ar_internal_metadata_pkey PRIMARY KEY (key);
+
+
+--
+-- Name: comments comments_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.comments
+    ADD CONSTRAINT comments_pkey PRIMARY KEY (id);
 
 
 --
@@ -541,6 +629,14 @@ ALTER TABLE ONLY public.platforms
 
 
 --
+-- Name: posts posts_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.posts
+    ADD CONSTRAINT posts_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: schema_migrations schema_migrations_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -581,6 +677,27 @@ ALTER TABLE ONLY public.users
 
 
 --
+-- Name: index_comments_on_commentable; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_comments_on_commentable ON public.comments USING btree (commentable_type, commentable_id);
+
+
+--
+-- Name: index_comments_on_commentable_type_and_commentable_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_comments_on_commentable_type_and_commentable_id ON public.comments USING btree (commentable_type, commentable_id);
+
+
+--
+-- Name: index_comments_on_user_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_comments_on_user_id ON public.comments USING btree (user_id);
+
+
+--
 -- Name: index_follows_on_followed_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -616,13 +733,6 @@ CREATE INDEX index_likes_on_likeable ON public.likes USING btree (likeable_type,
 
 
 --
--- Name: index_likes_on_likeable_type_and_likeable_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_likes_on_likeable_type_and_likeable_id ON public.likes USING btree (likeable_type, likeable_id);
-
-
---
 -- Name: index_likes_on_user_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -630,10 +740,10 @@ CREATE INDEX index_likes_on_user_id ON public.likes USING btree (user_id);
 
 
 --
--- Name: index_likes_on_user_id_and_likeable_type_and_likeable_id; Type: INDEX; Schema: public; Owner: -
+-- Name: index_posts_on_user_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE UNIQUE INDEX index_likes_on_user_id_and_likeable_type_and_likeable_id ON public.likes USING btree (user_id, likeable_type, likeable_id);
+CREATE INDEX index_posts_on_user_id ON public.posts USING btree (user_id);
 
 
 --
@@ -666,6 +776,14 @@ ALTER TABLE ONLY public.status_updates
 
 
 --
+-- Name: comments fk_rails_03de2dc08c; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.comments
+    ADD CONSTRAINT fk_rails_03de2dc08c FOREIGN KEY (user_id) REFERENCES public.users(id);
+
+
+--
 -- Name: game_journals fk_rails_193a9dcb98; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -687,6 +805,14 @@ ALTER TABLE ONLY public.likes
 
 ALTER TABLE ONLY public.user_games
     ADD CONSTRAINT fk_rails_445132b40d FOREIGN KEY (game_id) REFERENCES public.games(id);
+
+
+--
+-- Name: posts fk_rails_5b5ddfd518; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.posts
+    ADD CONSTRAINT fk_rails_5b5ddfd518 FOREIGN KEY (user_id) REFERENCES public.users(id);
 
 
 --
@@ -757,6 +883,10 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20230531040209'),
 ('20230531070911'),
 ('20230531071041'),
-('20230531071441');
+('20230531071441'),
+('20230606163245'),
+('20230606164159'),
+('20230606172225'),
+('20230618081417');
 
 

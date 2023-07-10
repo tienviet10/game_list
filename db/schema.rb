@@ -10,13 +10,25 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_05_31_071441) do
+ActiveRecord::Schema.define(version: 2023_06_18_081417) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   # These are custom enum types that must be created before they can be used in the schema definition
   create_enum "game_status", ["Playing", "Completed", "Paused", "Planning", "Dropped", "Inactive"]
+
+  create_table "comments", force: :cascade do |t|
+    t.text "body"
+    t.bigint "user_id", null: false
+    t.string "commentable_type", null: false
+    t.bigint "commentable_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["commentable_type", "commentable_id"], name: "index_comments_on_commentable"
+    t.index ["commentable_type", "commentable_id"], name: "index_comments_on_commentable_type_and_commentable_id"
+    t.index ["user_id"], name: "index_comments_on_user_id"
+  end
 
   create_table "follows", force: :cascade do |t|
     t.bigint "follower_id"
@@ -72,13 +84,11 @@ ActiveRecord::Schema.define(version: 2023_05_31_071441) do
 
   create_table "likes", force: :cascade do |t|
     t.bigint "user_id", null: false
-    t.string "likeable_type", null: false
-    t.bigint "likeable_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "likeable_type"
+    t.bigint "likeable_id"
     t.index ["likeable_type", "likeable_id"], name: "index_likes_on_likeable"
-    t.index ["likeable_type", "likeable_id"], name: "index_likes_on_likeable_type_and_likeable_id"
-    t.index ["user_id", "likeable_type", "likeable_id"], name: "index_likes_on_user_id_and_likeable_type_and_likeable_id", unique: true
     t.index ["user_id"], name: "index_likes_on_user_id"
   end
 
@@ -86,6 +96,14 @@ ActiveRecord::Schema.define(version: 2023_05_31_071441) do
     t.string "name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "posts", force: :cascade do |t|
+    t.string "text"
+    t.bigint "user_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_posts_on_user_id"
   end
 
   create_table "status_updates", force: :cascade do |t|
@@ -105,6 +123,7 @@ ActiveRecord::Schema.define(version: 2023_05_31_071441) do
   create_table "user_games", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.bigint "game_id", null: false
+    t.enum "game_status", as: "game_status"
     t.datetime "start_date"
     t.datetime "completed_date"
     t.boolean "private"
@@ -112,7 +131,6 @@ ActiveRecord::Schema.define(version: 2023_05_31_071441) do
     t.text "game_note"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.string "game_status"
     t.index ["game_id"], name: "index_user_games_on_game_id"
     t.index ["user_id"], name: "index_user_games_on_user_id"
   end
@@ -130,11 +148,13 @@ ActiveRecord::Schema.define(version: 2023_05_31_071441) do
     t.string "listsOrder"
   end
 
+  add_foreign_key "comments", "users"
   add_foreign_key "follows", "users", column: "followed_id"
   add_foreign_key "follows", "users", column: "follower_id"
   add_foreign_key "game_journals", "games"
   add_foreign_key "game_journals", "users"
   add_foreign_key "likes", "users"
+  add_foreign_key "posts", "users"
   add_foreign_key "status_updates", "user_games"
   add_foreign_key "user_games", "games"
   add_foreign_key "user_games", "users"

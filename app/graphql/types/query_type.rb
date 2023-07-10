@@ -4,6 +4,7 @@ module Types
     include GraphQL::Types::Relay::HasNodesField
 
     field :all_games, resolver: Queries::Game::GetAllGames
+    field :get_game_by_id, resolver: Queries::Game::GetGameById
     field :games_for_a_user, resolver: Queries::UserGames::GamesForAUser
     field :games_by_status_for_a_user, resolver: Queries::UserGames::GamesByStatusForAUser
     field :get_user_game_by_game_id, resolver: Queries::UserGames::GetUserGameByGameId
@@ -20,5 +21,12 @@ module Types
     field :get_all_follows, resolver: Queries::User::GetAllFollows
 
     field :get_all_status_updates_for_a_user, resolver: Queries::UserGames::GetAllStatusUpdatesForAUser
+    field :get_global_status_updates, resolver: Queries::UserGames::GetGlobalStatusUpdates
+
+    field :get_global_posts, resolver: Queries::Posts::GetGlobalPosts
+    field :get_global_socials, resolver: Queries::Posts::GetGlobalSocials
+
+    field :get_all_liked_games, resolver: Queries::Like::GetAllLikedGames
+
   end
 end
