@@ -50,28 +50,23 @@ class GraphqlController < ApplicationController
 
   # Verify JWT token
   def verify_jwt_token
-    if params[:query].include?("login") || params[:query].include?("register") || params[:query].include?("IntrospectionQuery")
+    if params[:query].include?("login") || params[:query].include?("register") || params[:query].include?("IntrospectionQuery") || params[:query].include?("GetAllGames") || params[:query].include?("GetGameFilters") || params[:query].include?("GetGameById")
       @current_user = nil
       return
     end
 
     token = request.headers["Authorization"]&.split&.last
-    if token
-      decoded_token = JWT.decode(token, ENV["SECRET_KEY_BASE"], true, { algorithm: "HS256" })
-      if decoded_token[0]["user_id"].present? && decoded_token[0]["exp"] > Time.now.to_i
-        @current_user = decoded_token[0]["user_id"]
-        return
-      end
-    end
-
-    if %w[GetAllGames GetGameFilters GetGameById].include?(params[:operationName])
+    decoded_token = JWT.decode(token, ENV["SECRET_KEY_BASE"], true, { algorithm: "HS256" })
+    if decoded_token[0]["user_id"].present? && decoded_token[0]["exp"] > Time.now.to_i
+      @current_user = decoded_token[0]["user_id"]
+    else
+      # The token could be decoded but was missing a user_id or expiered
+      cookies.delete(:token)
       @current_user = nil
-      return
+      raise GraphQL::ExecutionError, "Invalid token"
     end
-
-    @current_user = nil
-    raise GraphQL::ExecutionError, "Invalid token"
   rescue JWT::DecodeError, GraphQL::ExecutionError => e
+    cookies.delete(:token)
     render json: { error: "Unauthorized", message: "Please login again" }, status: :unauthorized
   end
 end
