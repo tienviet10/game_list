@@ -7,15 +7,31 @@ module Queries
       argument :platform, [String], required: false
       argument :genre, [String], required: false
       argument :tag, [String], required: false
+      argument :excludedPlatforms, [String], required: false
+      argument :excludedGenres, [String], required: false
+      argument :excludedTags, [String], required: false
       argument :year, Integer, required: false
       argument :search, String, required: false
       argument :sortBy, String, required: false
-      argument :limit, Integer, required: false
+      argument :limit, Integer, required: false, default_value: 30, prepare: ->(limit, ctx) { [limit, 50].min }
       argument :offset, Integer, required: false
 
-      def resolve(platform: nil, genre: nil, tag: nil, year: nil, search: nil, sortBy: nil, limit: nil, offset: nil)
-        #TODO: NOT GRAB ALL GAME IN THE FIRST PLACE
-        allGames = ::Game.all
+      def resolve(platform: nil, genre: nil, tag: nil, excludedPlatforms: nil, excludedGenres: nil, excludedTags: nil, year: nil, search: nil, sortBy: nil, limit: nil, offset: nil)
+        allGames = ::Game.where(nil)
+
+        # Determine if the game is added by the user
+        # user = ::User.find_by(id: context[:current_user])
+        # if user.present?
+        #   allGames = allGames.map do |game|
+        #     game.is_game_added = user.user_games.exists?(game_id: game.id)
+        #     game
+        #   end
+        # else
+        #   allGames = allGames.map do |game|
+        #     game.isGameAdded = false
+        #     game
+        #   end
+        # end
 
         # Return games by platform if platform argument is provided
         if (platform.present?)
@@ -30,6 +46,18 @@ module Queries
         # Return games by tag if tag argument is provided
         if (tag.present?)
           allGames = add_filter(allGames, :tags, :name, tag)
+        end
+
+        if (excludedPlatforms.present?)
+          allGames = exclude_filter(allGames, :platforms, :name, excludedPlatforms)
+        end
+
+        if (excludedGenres.present?)
+          allGames = exclude_filter(allGames, :genres, :name, excludedGenres)
+        end
+
+        if (excludedTags.present?)
+          allGames = exclude_filter(allGames, :tags, :name, excludedTags)
         end
 
         # Return games by tag if year argument is provided
@@ -57,15 +85,11 @@ module Queries
           end
         end
 
-        if (limit.present?)
-          allGames = allGames.limit(limit)
-        end
-
         if offset.present?
           allGames = allGames.offset(offset)
         end
 
-        return allGames.distinct.group("games.id")
+        return allGames.distinct.limit(limit)
       end
 
       def add_filter(games_table, table_type, column_name, value)
@@ -73,7 +97,17 @@ module Queries
         if (value.length == 0)
           return games_table
         end
-        games_table.joins(table_type).where(table_type => { column_name => value }).having("COUNT(DISTINCT #{table_type}.#{column_name}) = ?", value.length)
+
+        games_table.joins(table_type).where(table_type => { column_name => value }).having("COUNT(DISTINCT #{table_type}.#{column_name}) = ?", value.length).group("games.id")
+      end
+
+      def exclude_filter(games_table, table_type, column_name, value)
+        value = value.uniq.reject(&:empty?)
+        if value.length == 0
+          return games_table
+        end
+
+        games_table.where.not(id: games_table.joins(table_type).where(table_type => { column_name => value })).group("games.id")
       end
     end
   end
